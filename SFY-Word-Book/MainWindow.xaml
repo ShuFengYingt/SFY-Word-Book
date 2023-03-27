@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:SFY_Word_Book"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Rectangle x:Name="rectangle" Width="300" Height="200" >
+            <Rectangle.Fill>
+                <SolidColorBrush Color="AliceBlue"/>
+            </Rectangle.Fill>
+        </Rectangle>
     </Grid>
 </Window>
