@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFY-Word-Book", "SFY-Word-Book\SFY-Word-Book.csproj", "{4CCA0CC0-329A-40E5-8EE6-EEA9B61B80D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CCA0CC0-329A-40E5-8EE6-EEA9B61B80D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCA0CC0-329A-40E5-8EE6-EEA9B61B80D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCA0CC0-329A-40E5-8EE6-EEA9B61B80D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCA0CC0-329A-40E5-8EE6-EEA9B61B80D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40D3AB23-F26B-4568-83D8-35E205C07D4E}
+	EndGlobalSection
+EndGlobal
