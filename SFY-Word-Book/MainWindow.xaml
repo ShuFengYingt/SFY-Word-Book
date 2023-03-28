@@ -7,21 +7,17 @@
         xmlns:local="clr-namespace:SFY_Word_Book"
         mc:Ignorable="d"
         Title="X:Null" Height="400" Width="400">
-    <Window.Resources>
-        <!--创建按钮风格，并将x:Type以及TargetType设置为Button类型，完成对默认Button风格的修改-->
-        <Style x:Key="{x:Type Button }" TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-    </Window.Resources>
-    <StackPanel>
-        <Button Content="OK"/>
-        <Button Content="OK"/>
-        <Button Content="OK"/>
-        <Button Content="OK" Style="{x:Null}"/>
-        <!--自定义风格和默认风格不同-->
-    </StackPanel>
+    <Grid Background="AliceBlue">
+        <ListBox Margin="5">
+            <ListBox.ItemsSource>
+                <x:Array Type="sys:String">
+                    <sys:String>Tom</sys:String>
+                    <sys:String>Jerry</sys:String>
+                    <sys:String>Tim</sys:String>
+                </x:Array>
+            </ListBox.ItemsSource>
+        </ListBox>
+    </Grid>
 
 </Window>
 
