@@ -3,11 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SFY_Word_Book"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel Background="LightBlue">
-        <TextBox Margin="5" x:Name="SFY"/>
-        <Button Content="OK" Click="button1_Click" Height="43" Width="60" RenderTransformOrigin="0.512,0.517"/>
+        Title="MainWindow" Height="260" Width="400">
+    <Window.Resources>
+        <sys:String x:Key="myString">Hello WPF Resources!</sys:String>
+    </Window.Resources>
+    <StackPanel Background="Gray">
+        <TextBox Text="{StaticResource ResourceKey=myString}" Margin="5"/>
+        <TextBox Margin="5" x:Name="textbox_1"/>
+        <Button Content="Show" Click="Button_Click" Margin="5"/>
     </StackPanel>
+
 </Window>
