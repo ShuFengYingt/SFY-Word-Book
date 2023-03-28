@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SFY_Word_Book"
         mc:Ignorable="d"
-        Title="MainWindow" Height="260" Width="400">
+        Title="MainWindow" Height="400" Width="400">
     <Window.Resources>
         <sys:String x:Key="myString">Hello WPF Resources!</sys:String>
     </Window.Resources>
@@ -14,6 +14,9 @@
         <TextBox Text="{StaticResource ResourceKey=myString}" Margin="5"/>
         <TextBox Margin="5" x:Name="textbox_1"/>
         <Button Content="Show" Click="Button_Click" Margin="5"/>
+        <local:MyButton Content="MyWindow" UserWindowType="{x:Type local:MyWindow}" Margin="5"/>
     </StackPanel>
 
+
 </Window>
+
