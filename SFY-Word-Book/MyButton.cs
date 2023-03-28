@@ -16,9 +16,9 @@ namespace SFY_Word_Book
         protected override void OnClick()
         {
             base.OnClick();//当基类触发该事件
-            Window win = Activator.CreateInstance(this.UserWindowType) as Window; //获取用户按钮类型
+            Window win = Activator.CreateInstance(this.UserWindowType) as Window; //获取XAML中定义的新窗口
             
-            //default
+            //点击按钮时展现win
             if (win != null)
             {
                 win.ShowDialog();

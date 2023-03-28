@@ -10,10 +10,12 @@
     <Window.Resources>
         <sys:String x:Key="myString">Hello WPF Resources!</sys:String>
     </Window.Resources>
-    <StackPanel Background="Gray">
+    <StackPanel Background="LightBlue">
         <TextBox Text="{StaticResource ResourceKey=myString}" Margin="5"/>
         <TextBox Margin="5" x:Name="textbox_1"/>
         <Button Content="Show" Click="Button_Click" Margin="5"/>
+        
+        <!--在local下找到MyButton类，此类派生于Button，设置属性UserWindow扩展标签为x:Type扩展 本地MyWindow,当按钮被点击时激发OnClick,调用弹出MyWindow-->
         <local:MyButton Content="MyWindow" UserWindowType="{x:Type local:MyWindow}" Margin="5"/>
     </StackPanel>
 
