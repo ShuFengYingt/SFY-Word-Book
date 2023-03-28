@@ -9,7 +9,22 @@
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <Rectangle x:Name="rectangle" Width="300" Height="200" >
             <Rectangle.Fill>
-                <SolidColorBrush Color="AliceBlue"/>
+                <LinearGradientBrush>
+                    <LinearGradientBrush.StartPoint>
+                        <Point X="0" Y="0"/>
+                    </LinearGradientBrush.StartPoint>
+                    <LinearGradientBrush.EndPoint>
+                        <Point X="1" Y="1"/>
+                    </LinearGradientBrush.EndPoint>
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Offset="0.2" Color="LightBlue"/>
+                            <GradientStop Offset="0.7" Color="Blue"/>
+                            <GradientStop Offset="1.0" Color="DarkBlue"/>
+
+                        </GradientStopCollection>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
     </Grid>
