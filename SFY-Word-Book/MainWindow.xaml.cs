@@ -24,11 +24,5 @@ namespace SFY_Word_Book
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string str = this.FindResource("myString") as string;
-            this.textbox_1.Text = str;
-        }
     }
 }
