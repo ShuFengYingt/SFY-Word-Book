@@ -18,14 +18,14 @@ namespace SFY_Word_Book
         {
             Name = "Hello";
             Title = "Title";
-            ShowCommand = new RelayCommand(Show);
+            ShowCommand = new RelayCommand<string>(Show);
         }
 
-        public RelayCommand ShowCommand { get; set; }
+        public RelayCommand<string> ShowCommand { get; set; }
 
         private string name;
         public string Name
-        {
+        { 
             get { return name; }
             set
             { name = value; RaisePropertyChanged(); }
@@ -42,11 +42,11 @@ namespace SFY_Word_Book
 
 
 
-        public void Show()
+        public void Show(string content)
         {
             Name = "Is Changed";
             Title = "this is title";
-            MessageBox.Show("asd");
+            MessageBox.Show(content);
         }
 
 

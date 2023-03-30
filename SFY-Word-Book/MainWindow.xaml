@@ -15,10 +15,18 @@
             Width="60"
             Height="30"
             Command="{Binding ShowCommand}"
+            CommandParameter="{Binding ElementName=txtInput, Path=Text}"
             Content="OK" />
         <StackPanel>
-            <TextBox x:Name="Name" Text="{Binding Name}" />
-            <TextBox x:Name="Title" Text="{Binding Title}" />
+            <TextBox
+                x:Name="txtInput"
+                Height="40"
+                Margin="10" />
+            <TextBox
+                x:Name="Title"
+                Height="40"
+                Margin="10"
+                Text="{Binding Title}" />
         </StackPanel>
 
     </Grid>
