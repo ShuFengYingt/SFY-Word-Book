@@ -11,25 +11,32 @@
     Height="400"
     mc:Ignorable="d">
     <Grid>
-        <ListBox x:Name="list">
-            <!--  数据模板  -->
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <!--  颜色板，绑定Code属性，颜色代码自动转换颜色  -->
-                        <Border
-                            Width="10"
-                            Height="10"
-                            Background="{Binding Code}" />
-                        <!--  文字框，绑定Name属性，显示颜色名称  -->
-                        <TextBlock Margin="10,0" Text="{Binding Name}" />
+        <DataGrid
+            x:Name="Grid"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Code}" Header="Code" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
 
-                    </StackPanel>
+                <DataGridTemplateColumn Header="Control">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border
+                                    Width="10"
+                                    Height="10"
+                                    Background="{Binding Code}" />
+                                <TextBlock Margin="10,0" Text="{Binding Name}" />
+                            </StackPanel>
 
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                        </DataTemplate>
 
-        </ListBox>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 

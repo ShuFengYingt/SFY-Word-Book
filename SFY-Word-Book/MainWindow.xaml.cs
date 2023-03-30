@@ -29,7 +29,7 @@ namespace SFY_Word_Book
             test.Add(new Color() { Code = "#FFC0CB", Name = "粉红" });
             test.Add(new Color() { Code = "#DC143C", Name = "深红" });
 
-            this.list.ItemsSource = test;
+            this.Grid.ItemsSource = test;
         }
     }
     public class Color
