@@ -11,39 +11,12 @@
     Height="400"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel>
-            <Slider x:Name="Slider" Margin="5" />
-            <!--  绑定，指定来源和属性 ,oneTime只改变第一次  -->
+        <Button
+            Width="70"
+            Height="40"
+            Command="{Binding ShowCommand}"
+            Content="OK" />
 
-            <TextBox
-                x:Name="A"
-                Height="30"
-                Margin="5"
-                Text="{Binding ElementName=Slider, Path=Value, Mode=OneTime}" />
-
-            <!--  OneWay只允许被改变  -->
-            <TextBox
-                x:Name="B"
-                Height="30"
-                Margin="5"
-                Text="{Binding ElementName=Slider, Path=Value, Mode=OneWay}" />
-
-            <!--  OneWayToSource只改变Bingding另一端，另一端的改变不影响自身  -->
-            <TextBox
-                x:Name="C"
-                Height="30"
-                Margin="5"
-                Text="{Binding ElementName=Slider, Path=Value, Mode=OneWayToSource}" />
-
-            <!--  TwoWay即双向绑定，也是Default默认绑定状态  -->
-            <TextBox
-                x:Name="D"
-                Height="30"
-                Margin="5"
-                Text="{Binding ElementName=Slider, Path=Value, Mode=TwoWay}" />
-
-
-        </StackPanel>
     </Grid>
 
 

@@ -24,6 +24,9 @@ namespace SFY_Word_Book
         {
             InitializeComponent();
 
+            //上下文
+            this. DataContext = new MainViewModel();
+
         }
 
     }
