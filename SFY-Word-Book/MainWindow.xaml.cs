@@ -24,18 +24,7 @@ namespace SFY_Word_Book
         {
             InitializeComponent();
 
-            List<Color> test = new List<Color>();
-            test.Add(new Color() { Code = "#FFB6C1", Name = "浅粉红" });
-            test.Add(new Color() { Code = "#FFC0CB", Name = "粉红" });
-            test.Add(new Color() { Code = "#DC143C", Name = "深红" });
-
-            this.Grid.ItemsSource = test;
         }
-    }
-    public class Color
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
 
     }
 }

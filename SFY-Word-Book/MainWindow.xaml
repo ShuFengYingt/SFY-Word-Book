@@ -11,33 +11,26 @@
     Height="400"
     mc:Ignorable="d">
     <Grid>
-        <DataGrid
-            x:Name="Grid"
-            AutoGenerateColumns="False"
-            CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Code}" Header="Code" />
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+        <StackPanel>
+            <Slider x:Name="Slider" Margin="5" />
+            <TextBox
+                x:Name="A"
+                Height="30"
+                Margin="5"
+                Text="{Binding ElementName=Slider, Path=Value}" />
+            <TextBox
+                x:Name="B"
+                Height="30"
+                Margin="5"
+                Text="{Binding ElementName=Slider, Path=Value}" />
 
-                <DataGridTemplateColumn Header="Control">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Border
-                                    Width="10"
-                                    Height="10"
-                                    Background="{Binding Code}" />
-                                <TextBlock Margin="10,0" Text="{Binding Name}" />
-                            </StackPanel>
+            <TextBox
+                x:Name="C"
+                Height="30"
+                Margin="5"
+                Text="{Binding ElementName=Slider, Path=Value}" />
 
-                        </DataTemplate>
-
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-            </DataGrid.Columns>
-        </DataGrid>
-
+        </StackPanel>
     </Grid>
 
 
