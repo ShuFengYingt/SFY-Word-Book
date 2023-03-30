@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -9,40 +11,35 @@ using System.Windows;
 
 namespace SFY_Word_Book
 {
-    
-    public class MainViewModel :ViewModelBase
+
+    public class MainViewModel:ViewModelBase
     {
         public MainViewModel()
         {
-            ShowCommand = new MyCommand(Show);
             Name = "Hello";
             Title = "Title";
+            ShowCommand = new RelayCommand(Show);
         }
+
+        public RelayCommand ShowCommand { get; set; }
 
         private string name;
-        private string title;
-
-        public string Name 
+        public string Name
         {
             get { return name; }
-            set 
-            { 
-                name = value;
-
-                //ViewModelBase下的通知更新方法
-                OnPropertyChanged();
-            }
+            set
+            { name = value; RaisePropertyChanged(); }
 
         }
 
+        private string title;
         //如法炮制
         public string Title
         {
             get { return title; }
-            set { title = value;OnPropertyChanged(); }
+            set { title = value; RaisePropertyChanged(); }
         }
 
-        public MyCommand ShowCommand { get; set; }
 
 
         public void Show()

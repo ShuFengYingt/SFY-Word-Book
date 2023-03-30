@@ -12,13 +12,13 @@
     mc:Ignorable="d">
     <Grid>
         <Button
-            Width="70"
-            Height="40"
+            Width="60"
+            Height="30"
             Command="{Binding ShowCommand}"
             Content="OK" />
         <StackPanel>
-            <TextBox Height="20" Text="{Binding Name}" />
-            <TextBox Height="20" Text="{Binding Title}" />
+            <TextBox x:Name="Name" Text="{Binding Name}" />
+            <TextBox x:Name="Title" Text="{Binding Title}" />
         </StackPanel>
 
     </Grid>
