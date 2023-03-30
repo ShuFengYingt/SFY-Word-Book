@@ -16,6 +16,10 @@
             Height="40"
             Command="{Binding ShowCommand}"
             Content="OK" />
+        <StackPanel>
+            <TextBox Height="20" Text="{Binding Name}" />
+            <TextBox Height="20" Text="{Binding Title}" />
+        </StackPanel>
 
     </Grid>
 
