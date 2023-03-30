@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -46,7 +47,9 @@ namespace SFY_Word_Book
         {
             Name = "Is Changed";
             Title = "this is title";
-            MessageBox.Show(content);
+
+            //给Token_1的地址发送一个string类型的值content
+            Messenger.Default.Send(content, "Token_1");
         }
 
 

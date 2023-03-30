@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,15 @@ namespace SFY_Word_Book
             //上下文
             this. DataContext = new MainViewModel();
 
-        }
+            //注册一个接受string类型参数的消息，地址为Token_1
+            //接收位置、令牌token、方法委托
+            Messenger.Default.Register<string>(this, "Token_1", Show);
 
+        }
+         
+        void Show(string value)
+        {
+            MessageBox.Show(value);
+        }
     }
 }
