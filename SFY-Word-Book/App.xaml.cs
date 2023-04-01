@@ -10,8 +10,6 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using ModuleA;
-using ModuleB;
 
 namespace SFY_Word_Book
 {
@@ -39,11 +37,14 @@ namespace SFY_Word_Book
         //重写ConfigureModuleCatalog
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            //加入模块主类，记得在项目中添加项目引用，同时引用命名空间，
-            moduleCatalog.AddModule<ModuleAProfile>();
-            moduleCatalog.AddModule < ModuleBProfile>();
+        }
 
-            base.ConfigureModuleCatalog(moduleCatalog);
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            return new DirectoryModuleCatalog()
+            {
+                ModulePath = @".\Modules"
+            };
         }
     }
 }
