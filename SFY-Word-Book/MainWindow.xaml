@@ -11,14 +11,11 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <Button
-            x:Name="Button_1"
-            Width="100"
-            Height="40"
-            Click="Button_1_Click"
-            Content="执行动画" />
+        <TextBox
+            x:Name="Text_1"
+            FontSize="40"
+            Text="Hello! Prism!" />
     </Grid>
-
 
 </Window>
 
