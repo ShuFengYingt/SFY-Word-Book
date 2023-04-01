@@ -7,26 +7,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     Title="SFY-WORD-BOOK"
-    Width="400"
-    Height="400"
+    Width="800"
+    Height="450"
     mc:Ignorable="d">
     <Grid>
-        <Button
-            Width="60"
-            Height="30"
-            Command="{Binding ShowCommand}"
-            CommandParameter="{Binding ElementName=txtInput, Path=Text}"
-            Content="OK" />
         <StackPanel>
-            <TextBox
-                x:Name="txtInput"
-                Height="40"
-                Margin="10" />
-            <TextBox
-                x:Name="Title"
+
+            <Button
+                Margin="10"
+                Click="Button_Click"
+                Content="Update" />
+            <!--  静态资源引用无法更新  -->
+            <Button
                 Height="40"
                 Margin="10"
-                Text="{Binding Title}" />
+                BorderBrush="{StaticResource SolidColor}"
+                BorderThickness="5"
+                Content="Button_1" />
+            <!--  动态资源引用可以更新  -->
+            <Button
+                Height="40"
+                Margin="10"
+                BorderBrush="{DynamicResource SolidColor}"
+                BorderThickness="5"
+                Content="Button_2" />
         </StackPanel>
 
     </Grid>
