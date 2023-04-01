@@ -21,6 +21,7 @@ namespace SFY_Word_Book
         //1。引入prism，
         //2，于app。xaml中引入prism命名空间，删去StartUpUI（如果有）
         //3，将app。cs的基类改为PrismApplication
+        //4.重写方法
 
         protected override Window CreateShell()
         {
@@ -29,6 +30,11 @@ namespace SFY_Word_Book
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //注册导航
+            containerRegistry.RegisterForNavigation<ViewA>();
+            containerRegistry.RegisterForNavigation<ViewB>();
+            containerRegistry.RegisterForNavigation<ViewC>();
+
             
         }
 

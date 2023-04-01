@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using SFY_Word_Book.Views;
 using System;
 using System.Collections.Generic;
@@ -12,43 +13,27 @@ namespace SFY_Word_Book.ViewModels
 {
     public class MainViewModel : BindableBase
     {
+        private readonly IRegionManager regionManager;
+
         public DelegateCommand<string> OpenCommand { get;private set; }
-        public MainViewModel() 
+
+        //IRegionManager接口管理订阅区域，记得创建字段（实例化）
+        public MainViewModel(IRegionManager regionManager) 
         {
             OpenCommand = new DelegateCommand<string>(Open);
+            this.regionManager = regionManager;
         }
 
 
-        private object body;
-
-        public object Body
-        {
-            get { return body; }
-            set { body = value; RaisePropertyChanged(); }
-        }
-
+      
 
         private void Open(string obj)
         {
-            switch (obj)
-            {
-                case "ViewA":
-                    {
-                        Body = new ViewA();
-                        break;
-                    }
-                case "ViewB":
-                    {
-                        Body = new ViewB();
-                        break;
-                    }
-                case "ViewC":
-                    {
-                        Body = new ViewC();
-                        break;
-                    }
-                    
-            }
+            //首先通过IRegionManager接口获取到全局定义的“可用区域”
+            //而后往这个区域动态地设置内容
+            //设置内容的方式为通过依赖注入的形式
+            
+            regionManager.Regions["ContentRegion"].RequestNavigate(obj);
         }
     }
 }
