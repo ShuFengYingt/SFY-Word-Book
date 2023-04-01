@@ -1,6 +1,6 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,7 +13,7 @@ using System.Windows;
 namespace SFY_Word_Book
 {
 
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel:ObservableObject
     {
         public MainViewModel()
         {
@@ -29,7 +29,7 @@ namespace SFY_Word_Book
         { 
             get { return name; }
             set
-            { name = value; RaisePropertyChanged(); }
+            { name = value; OnPropertyChanged(); }
 
         }
 
@@ -38,7 +38,7 @@ namespace SFY_Word_Book
         public string Title
         {
             get { return title; }
-            set { title = value; RaisePropertyChanged(); }
+            set { title = value; OnPropertyChanged(); }
         }
 
 
@@ -49,7 +49,7 @@ namespace SFY_Word_Book
             Title = "this is title";
 
             //给Token_1的地址发送一个string类型的值content
-            Messenger.Default.Send(content, "Token_1");
+            WeakReferenceMessenger.Default.Send(content, "Token_1");
         }
 
 

@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,11 @@ namespace SFY_Word_Book
 
             //注册一个接受string类型参数的消息，地址为Token_1
             //接收位置、令牌token、方法委托
-            Messenger.Default.Register<string>(this, "Token_1", Show);
+            WeakReferenceMessenger.Default.Register<string,string>(this, "Token_1", (s,e)=>
+            {
+                MessageBox.Show(e);
+
+            });
 
         }
          
