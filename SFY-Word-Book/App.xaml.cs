@@ -1,5 +1,6 @@
 ﻿using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Modularity;
 using SFY_Word_Book;
 using SFY_Word_Book.Views;
 using System;
@@ -9,6 +10,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ModuleA;
+using ModuleB;
 
 namespace SFY_Word_Book
 {
@@ -30,14 +33,17 @@ namespace SFY_Word_Book
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //注册导航
-            containerRegistry.RegisterForNavigation<ViewA>();
-            containerRegistry.RegisterForNavigation<ViewB>();
-            containerRegistry.RegisterForNavigation<ViewC>();
-
             
         }
 
+        //重写ConfigureModuleCatalog
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            //加入模块主类，记得在项目中添加项目引用，同时引用命名空间，
+            moduleCatalog.AddModule<ModuleAProfile>();
+            moduleCatalog.AddModule < ModuleBProfile>();
 
+            base.ConfigureModuleCatalog(moduleCatalog);
+        }
     }
 }

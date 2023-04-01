@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SFY_Word_Book.Views
+namespace ModuleA.Views
 {
     /// <summary>
     /// ViewA.xaml 的交互逻辑

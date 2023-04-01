@@ -30,14 +30,10 @@
                 Command="{Binding OpenCommand}"
                 CommandParameter="ViewB"
                 Content="打开模块B" />
-            <Button
-                Margin="5"
-                Command="{Binding OpenCommand}"
-                CommandParameter="ViewC"
-                Content="打开模块C" />
+
 
         </StackPanel>
-        <!--  定义订阅区域为 ContentRegion  -->
+        <!--  定义订阅区域为 ContentRegion,前后端解耦合  -->
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" />
     </Grid>
 

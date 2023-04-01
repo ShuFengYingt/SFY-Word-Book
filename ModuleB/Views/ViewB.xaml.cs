@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SFY_Word_Book.Views
+namespace ModuleB.Views
 {
     /// <summary>
-    /// ViewC.xaml 的交互逻辑
+    /// ViewB.xaml 的交互逻辑
     /// </summary>
-    public partial class ViewC : UserControl
+    public partial class ViewB : UserControl
     {
-        public ViewC()
+        public ViewB()
         {
             InitializeComponent();
         }
