@@ -17,7 +17,6 @@ namespace ModuleB
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //通过容器注册导航页面
             containerRegistry.RegisterForNavigation<ViewB>();
         }
     }

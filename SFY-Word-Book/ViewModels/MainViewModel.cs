@@ -33,11 +33,7 @@ namespace SFY_Word_Book.ViewModels
             //而后往这个区域动态地设置内容
             //设置内容的方式为通过依赖注入的形式
             
-            //创建导航参数
-            NavigationParameters keys = new NavigationParameters();
-            keys.Add("Title", "Hello!");
-
-            regionManager.Regions["ContentRegion"].RequestNavigate(obj,keys);
+            regionManager.Regions["ContentRegion"].RequestNavigate(obj);
         }
     }
 }
