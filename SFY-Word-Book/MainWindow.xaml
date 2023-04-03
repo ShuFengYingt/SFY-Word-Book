@@ -4,16 +4,110 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SFY_Word_Book"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="720"
+    Background="{DynamicResource MaterialDesignPaper}"
+    Cursor=""
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ResizeMode="CanMinimize"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
-        <Button
-            Width="100"
-            Height="50"
-            Content="Hello, WPF!"
-            FontSize="12" />
-    </Grid>
+    <materialDesign:DialogHost
+        DialogTheme="Inherit"
+        Identifier="RootDialog"
+        SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="220" />
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <DockPanel>
+
+                <materialDesign:ColorZone
+                    x:Name="ColorZone"
+                    Padding="16"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    DockPanel.Dock="Top"
+                    Mode="PrimaryMid">
+                    <DockPanel LastChildFill="False">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Image
+                                Width="45"
+                                Height="45"
+                                Source="/Images/头像.jpeg">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        Center="22.5,22.5"
+                                        RadiusX="22.5"
+                                        RadiusY="22.5" />
+
+                                </Image.Clip>
+                            </Image>
+                            <Button
+                                x:Name="Button_WindowMin"
+                                Content="—"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                            <Button
+                                x:Name="Button_WindowMax"
+                                Content="☐"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                            <Button
+                                x:Name="Button_WindowClose"
+                                Content="✕"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton
+                                x:Name="MenuToggleButton"
+                                AutomationProperties.Name="HamburgerToggleButton"
+                                IsChecked="False"
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+
+                            <Button
+                                Margin="24,0,0,0"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                Command="{Binding MovePrevCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowLeft,
+                                                                  Size=24}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                ToolTip="Previous Item" />
+
+                            <Button
+                                Margin="16,0,0,0"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                Command="{Binding MoveNextCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowRight,
+                                                                  Size=24}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                ToolTip="Next Item" />
+
+                            <TextBlock
+                                Margin="16,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                AutomationProperties.Name="书封影的单词书"
+                                FontSize="22"
+                                Text="书封影的单词书" />
+
+                        </StackPanel>
+
+                    </DockPanel>
+                </materialDesign:ColorZone>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
 </Window>
