@@ -9,11 +9,60 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
-                    BaseTheme="Light"
+                    BaseTheme="Dark"
                     PrimaryColor="DeepPurple"
                     SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!--  目标类型为ListBoxItem  -->
+            <Style x:Key="MenuListBoxItem" TargetType="ListBoxItem">
+                <!--  行高距40  -->
+                <Setter Property="MinHeight" Value="40" />
+
+
+                <!--  设置模板  -->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <!--  模板类型为ListBoxItem  -->
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid>
+                                <!--  颜色条  -->
+                                <Border x:Name="colorBar" />
+                                <!--  选中后的背景,变淡  -->
+                                <Border x:Name="focusColor" />
+                                <!--  ListItem内图标文本等内容，绑定好水平垂直位置  -->
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+
+                            </Grid>
+
+                            <!--  选中ListItem的触发器  -->
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <!--  选中时，为其增加边框  -->
+                                    <Setter TargetName="colorBar" Property="BorderThickness" Value="4,0,0,0" />
+                                    <!--  颜色自适配Windows主题  -->
+                                    <Setter TargetName="colorBar" Property="BorderBrush" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <!--  点击选择后，保留对焦时的颜色效果  -->
+                                    <!--
+                                    <Setter TargetName="focusColor" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <Setter TargetName="focusColor" Property="Opacity" Value="0.3" />-->
+
+
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--  对焦时，增加颜色效果  -->
+                                    <Setter TargetName="focusColor" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <Setter TargetName="focusColor" Property="Opacity" Value="0.2" />
+
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
