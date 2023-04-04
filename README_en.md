@@ -1,5 +1,5 @@
 # *4.4Project Log*
-
+[Original Chinese log](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
 # **Implemented the following features:**
 
 1. Users can navigate to corresponding pages by selecting menu items in the left side menu bar.
