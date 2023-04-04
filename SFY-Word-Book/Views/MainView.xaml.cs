@@ -24,6 +24,7 @@ namespace SFY_Word_Book.Views
         public MainView(IRegionManager regionManager)
         {
             InitializeComponent();
+            //基础窗口交互
             Button_WindowMin.Click += (s, e) =>
             {
                 WindowState = WindowState.Minimized;
@@ -67,11 +68,11 @@ namespace SFY_Word_Book.Views
             //设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager);
 
-        }
-
-
-        void MenuToggleButton_Checked(RoutedEventHandler routedEventHandler)
-        {
+            //左侧菜单栏选中页面后，收回菜单栏
+            MenuBar.SelectionChanged += (s, e) =>
+            {
+                drawerHost.IsLeftDrawerOpen = false;
+            };
 
         }
 

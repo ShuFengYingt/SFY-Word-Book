@@ -1,5 +1,6 @@
 ﻿using Prism.DryIoc;
 using Prism.Ioc;
+using SFY_Word_Book.ViewModels;
 using SFY_Word_Book.Views;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ namespace SFY_Word_Book
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //注册子页面导航,基于PrismApplication，containerRegistry.RegisterForNavigation<View, ViewModel>();
+            containerRegistry.RegisterForNavigation<HomeView,HomeViewModel> ();
+            containerRegistry.RegisterForNavigation<NewWordBookView, NewWordBookViewModel>();
+            containerRegistry.RegisterForNavigation<LearningHistoryView, LearningHistoryViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
         }
     }
 }

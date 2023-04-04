@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFY-Word-Book", "SFY-Word-Book\SFY-Word-Book.csproj", "{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book", "SFY-Word-Book\SFY-Word-Book.csproj", "{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFY-Word-Book.API", "SFY-Word-Book.API\SFY-Word-Book.API.csproj", "{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book.API", "SFY-Word-Book.API\SFY-Word-Book.API.csproj", "{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

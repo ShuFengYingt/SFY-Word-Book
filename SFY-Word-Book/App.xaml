@@ -16,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--  目标类型为ListBoxItem  -->
-            <Style x:Key="MenuListBoxItem" TargetType="ListBoxItem">
+            <Style x:Key="MenuListBoxItemStyle" TargetType="ListBoxItem">
                 <!--  行高距40  -->
                 <Setter Property="MinHeight" Value="40" />
 
