@@ -11,11 +11,12 @@
     xmlns:prism="http://prismlibrary.com/"
     Title="MainView"
     Width="1280"
-    Height="720"
+    Height="768"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    AllowsTransparency="True"
     Background="{DynamicResource MaterialDesignPaper}"
     Cursor=""
-    FontFamily="{DynamicResource MaterialDesignFont}"
+    FontFamily="微软雅黑"
     ResizeMode="CanMinimize"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -25,6 +26,24 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    <!--  圆角窗口  -->
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border
+                            Background="#303030"
+                            CornerRadius="15"
+                            Opacity="1">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
     <materialDesign:DialogHost
         DialogTheme="Inherit"
         Identifier="RootDialog"
@@ -96,6 +115,7 @@
                     x:Name="ColorZone"
                     Padding="16"
                     materialDesign:ElevationAssist.Elevation="Dp4"
+                    CornerRadius="10,10,0,0"
                     DockPanel.Dock="Top"
                     Mode="PrimaryMid">
                     <DockPanel LastChildFill="False">

@@ -4,11 +4,165 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SFY_Word_Book.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
     <Grid>
-        <TextBlock FontSize="80" Text="HomeView" />
+        <Grid.RowDefinitions>
+            <!--  创建三行Gid  -->
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+
+        <!--  欢迎文本  -->
+        <TextBox
+            Margin="15"
+            FontSize="30"
+            Text="欢迎回来，书封影！" />
+
+        <!--  任务栏,绑定TaskBars  -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <!--  数据模板，图标+文本+数据信息+背景特效  -->
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--  边界，可以用来设置成圆角  -->
+                    <Border
+                        Margin="10"
+                        Background="{Binding Color}"
+                        CornerRadius="5">
+                        <!--  边界内放个窗格  -->
+                        <Grid>
+                            <!--  窗格内的元素用栈容器  -->
+                            <StackPanel Margin="20,10">
+
+                                <!--  图标  -->
+                                <materialDesign:PackIcon
+                                    Width="35"
+                                    Height="35"
+                                    Margin="1,0"
+                                    Kind="{Binding Icon}" />
+
+                                <!--  标题  -->
+                                <TextBlock
+                                    Margin="0,15"
+                                    FontSize="15 "
+                                    FontWeight="Bold"
+                                    Text="{Binding Title}" />
+
+                                <!--  数据信息  -->
+                                <TextBlock
+                                    FontSize="30"
+                                    FontWeight="Bold"
+                                    Text="{Binding Content}" />
+                            </StackPanel>
+
+                            <!--  背景特效  -->
+                            <Canvas ClipToBounds="True">
+                                <Border
+                                    Canvas.Top="9"
+                                    Canvas.Right="-50"
+                                    Width="120"
+                                    Height="130"
+                                    Background="#FFFFFF"
+                                    CornerRadius="100"
+                                    Opacity="0.15" />
+                                <Border
+                                    Canvas.Top="80"
+                                    Canvas.Right="-30"
+                                    Width="200"
+                                    Height="150"
+                                    Background="#FFFFFF"
+                                    CornerRadius="100"
+                                    Opacity="0.15" />
+                            </Canvas>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--  下方栏，一个放每日文章，一个放查词  -->
+        <Grid Grid.Row="2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+
+            </Grid.ColumnDefinitions>
+
+
+            <Border
+                Grid.Column="1"
+                Margin="10,0"
+                Background="#757575"
+                CornerRadius="5"
+                Opacity="0.1" />
+            <Border
+                Grid.Column="0"
+                Margin="10,0"
+                Background="#757575"
+                CornerRadius="5"
+                Opacity="0.1" />
+
+
+            <!--  单词查找板块  -->
+            <DockPanel Grid.Column="1" Margin="10,0">
+                <DockPanel
+                    Margin="10,0"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        Margin="10,10"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="单词查找" />
+                    <Button
+                        Width="40"
+                        Height="40"
+                        Margin="10,10"
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="Magnify" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+            <!--  每日文章  -->
+            <DockPanel Grid.Column="0" Margin="10,0">
+                <DockPanel
+                    Margin="10,0"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        Margin="10,10"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="单词查找" />
+                    <Button
+                        Width="40"
+                        Height="40"
+                        Margin="10,10"
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="DotsVertical" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+
+
+
+        </Grid>
     </Grid>
 </UserControl>
