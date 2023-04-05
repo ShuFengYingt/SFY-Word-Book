@@ -1,5 +1,9 @@
-# *4.4Project Log*
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+# *4.5 Project Log*
+1. Finished the UI of the homepage.
+2. Replaced the window with rounded corners.
+3. Encountered a bunch of issues related to the MetarialDesign style. Damn it!
+# *4.4Project Log*
 # **Implemented the following features:**
 
 1. Users can navigate to corresponding pages by selecting menu items in the left side menu bar.

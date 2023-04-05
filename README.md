@@ -1,5 +1,14 @@
-# 4.4 项目日志
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
+
+# 4.5 项目日志
+1. 完成了首页的UI
+2. 将窗口替换为圆角
+3. 遇到了有关MetarialDesign的Style的一大堆坑，艹！！！！
+
+
+
+
+# 4.4 项目日志
 # 实现了以下功能：
 
 1. 用户在左侧菜单栏选中菜单的元素后导航至对应页面。
