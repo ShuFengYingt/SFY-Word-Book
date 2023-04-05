@@ -115,6 +115,28 @@
                 CornerRadius="5"
                 Opacity="0.1" />
 
+            <!--  每日文章  -->
+            <DockPanel Grid.Column="0" Margin="10,0">
+                <DockPanel
+                    Margin="10,0"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        Margin="10,10"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="每日文章" />
+                    <Button
+                        Width="40"
+                        Height="40"
+                        Margin="10,10"
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="DotsVertical" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
 
             <!--  单词查找板块  -->
             <DockPanel Grid.Column="1" Margin="10,0">
@@ -135,28 +157,6 @@
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                         <materialDesign:PackIcon Kind="Magnify" />
-                    </Button>
-                </DockPanel>
-            </DockPanel>
-            <!--  每日文章  -->
-            <DockPanel Grid.Column="0" Margin="10,0">
-                <DockPanel
-                    Margin="10,0"
-                    DockPanel.Dock="Top"
-                    LastChildFill="False">
-                    <TextBlock
-                        Margin="10,10"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        Text="单词查找" />
-                    <Button
-                        Width="40"
-                        Height="40"
-                        Margin="10,10"
-                        VerticalAlignment="Top"
-                        DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-                        <materialDesign:PackIcon Kind="DotsVertical" />
                     </Button>
                 </DockPanel>
             </DockPanel>
