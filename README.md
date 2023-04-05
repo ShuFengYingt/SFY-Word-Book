@@ -1,5 +1,5 @@
 # 4.4 项目日志
-[ChatGPT翻译的英文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
+[English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 # 实现了以下功能：
 
 1. 用户在左侧菜单栏选中菜单的元素后导航至对应页面。
