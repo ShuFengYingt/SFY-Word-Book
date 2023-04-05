@@ -123,6 +123,7 @@
                     LastChildFill="False">
                     <TextBlock
                         Margin="10,10"
+                        VerticalAlignment="Top"
                         FontSize="20"
                         FontWeight="Bold"
                         Text="每日文章" />
@@ -146,6 +147,7 @@
                     LastChildFill="False">
                     <TextBlock
                         Margin="10,10"
+                        VerticalAlignment="Top"
                         FontSize="20"
                         FontWeight="Bold"
                         Text="单词查找" />
