@@ -81,6 +81,10 @@ namespace SFY_Word_Book.ViewModels
                             {
                                 continue;
                             }
+                            if (content.Length < 50)
+                            {
+                                continue;
+                            }
 
                             DailyPages.Add(new DailyPage
                             {

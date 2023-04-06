@@ -11,7 +11,9 @@ namespace SFY_Word_Book.Common.Models
 {
     public class DailyPage:BindableBase
     {
-        //文章封面
+        /// <summary>
+        /// 文章封面
+        /// </summary>
         private string image;
         public string Image
         { 
@@ -19,7 +21,9 @@ namespace SFY_Word_Book.Common.Models
             set { image = value; RaisePropertyChanged(); }
         }
 
-        //文章标题
+        /// <summary>
+        /// 文章标题
+        /// </summary>
         private string title;
         public string Title
         {
@@ -27,7 +31,9 @@ namespace SFY_Word_Book.Common.Models
             set { title = value; RaisePropertyChanged();}
         }
 
-        //文章内容
+        /// <summary>
+        /// 文章内容
+        /// </summary>
         private string content;
         public string Content
         {
@@ -35,7 +41,9 @@ namespace SFY_Word_Book.Common.Models
             set { content = value; RaisePropertyChanged();}
         }
 
-        //文章源
+        /// <summary>
+        /// 文章源
+        /// </summary>
         private string flow;
         public string Flow
         {

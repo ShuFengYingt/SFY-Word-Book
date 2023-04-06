@@ -1,5 +1,118 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 4.6项目日志
+1. 大部分实现了每日文章的功能，调用的是API，显示图片，标题，内容信息（还有很多bug等待明天和后天去修复）
+
+等待修复的内容：
+1. 圆角图片的实现
+2. 文本长度的控制
+3. 三大键位置
+
+## 坑点
+1. ItemTmplate造成的填充不满问题（原因未知，还要学）
+2. API调用
+
+## API调用心得
+为了实现自动从网上获取每日资讯，我找到了一个API（只有500次token）。
+我定义了一个DailyPage类在Model中（实际上叫DailyArticle更合适），包括以下几个属性（Property）
+1. Image 图片
+2. Title 标题
+3. Content 内容
+4. Flow 源地址（应该叫url更合适）
+
+而后在HomeView当中，进行通知更新声明
+```csharp
+        //每日文章通知更新
+        private ObservableCollection<DailyPage> dailyPages;
+        public ObservableCollection<DailyPage> DailyPages
+        {
+            get { return dailyPages; }
+            set { dailyPages = value; RaisePropertyChanged(); }
+        }
+```
+为了调用API，建立了异步方法：
+```csharp
+        async void CreateDailyPage(){}
+
+```
+在其中，用如下代码体获取API-JSON信息
+```csharp
+ using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage responseMessage = await client.GetAsync(apiUrlString);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string responseContent = await responseMessage.Content.ReadAsStringAsync();
+                    //解析Json
+                    JObject jsonResponse = JObject.Parse(responseContent);
+                    JArray articles = (JArray)jsonResponse["data"];
+                }
+            }
+```
+解析Json的类库CSharp并不自备，需要用Nuget引入，名为NewtonSoft.Json。这样就能用上面的方法体了。
+
+由于我的Json是个数据集合，所以需要
+```csharp
+JArray articles = (JArray)jsonResponse["data"];
+```
+对data进行拆分。而后我写下了以下方法体
+```csharp
+  foreach (JToken article in articles)
+                    {
+                        if (articles.Count > 0)
+                        {
+                            string content = (string)article["description"];
+                            if (content.Length > 500)
+                            {
+                                content = content.Substring(0, 500) + "...";
+                            }
+                            string image = (string)article["image"];
+                            if (image == null || image.Contains('%') || image.Contains('&') || image.Contains('$'))
+                            {
+                                continue;
+                            }
+                            if (content.Length < 50)
+                            {
+                                continue;
+                            }
+
+                            DailyPages.Add(new DailyPage
+                            {
+                                Image = (string)article["image"],
+                                Title = (string)article["title"],
+                                Content = content,
+                                Flow = (string)article["url"]
+                                
+                            });
+                            break;
+                        }
+                    }
+```
+之所以要用到一个循环，是为了避免出现以下情况：
+1. 图片乱码无法加载
+2. 图片被加密过
+3. 文字太多
+4. 文字太少
+
+这里面添加了实例化方法，即如下所示：
+```csharp
+DailyPages.Add(new DailyPage
+                            {
+                                Image = (string)article["image"],
+                                Title = (string)article["title"],
+                                Content = content,
+                                Flow = (string)article["url"]
+                                
+                            });     
+```
+请注意这个语法
+```csharp
+Image = (string)article["image"]
+```
+这是很重要的Json解析语法，即将Json中的"image"标注数据专化为字符串赋值给属性当中。
+
+
+
 # 4.5 项目日志
 1. 完成了首页的UI
 2. 将窗口替换为圆角

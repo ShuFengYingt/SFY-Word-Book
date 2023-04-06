@@ -1,4 +1,113 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+
+# 4.6 Project Log
+1. Most of the daily article functionality has been implemented, which calls an API to display image, title, and content information (there are still many bugs waiting to be fixed tomorrow and the day after tomorrow).
+
+## Contents waiting to be fixed:
+
+1. Implementation of rounded corner images
+2. Control of text length
+3. Positioning of the three keys
+## Pitfalls
+1. The problem of incomplete filling caused by ItemTemplate (reason unknown, still needs to be learned)
+2. API calls
+
+## Experience with API Calls
+In order to automatically obtain daily news from the internet, I found an API (with only 500 token calls available).
+I defined a DailyPage class in the Model (actually DailyArticle is more appropriate), which includes the following properties:
+
+1. Image
+2. Title
+3. Content
+4. Flow (should be called url instead)
+5. Then, in the HomeView, a notification update is declared.
+
+After that, a notification update is declared in the HomeView:
+```csharp
+        // Daily article notification update
+        private ObservableCollection<DailyPage> dailyPages;
+        public ObservableCollection<DailyPage> DailyPages
+        {
+            get { return dailyPages; }
+            set { dailyPages = value; RaisePropertyChanged(); }
+        }
+
+```
+To call the API, an asynchronous method is created:
+```csharp
+        async void CreateDailyPage(){}
+```
+In it, the following code is used to obtain API-JSON information:
+```csharp
+ using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage responseMessage = await client.GetAsync(apiUrlString);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string responseContent = await responseMessage.Content.ReadAsStringAsync();
+                    //Parse JSON
+                    JObject jsonResponse = JObject.Parse(responseContent);
+                    JArray articles = (JArray)jsonResponse["data"];
+                }
+            }
+
+```
+The CSharp library for parsing JSON is not included by default, so it needs to be imported through NuGet, named NewtonSoft.Json. This way, the above method body can be used.
+
+Since my JSON is a collection of data, I need to split it with the following code:
+```csharp
+JArray articles = (JArray)jsonResponse["data"];
+```
+Then, I wrote the following method body:
+```csharp
+foreach (JToken article in articles)
+{
+    if (articles.Count > 0)
+    {
+        string content = (string)article["description"];
+        if (content.Length > 500)
+        {
+            content = content.Substring(0, 500) + "...";
+        }
+        string image = (string)article["image"];
+        if (image == null || image.Contains('%') || image.Contains('&') || image.Contains('$'))
+        {
+            continue;
+        }
+        if (content.Length < 50)
+        {
+            continue;
+        }
+
+        DailyPages.Add(new DailyPage
+        {
+            Image = (string)article["image"],
+            Title = (string)article["title"],
+            Content = content,
+            Flow = (string)article["url"]
+        });
+        break;
+    }
+}
+
+```
+The reason for using a loop is to avoid the following situations:
+
+1. Garbled images cannot be loaded
+2. Images are encrypted
+3. Text is too long
+4. Text is too short
+5. An instantiation method is added here, as shown below:
+
+
+Please note this syntax:
+```csharp
+Image = (string)article["image"]
+```
+This is an important syntax for parsing JSON, which specializes the data labeled as "image" in JSON as a string and assigns it to the corresponding property.
+
+
+
 # *4.5 Project Log*
 1. Finished the UI of the homepage.
 2. Replaced the window with rounded corners.
