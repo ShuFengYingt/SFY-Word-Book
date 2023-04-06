@@ -29,8 +29,7 @@
             Margin="15"
             FontSize="30"
             Text="欢迎回来，书封影！" />
-        <!--#region 任务栏-->
-        <!--  任务栏,绑定TaskBars  -->
+        <!--#region 任务栏,绑定TaskBars-->
         <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -46,6 +45,23 @@
                         Margin="10"
                         Background="{Binding Color}"
                         CornerRadius="5">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <!--  鼠标悬浮效果  -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect
+                                                    BlurRadius="10"
+                                                    ShadowDepth="1"
+                                                    Color="#DDDDDD" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <!--  边界内放个窗格  -->
                         <Grid>
                             <!--  窗格内的元素用栈容器  -->

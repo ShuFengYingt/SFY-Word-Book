@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace SFY_Word_Book.Views
 {
@@ -24,5 +25,11 @@ namespace SFY_Word_Book.Views
         {
             InitializeComponent();
         }
+
+        private void ReadMoreButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
