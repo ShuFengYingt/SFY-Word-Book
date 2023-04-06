@@ -26,6 +26,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    <!--#region 圆角窗口-->
     <!--  圆角窗口  -->
     <Window.Style>
         <Style TargetType="Window">
@@ -43,14 +44,16 @@
             </Setter>
         </Style>
     </Window.Style>
-
+    <!--#endregion-->
+    
     <materialDesign:DialogHost
         DialogTheme="Inherit"
         Identifier="RootDialog"
         SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-
-        <!--  左侧菜单栏  -->
+        <!--  菜单栏  -->
         <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <!--#region 左侧菜单栏-->
+
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="220">
                     <!--  头像  -->
@@ -108,7 +111,9 @@
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
+            <!--#endregion-->
 
+            <!--#region 顶部导航条-->
             <DockPanel>
 
                 <materialDesign:ColorZone
@@ -192,7 +197,7 @@
                 <!--  而后在MainView.xaml中，用ContentControl特性， 使用prism命名空间，调用RegionManager类下的RegionName属性，绑定PrismManager类下的静态变量MainViewRegionName  -->
                 <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
             </DockPanel>
-
+            <!--#endregion-->
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
 </Window>

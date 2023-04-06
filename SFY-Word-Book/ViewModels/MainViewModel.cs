@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SFY_Word_Book.Extensions;
 using System.Diagnostics;
+using Newtonsoft.Json;
+
 
 namespace SFY_Word_Book.ViewModles
 {
@@ -116,6 +118,8 @@ namespace SFY_Word_Book.ViewModles
                     journal.GoBack();
                 }
             });
+
+            
 
             //实现下一步功能
             GoForwardCommand = new DelegateCommand(() =>

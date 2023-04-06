@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Images\头像.jpeg" />
+    <None Remove="Images\清明杭州.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,11 +19,13 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\头像.jpeg" />
+    <Resource Include="Images\清明杭州.jpg" />
   </ItemGroup>
 
 </Project>
