@@ -10,12 +10,12 @@ namespace SFY_Word_Book.Common.Models
     /// <summary>
     /// 任务栏
     /// </summary>
-    public class TaskBars:BindableBase
+    public class TaskBar:BindableBase
     {
         /// <summary>
         /// 任务栏构造函数
         /// </summary>
-        public TaskBars()
+        public TaskBar()
         {
         
         }

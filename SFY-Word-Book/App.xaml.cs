@@ -29,6 +29,7 @@ namespace SFY_Word_Book
             containerRegistry.RegisterForNavigation<NewWordBookView, NewWordBookViewModel>();
             containerRegistry.RegisterForNavigation<LearningHistoryView, LearningHistoryViewModel>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
+            containerRegistry.RegisterForNavigation<LearningView,LearningViewModel>();
         }
     }
 }
