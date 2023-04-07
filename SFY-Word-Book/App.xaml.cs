@@ -30,6 +30,7 @@ namespace SFY_Word_Book
             containerRegistry.RegisterForNavigation<LearningHistoryView, LearningHistoryViewModel>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
             containerRegistry.RegisterForNavigation<LearningView,LearningViewModel>();
+            containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
         }
     }
 }

@@ -55,111 +55,113 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!--  边界，可以用来设置成圆角  -->
-                    <Border
-                        Margin="10"
-                        Background="{Binding Color}"
-                        CornerRadius="5">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Style.Triggers>
-                                    <!--  鼠标悬浮效果  -->
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect
-                                                    BlurRadius="10"
-                                                    ShadowDepth="1"
-                                                    Color="#DDDDDD" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <!--  边界内放个窗格  -->
-                        <Grid>
-                            <!--  窗格内的元素用栈容器  -->
-                            <StackPanel Margin="20,10">
+                    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn}">
+                        <Border
+                            Margin="10"
+                            Background="{Binding Color}"
+                            CornerRadius="5">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <!--  鼠标悬浮效果  -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect
+                                                        BlurRadius="10"
+                                                        ShadowDepth="1"
+                                                        Color="#DDDDDD" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <!--  边界内放个窗格  -->
+                            <Grid>
 
-                                <!--  图标  -->
-                                <materialDesign:PackIcon
-                                    Width="35"
-                                    Height="35"
-                                    Margin="1,0"
-                                    Kind="{Binding Icon}" />
+                                <!--  窗格内的元素用栈容器  -->
+                                <StackPanel Margin="20,10">
 
-                                <!--  标题  -->
-                                <TextBlock
-                                    Margin="0,15"
-                                    FontSize="15 "
-                                    FontWeight="Bold"
-                                    Text="{Binding Title}" />
+                                    <!--  图标  -->
+                                    <materialDesign:PackIcon
+                                        Width="35"
+                                        Height="35"
+                                        Margin="1,0"
+                                        Kind="{Binding Icon}" />
 
-                                <!--  数据信息  -->
-                                <TextBlock
-                                    FontSize="30"
-                                    FontWeight="Bold"
-                                    Text="{Binding Content}" />
-                            </StackPanel>
+                                    <!--  标题  -->
+                                    <TextBlock
+                                        Margin="0,15"
+                                        FontSize="15 "
+                                        FontWeight="Bold"
+                                        Text="{Binding Title}" />
 
-                            <!--  背景特效  -->
-                            <Canvas ClipToBounds="True">
-                                <Border
-                                    Canvas.Top="9"
-                                    Canvas.Right="-50"
-                                    Width="120"
-                                    Height="130"
-                                    Background="#FFFFFF"
-                                    CornerRadius="100"
-                                    Opacity="0.15" />
-                                <Border
-                                    Canvas.Top="80"
-                                    Canvas.Right="-30"
-                                    Width="200"
-                                    Height="150"
-                                    Background="#FFFFFF"
-                                    CornerRadius="100"
-                                    Opacity="0.15" />
-                            </Canvas>
-                        </Grid>
-                    </Border>
+                                    <!--  数据信息  -->
+                                    <TextBlock
+                                        FontSize="30"
+                                        FontWeight="Bold"
+                                        Text="{Binding Content}" />
+                                </StackPanel>
+
+                                <!--  背景特效  -->
+                                <Canvas ClipToBounds="True">
+                                    <Border
+                                        Canvas.Top="9"
+                                        Canvas.Right="-50"
+                                        Width="120"
+                                        Height="130"
+                                        Background="#FFFFFF"
+                                        CornerRadius="100"
+                                        Opacity="0.15" />
+                                    <Border
+                                        Canvas.Top="80"
+                                        Canvas.Right="-30"
+                                        Width="200"
+                                        Height="150"
+                                        Background="#FFFFFF"
+                                        CornerRadius="100"
+                                        Opacity="0.15" />
+                                </Canvas>
+                            </Grid>
+                        </Border>
+
+                    </materialDesign:TransitioningContent>
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <!--#endregion-->
-
-        <!--  下方栏，一个放每日文章，一个放查词  -->
-        <Grid Grid.Row="2" Margin="0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <!--#region 每日英文板块-->
-
-            <!--#region大底框-->
-            <Border
-                Grid.Column="0"
-                Margin="10,0"
-                Background="#757575"
-                CornerRadius="5"
-                Opacity="0.1" />
-            <!--#endregion-->
-
-            <Grid
-                x:Name="ButtomPanel"
-                Margin="10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+        <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+            <!--  下方栏，一个放每日文章，一个放查词  -->
+            <Grid Grid.Row="2" Margin="0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <!--#region 每日英文板块-->
 
+                <!--#region大底框-->
+                <Border
+                    Grid.Column="0"
+                    Margin="10,0"
+                    Background="#757575"
+                    CornerRadius="5"
+                    Opacity="0.1" />
+                <!--#endregion-->
 
-                <ItemsControl Grid.Column="0" ItemsSource="{Binding DailyPages}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Viewbox>
+                <Grid
+                    x:Name="ButtomPanel"
+                    Margin="10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ItemsControl ItemsSource="{Binding DailyPages}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
                                 <Border
                                     x:Name="cardBorder"
                                     Grid.Row="0"
@@ -170,148 +172,156 @@
                                     Background="{Binding Image, IsAsync=True, Converter={StaticResource ImageBrushConverter}}"
                                     CornerRadius="5,0,0,5"
                                     Opacity="0.7" />
+                            </DataTemplate>
 
-                            </Viewbox>
-
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
 
 
 
 
-                <ItemsControl Grid.Column="1" ItemsSource="{Binding DailyPages}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel LastChildFill="False">
-                                <!--  文章标题  -->
-                                <TextBlock
-                                    Margin="20,20,0,10"
-                                    DockPanel.Dock="Top"
-                                    FontFamily="Arial"
-                                    FontSize="24"
-                                    FontWeight="Bold"
-                                    LineHeight="30"
-                                    Text="{Binding Title}"
-                                    TextWrapping="Wrap" />
-                                <!--  内容  -->
-                                <TextBlock
-                                    Margin="20,10,10,10"
-                                    DockPanel.Dock="Top"
-                                    LineHeight="22"
-                                    Text="{Binding Content}"
-                                    TextWrapping="Wrap" />
-
-                                <!--  底部菜单  -->
-                                <StackPanel
-                                    Margin="15,0,15,15"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
-                                    DockPanel.Dock="Bottom"
-                                    Orientation="Horizontal">
-                                    <!--  分享  -->
-                                    <Button
-                                        Width="30"
-                                        Padding="2,0,2,0"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Style="{StaticResource MaterialDesignToolButton}">
-                                        <materialDesign:PackIcon Kind="ShareVariant" />
-                                    </Button>
-                                    <!--  喜欢  -->
-                                    <Button
-                                        Width="30"
-                                        Padding="2,0,2,0"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Style="{StaticResource MaterialDesignToolButton}">
-                                        <materialDesign:PackIcon Kind="Heart" />
-                                    </Button>
-                                    <!--  更多  -->
-                                    <materialDesign:PopupBox Padding="2,0,2,0" Style="{StaticResource MaterialDesignToolPopupBox}">
-                                        <StackPanel>
-                                            <Button Command="{Binding ShowPageFlowCommand}" Content="Read More" />
-                                        </StackPanel>
-                                    </materialDesign:PopupBox>
-
-                                </StackPanel>
 
 
-                            </DockPanel>
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding DailyPages}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel LastChildFill="False">
+                                    <!--  文章标题  -->
+                                    <TextBlock
+                                        Margin="20,20,0,10"
+                                        DockPanel.Dock="Top"
+                                        FontFamily="Arial"
+                                        FontSize="24"
+                                        FontWeight="Bold"
+                                        LineHeight="30"
+                                        Text="{Binding Title}"
+                                        TextWrapping="Wrap" />
+                                    <!--  内容  -->
+                                    <TextBlock
+                                        Margin="20,10,10,10"
+                                        DockPanel.Dock="Top"
+                                        LineHeight="22"
+                                        Text="{Binding Content}"
+                                        TextWrapping="Wrap" />
 
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                    <!--  底部菜单  -->
+                                    <StackPanel
+                                        Margin="15,0,15,15"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        DockPanel.Dock="Bottom"
+                                        Orientation="Horizontal">
+                                        <!--  分享  -->
+                                        <Button
+                                            Width="30"
+                                            Padding="2,0,2,0"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            Style="{StaticResource MaterialDesignToolButton}">
+                                            <materialDesign:PackIcon Kind="ShareVariant" />
+                                        </Button>
+                                        <!--  喜欢  -->
+                                        <Button
+                                            Width="30"
+                                            Padding="2,0,2,0"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            Style="{StaticResource MaterialDesignToolButton}">
+                                            <materialDesign:PackIcon Kind="Heart" />
 
-                <!--  文章内容  -->
+                                        </Button>
+                                        <!--  更多  -->
+                                        <materialDesign:PopupBox Padding="2,0,2,0" Style="{StaticResource MaterialDesignToolPopupBox}">
+                                            <StackPanel>
+                                                <Button Command="{Binding ShowPageFlowCommand}" Content="Read More" />
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+
+                                    </StackPanel>
 
 
-            </Grid>
-
-            <!--  标题+按钮  -->
-            <DockPanel Grid.Column="0" Margin="10,0">
-                <DockPanel
-                    Margin="10,0"
-                    DockPanel.Dock="Top"
-                    LastChildFill="False">
-
-                    <StackPanel />
-                    <TextBlock
-                        Margin="10,10"
-                        VerticalAlignment="Top"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        Text="每日英文" />
+                                </DockPanel>
 
 
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!--  文章内容  -->
+
+
+                </Grid>
+
+                <!--  标题+按钮  -->
+                <DockPanel Grid.Column="0" Margin="10,0">
+                    <DockPanel
+                        Margin="10,0"
+                        DockPanel.Dock="Top"
+                        LastChildFill="False">
+
+                        <StackPanel />
+                        <TextBlock
+                            Margin="10,10"
+                            VerticalAlignment="Top"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Text="每日英文" />
+
+
+                    </DockPanel>
                 </DockPanel>
-            </DockPanel>
 
-            <!--#endregion-->
-
+                <!--#endregion-->
 
 
-            <!--  单词查找板块  -->
-            <Border
-                Grid.Column="1"
-                Margin="10,0"
-                Background="#757575"
-                CornerRadius="5"
-                Opacity="0.1" />
 
-            <DockPanel
-                Grid.Column="1"
-                Margin="10,0"
-                LastChildFill="False">
-                <DockPanel
+                <!--  单词查找板块  -->
+                <Border
+                    Grid.Column="1"
                     Margin="10,0"
-                    DockPanel.Dock="Top"
-                    LastChildFill="False">
-                    <TextBlock
-                        Margin="10,10,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        Text="单词查找" />
-                    <ComboBox
-                        Width="256"
-                        Margin="0,15,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        materialDesign:HintAssist.Hint="Search for unknown word"
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        DockPanel.Dock="Right"
-                        IsEditable="True"
-                        Style="{StaticResource MaterialDesignComboBox}">
-                        <ComboBox.SelectedItem>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="SelectedValidationFilled"
-                                UpdateSourceTrigger="PropertyChanged" />
+                    Background="#757575"
+                    CornerRadius="5"
+                    Opacity="0.1" />
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <DockPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="12,0"
+                        LastChildFill="False">
+                        <DockPanel
+                            Margin="10,0"
+                            DockPanel.Dock="Top"
+                            LastChildFill="False">
+                            <TextBlock
+                                Margin="10,10,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Text="单词查找" />
+                            <ComboBox
+                                Width="499"
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="Search for unknown word"
+                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                DockPanel.Dock="Right"
+                                IsEditable="True"
+                                Style="{StaticResource MaterialDesignComboBox}">
+                                <ComboBox.SelectedItem>
+                                    <Binding
+                                        Mode="TwoWay"
+                                        Path="SelectedValidationFilled"
+                                        UpdateSourceTrigger="PropertyChanged" />
 
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                    <!--<Button
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                            <!--<Button
                             HorizontalAlignment="Right"
                             Width="40"
                             Height="40"
@@ -322,13 +332,39 @@
                             <materialDesign:PackIcon Kind="Magnify" />
                         </Button>-->
 
-                    <DockPanel VerticalAlignment="Top" />
-                </DockPanel>
-            </DockPanel>
+                        </DockPanel>
+                    </DockPanel>
+                    <!--  中间显示单词  -->
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,-50,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <TextBlock
+                            FontFamily="centaur"
+                            FontSize="110"
+                            FontWeight="DemiBold"
+                            Text="fantasy" />
+                    </StackPanel>
+
+                    <!--  下方显示意思  -->
+                    <StackPanel
+                        Grid.Row="2"
+                        Margin="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="0,1,10,0" Kind="AlphaVBoxOutline" />
+                        <TextBlock Text="幻想；梦想；想像；对…进行幻想" />
+                    </StackPanel>
+                </Grid>
 
 
 
-        </Grid>
+
+            </Grid>
+
+        </materialDesign:TransitioningContent>
         <!--  注册区域  -->
         <!--
         <ContentControl prism:RegionManager.RegionName="{x:Static extension:PrismManager.HomeViewRegionName}" />-->

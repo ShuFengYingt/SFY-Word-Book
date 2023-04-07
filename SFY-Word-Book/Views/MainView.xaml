@@ -13,7 +13,6 @@
     Width="1280"
     Height="768"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    AllowsTransparency="True"
     Background="{DynamicResource MaterialDesignPaper}"
     Cursor=""
     FontFamily="微软雅黑"
@@ -24,28 +23,15 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
     mc:Ignorable="d">
     <!--#region 圆角窗口-->
-    <!--  圆角窗口  -->
-    <Window.Style>
-        <Style TargetType="Window">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Window">
-                        <Border
-                            Background="#303030"
-                            CornerRadius="15"
-                            Opacity="1">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Style>
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CornerRadius="20" GlassFrameThickness="10" />
+    </WindowChrome.WindowChrome>
     <!--#endregion-->
-    
+
     <materialDesign:DialogHost
         DialogTheme="Inherit"
         Identifier="RootDialog"
