@@ -176,7 +176,7 @@ This is an important syntax for parsing JSON, which specializes the data labeled
 1. Users can navigate to corresponding pages by selecting menu items in the left side menu bar.
 2. The left side menu bar is collapsed after navigation.
 3. Users can use the "→" and "←" keys on the navigation bar to navigate forward and backward (implemented using navigation log).
-![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGNSL473Z5ROB35VOWZBRD2SA)
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGUVQKBOHOBWLU263EZBRD73A)
 # **Pitfalls:**
 
 1. Use "UserControl" to create child pages, instead of using "Window".
