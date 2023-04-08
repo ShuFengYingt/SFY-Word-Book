@@ -34,14 +34,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel Margin="0,30" Orientation="Horizontal">
+                <StackPanel Margin="0,30,0,3" Orientation="Horizontal">
                     <TextBlock Text="白昼" />
                     <ToggleButton Margin="8,0,16,0" IsChecked="{Binding IsDarkTheme}" />
                     <TextBlock Text="黑夜" />
                 </StackPanel>
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Swatches}">
+                <ItemsControl Grid.Row="2" ItemsSource="{Binding Swatches}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type materialDesignColors:ISwatch}">
                             <StackPanel Orientation="Horizontal">

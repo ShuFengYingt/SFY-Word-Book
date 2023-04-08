@@ -5,6 +5,7 @@
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extension="clr-namespace:SFY_Word_Book.Extensions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:SFY_Word_Book.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
@@ -37,7 +38,6 @@
             x:Name="TaskBar"
             Grid.Row="1"
             ItemsSource="{Binding TaskBars}">
-
             <behaviors:Interaction.Triggers>
                 <behaviors:EventTrigger EventName="SelectionChanged">
                     <behaviors:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=TaskBar, Path=SelectedItem}" />
@@ -50,81 +50,91 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
-
             <!--  数据模板，图标+文本+数据信息+背景特效  -->
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!--  边界，可以用来设置成圆角  -->
                     <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn}">
-                        <Border
-                            Margin="10"
-                            Background="{Binding Color}"
-                            CornerRadius="5">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <!--  鼠标悬浮效果  -->
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect
-                                                        BlurRadius="10"
-                                                        ShadowDepth="1"
-                                                        Color="#DDDDDD" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <!--  边界内放个窗格  -->
-                            <Grid>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Border
+                                Width="285"
+                                Margin="10"
+                                Background="{Binding Color}"
+                                CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <!--  鼠标悬浮效果  -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect
+                                                            BlurRadius="10"
+                                                            ShadowDepth="1"
+                                                            Color="#DDDDDD" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <!--  边界内放个窗格  -->
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                                <!--  窗格内的元素用栈容器  -->
-                                <StackPanel Margin="20,10">
+                                    <!--  窗格内的元素用栈容器  -->
+                                    <StackPanel Margin="20,10">
 
-                                    <!--  图标  -->
-                                    <materialDesign:PackIcon
-                                        Width="35"
-                                        Height="35"
-                                        Margin="1,0"
-                                        Kind="{Binding Icon}" />
+                                        <!--  图标  -->
+                                        <materialDesign:PackIcon
+                                            Width="35"
+                                            Height="35"
+                                            Margin="1,0"
+                                            Foreground="WhiteSmoke"
+                                            Kind="{Binding Icon}" />
 
-                                    <!--  标题  -->
-                                    <TextBlock
-                                        Margin="0,15"
-                                        FontSize="15 "
-                                        FontWeight="Bold"
-                                        Text="{Binding Title}" />
+                                        <!--  标题  -->
+                                        <TextBlock
+                                            Margin="0,15"
+                                            FontSize="15 "
+                                            FontWeight="Bold"
+                                            Foreground="WhiteSmoke"
+                                            Text="{Binding Title}" />
 
-                                    <!--  数据信息  -->
-                                    <TextBlock
-                                        FontSize="30"
-                                        FontWeight="Bold"
-                                        Text="{Binding Content}" />
-                                </StackPanel>
+                                        <!--  数据信息  -->
+                                        <TextBlock
+                                            FontSize="30"
+                                            FontWeight="Bold"
+                                            Foreground="WhiteSmoke"
+                                            Text="{Binding Content}" />
+                                    </StackPanel>
 
-                                <!--  背景特效  -->
-                                <Canvas ClipToBounds="True">
-                                    <Border
-                                        Canvas.Top="9"
-                                        Canvas.Right="-50"
-                                        Width="120"
-                                        Height="130"
-                                        Background="#FFFFFF"
-                                        CornerRadius="100"
-                                        Opacity="0.15" />
-                                    <Border
-                                        Canvas.Top="80"
-                                        Canvas.Right="-30"
-                                        Width="200"
-                                        Height="150"
-                                        Background="#FFFFFF"
-                                        CornerRadius="100"
-                                        Opacity="0.15" />
-                                </Canvas>
-                            </Grid>
-                        </Border>
+                                    <!--  背景特效  -->
+                                    <Canvas
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        ClipToBounds="True">
+                                        <Border
+                                            Canvas.Top="9"
+                                            Canvas.Right="-50"
+                                            Width="120"
+                                            Height="130"
+                                            Background="#FFFFFF"
+                                            CornerRadius="100"
+                                            Opacity="0.15" />
+                                        <Border
+                                            Canvas.Top="80"
+                                            Canvas.Right="-30"
+                                            Width="200"
+                                            Height="150"
+                                            Background="#FFFFFF"
+                                            CornerRadius="100"
+                                            Opacity="0.15" />
+                                    </Canvas>
+
+                                </Grid>
+                            </Border>
+
+                        </Grid>
 
                     </materialDesign:TransitioningContent>
 
@@ -150,42 +160,39 @@
                     Opacity="0.1" />
                 <!--#endregion-->
 
-                <Grid
-                    x:Name="ButtomPanel"
-                    Margin="10,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <ItemsControl>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
                     <ItemsControl ItemsSource="{Binding DailyPages}">
+
+
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="BorderGapMaskConverter">
                                 <Border
                                     x:Name="cardBorder"
-                                    Grid.Row="0"
+                                    Grid.Column="0"
                                     Width="300"
-                                    Height="435"
-                                    HorizontalAlignment="Center"
+                                    Height="420"
+                                    Margin="11,0,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Background="{Binding Image, IsAsync=True, Converter={StaticResource ImageBrushConverter}}"
                                     CornerRadius="5,0,0,5"
                                     Opacity="0.7" />
+
+
                             </DataTemplate>
 
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-
-
-
-
-
-
                     <ItemsControl Grid.Column="1" ItemsSource="{Binding DailyPages}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
+
                                 <DockPanel LastChildFill="False">
                                     <!--  文章标题  -->
                                     <TextBlock
@@ -246,12 +253,12 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!--  文章内容  -->
+
+                </ItemsControl>
 
 
-                </Grid>
 
-                <!--  标题+按钮  -->
+                <!--  标题  -->
                 <DockPanel Grid.Column="0" Margin="10,0">
                     <DockPanel
                         Margin="10,0"
@@ -365,7 +372,6 @@
             </Grid>
 
         </materialDesign:TransitioningContent>
-        <!--  注册区域  -->
 
 
     </Grid>

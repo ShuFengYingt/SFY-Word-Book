@@ -16,6 +16,7 @@ using System.Configuration;
 using Prism.DryIoc;
 using System.Diagnostics;
 using SFY_Word_Book.ViewModels;
+using SFY_Word_Book.Common.Models;
 
 namespace SFY_Word_Book.Views
 {
@@ -34,5 +35,9 @@ namespace SFY_Word_Book.Views
            
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }

@@ -155,6 +155,9 @@ namespace SFY_Word_Book.ViewModels
             }
             regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
         }
+
+
+
     }
 }
 
