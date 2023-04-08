@@ -1,4 +1,11 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
+# 4.7项目日志
+1. 新增设置面板
+2. 添加个性化功能
+3. 修复了圆角窗口的细节
+
+
+
 
 # 4.6项目日志
 1. 大部分实现了每日文章的功能，调用的是API，显示图片，标题，内容信息（还有很多bug等待明天和后天去修复）

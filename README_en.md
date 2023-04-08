@@ -1,4 +1,8 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+# 4.7 Project Log
+1. New settings panel
+2. Add personalized features
+3. Fixed the details of the rounded window
 
 # 4.6 Project Log
 1. Most of the daily article functionality has been implemented, which calls an API to display image, title, and content information (there are still many bugs waiting to be fixed tomorrow and the day after tomorrow).
