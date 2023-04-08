@@ -47,18 +47,18 @@ which successfully resolved the issue of overlapping user controls.
 This is because the region registered in MainView is the region of the entire page, with the area covering the entire window, and all the user controls loaded are displayed on the window. The window itself does not contain anything and is empty. On the other hand, the region registered in HomeView is the region of HomeView itself, and the user controls loaded in the HomeViewRegion will naturally be loaded onto HomeView, which leads to the overlap issue.
 
 In the words of GPT:
-![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPGMYCNUXB6T5JO57DSZBRDITA)
+![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPHFEMMAVTGO2CL5H3OZBRD63A)
 
 # 4.7 Project Log
 1. New settings panel
 2. Add personalized features
 3. Fixed the details of the rounded window
-![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPHOGOA6SR3MF36EAQCZBRDP7A)
+![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPGVXVZYGIOBBNX5NDOZBRD6EA)
 and
-![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPGWFIB2BFMMOLE6Z3KZBRDQQA)
+![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPH5ZBKZYXSCJYIQ4S2ZBRD6OQ)
 # 4.6 Project Log
 1. Most of the daily article functionality has been implemented, which calls an API to display image, title, and content information (there are still many bugs waiting to be fixed tomorrow and the day after tomorrow).
-![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPHOTLYUUIKKWERAYDMZBRDPEA)
+![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPGSYHPKWIKIAEUWK4SZBRD5KQ)
 ## Contents waiting to be fixed:
 
 1. Implementation of rounded corner images
@@ -168,7 +168,7 @@ This is an important syntax for parsing JSON, which specializes the data labeled
 1. Finished the UI of the homepage.
 2. Replaced the window with rounded corners.
 3. Encountered a bunch of issues related to the MetarialDesign style. Damn it!
-![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPGQGHUXHIQQRAK2F3UZBRDOOA)
+![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPHJUO4KPQ7QPGCSE3AZBRD42A)
 
 # *4.4Project Log*
 # **Implemented the following features:**
@@ -176,7 +176,7 @@ This is an important syntax for parsing JSON, which specializes the data labeled
 1. Users can navigate to corresponding pages by selecting menu items in the left side menu bar.
 2. The left side menu bar is collapsed after navigation.
 3. Users can use the "→" and "←" keys on the navigation bar to navigate forward and backward (implemented using navigation log).
-![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPHXFX3BR6NPT5ARMUEZBRDNXQ)
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGNSL473Z5ROB35VOWZBRD2SA)
 # **Pitfalls:**
 
 1. Use "UserControl" to create child pages, instead of using "Window".

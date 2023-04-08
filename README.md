@@ -49,7 +49,7 @@ regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSp
 
 这是因为MainView中注册的region是整个页面的region，区域为整个窗体，加载的所有的用户控件在窗体上显示。窗体本身没有东西，是空的。而HomeView中注册的region则区域为HomeView本身，在HomeViewRegion中加载的用户控件则自然会加载到HomeView上——这就导致了重叠。
 用GPT的话说就是：
-![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPGMYCNUXB6T5JO57DSZBRDITA)
+![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPHFEMMAVTGO2CL5H3OZBRD63A)
 
 一个小坑。记一下。
 
@@ -58,13 +58,13 @@ regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSp
 2. 添加个性化功能
 3. 修复了圆角窗口的细节
 
-![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPHOGOA6SR3MF36EAQCZBRDP7A)
+![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPGVXVZYGIOBBNX5NDOZBRD6EA)
 以及
-![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPGWFIB2BFMMOLE6Z3KZBRDQQA)
+![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPH5ZBKZYXSCJYIQ4S2ZBRD6OQ)
 
 # 4.6项目日志
 1. 大部分实现了每日文章的功能，调用的是API，显示图片，标题，内容信息（还有很多bug等待明天和后天去修复）
-![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPHOTLYUUIKKWERAYDMZBRDPEA)
+![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPGSYHPKWIKIAEUWK4SZBRD5KQ)
 
 ## 等待修复的内容：
 1. 圆角图片的实现
@@ -181,7 +181,7 @@ Image = (string)article["image"]
 2. 将窗口替换为圆角
 3. 遇到了有关MetarialDesign的Style的一大堆坑，艹！！！！
 
-![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPGQGHUXHIQQRAK2F3UZBRDOOA)
+![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPHJUO4KPQ7QPGCSE3AZBRD42A)
 
 
 
@@ -191,7 +191,7 @@ Image = (string)article["image"]
 1. 用户在左侧菜单栏选中菜单的元素后导航至对应页面。
 2. 导航后收起左侧菜单栏。
 3. 允许用户使用导航条上的“—>”和“<—”键完成上一步和下一步的导航（利用导航日志实现）
-![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPHXFX3BR6NPT5ARMUEZBRDNXQ)
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGNSL473Z5ROB35VOWZBRD2SA)
 
 # 坑点：
 
