@@ -33,16 +33,16 @@
             FontSize="30"
             Text="欢迎回来，书封影！" />
         <!--#region 任务栏,绑定TaskBars-->
-        <ItemsControl
+        <ListBox
             x:Name="TaskBar"
             Grid.Row="1"
             ItemsSource="{Binding TaskBars}">
 
-            <!--<behaviors:Interaction.Triggers>
+            <behaviors:Interaction.Triggers>
                 <behaviors:EventTrigger EventName="SelectionChanged">
                     <behaviors:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=TaskBar, Path=SelectedItem}" />
                 </behaviors:EventTrigger>
-            </behaviors:Interaction.Triggers>-->
+            </behaviors:Interaction.Triggers>
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -130,7 +130,7 @@
 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ListBox>
         <!--#endregion-->
         <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
             <!--  下方栏，一个放每日文章，一个放查词  -->
@@ -366,8 +366,9 @@
 
         </materialDesign:TransitioningContent>
         <!--  注册区域  -->
-        <!--
-        <ContentControl prism:RegionManager.RegionName="{x:Static extension:PrismManager.HomeViewRegionName}" />-->
+
 
     </Grid>
+
+
 </UserControl>

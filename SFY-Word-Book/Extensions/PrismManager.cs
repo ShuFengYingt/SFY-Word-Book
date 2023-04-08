@@ -17,5 +17,7 @@ namespace SFY_Word_Book.Extensions
         /// 注册Settings区域
         /// </summary>
         public static readonly string SettingsViewRegionName = "SettingsViewRegion";
+
+        public static readonly string HomeViewRegionName = "HomeViewRegion";
     }
 }

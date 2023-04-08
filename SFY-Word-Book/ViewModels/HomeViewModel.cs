@@ -22,18 +22,19 @@ using SFY_Word_Book.Extensions;
 using Prism.Modularity;
 using System.Diagnostics;
 using SFY_Word_Book.Common.Command;
+using SFY_Word_Book.Views;
 
 namespace SFY_Word_Book.ViewModels
 {
     public class HomeViewModel : BindableBase
     {
-        public HomeViewModel()
+        public HomeViewModel(IRegionManager regionManager)
         {
             //初始化
             TaskBars = new ObservableCollection<TaskBar>();
             dailyPages = new ObservableCollection<DailyPage>();
-            //NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
-            //this.regionManage = regionManager;
+            NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
+            this.regionManage = regionManager;
 
 
             CreateTaskBar();
@@ -56,7 +57,7 @@ namespace SFY_Word_Book.ViewModels
 
             TaskBars.Add(new TaskBar { Icon = "BookOpenPageVariant", Title = "待学习", Content = "2677", Color = "#48815a", NameSpace = "LearningView" });
             TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = "0", Color = "#008184", NameSpace = "ReviewView" });
-            TaskBars.Add(new TaskBar { Icon = "BookCheck", Title = "已学习", Content = "121", Color = "#965fa0", NameSpace = "" });
+            TaskBars.Add(new TaskBar { Icon = "BookCheck", Title = "已学习", Content = "121", Color = "#965fa0", NameSpace = "LearningHistoryView" });
             TaskBars.Add(new TaskBar { Icon = "Bookshelf", Title = "单词书", Content = "四级大纲词汇", Color = "#866e66", NameSpace = "" });
 
         }
@@ -139,26 +140,21 @@ namespace SFY_Word_Book.ViewModels
 
 
 
-        //private readonly IRegionManager regionManage;
-        //private IRegionNavigationJournal journal;
-        //private DelegateCommand<TaskBar> navigateCommand;
-        ///// <summary>
-        ///// 任务栏导航委托
-        ///// </summary>
-        //public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
+        private readonly IRegionManager regionManage;
+        private IRegionNavigationJournal journal;
+        /// <summary>
+        /// 任务栏导航委托
+        /// </summary>
+        public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
 
-        //private void Navigate(TaskBar taskBar)
-        //{
-        //    if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
-        //    {
-        //        return;
-        //    }
-
-        //    regionManage.Regions[PrismManager.HomeViewRegionName].RequestNavigate(taskBar.NameSpace,back=>
-        //    {
-        //        journal = back.Context.NavigationService.Journal;
-        //    });
-        //}
+        private void Navigate(TaskBar taskBar)
+        {
+            if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
+            {
+                return;
+            }
+            regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
+        }
     }
 }
 

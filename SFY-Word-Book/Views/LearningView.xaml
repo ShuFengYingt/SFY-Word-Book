@@ -9,6 +9,14 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock FontSize="30" Text="LearningView" />
+        <StackPanel>
+            <TextBlock FontSize="30" Text="LearningView" />
+            <TextBlock FontSize="30" Text="LearningView" />
+            <TextBlock FontSize="30" Text="LearningView" />
+            <TextBlock FontSize="30" Text="LearningView" />
+            <TextBlock FontSize="30" Text="LearningView" />
+            <TextBlock FontSize="30" Text="LearningView" />
+
+        </StackPanel>
     </Grid>
 </UserControl>

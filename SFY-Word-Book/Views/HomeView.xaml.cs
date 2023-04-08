@@ -27,7 +27,6 @@ namespace SFY_Word_Book.Views
         public HomeView()
         {
             InitializeComponent();
-            this.DataContext = new HomeViewModel();
         }
 
         private void ReadMoreButton_Click(object sender, RoutedEventArgs e)
