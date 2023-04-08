@@ -1,14 +1,70 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
+# 4.8项目日志
+1. 为个性化板块添加了打开动画效果
+2. 实现了主窗口的任务条的导航功能
+
+## 当前待解决问题
+1. 任务条显示问题（各种容器还是没有整明白）
+2. 窗口预加载
+3. 主窗口显示问题
+
+## 坑点
+我依据之前的Prism依赖注入导航方法尝试着让任务栏的按钮能够导航到对应的用户控件，导航确实是实现了，但是主用户控件和新用户控件出现了重叠问题，这实在是让人火大。
+
+后来我发现是region的问题。
+
+之前我在MainView下定义了一个region，通过这个region实现了菜单栏导航到各个页面。
+```xml
+                <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+
+```
+而后我依葫芦画瓢，在HomeView下这样定义
+```xml
+                <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.HomeViewRegionName}" />
+
+```
+在HomeViewModel中，这样写方法:
+```csharp
+        private void Navigate(TaskBar taskBar)
+        {
+            if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
+            {
+                return;
+            }
+            regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSpace);
+        }
+
+```
+这就导致了用户控件重叠问题。而后我尝试将HomeView.xaml中的区域注册删除（其实删不删无所谓），将导航方法中的
+
+```csharp
+regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSpace);
+```
+改写为
+```csharp
+            regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
+
+```
+则成功解决了用户控件重叠问题。
+
+这是因为MainView中注册的region是整个页面的region，区域为整个窗体，加载的所有的用户控件在窗体上显示。窗体本身没有东西，是空的。而HomeView中注册的region则区域为HomeView本身，在HomeViewRegion中加载的用户控件则自然会加载到HomeView上——这就导致了重叠。
+用GPT的话说就是：
+![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPGMYCNUXB6T5JO57DSZBRDITA)
+
+一个小坑。记一下。
+
 # 4.7项目日志
 1. 新增设置面板
 2. 添加个性化功能
 3. 修复了圆角窗口的细节
 
-
-
+![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPHOGOA6SR3MF36EAQCZBRDP7A)
+以及
+![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPGWFIB2BFMMOLE6Z3KZBRDQQA)
 
 # 4.6项目日志
 1. 大部分实现了每日文章的功能，调用的是API，显示图片，标题，内容信息（还有很多bug等待明天和后天去修复）
+![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPHOTLYUUIKKWERAYDMZBRDPEA)
 
 ## 等待修复的内容：
 1. 圆角图片的实现
@@ -125,6 +181,7 @@ Image = (string)article["image"]
 2. 将窗口替换为圆角
 3. 遇到了有关MetarialDesign的Style的一大堆坑，艹！！！！
 
+![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPGQGHUXHIQQRAK2F3UZBRDOOA)
 
 
 
@@ -134,6 +191,7 @@ Image = (string)article["image"]
 1. 用户在左侧菜单栏选中菜单的元素后导航至对应页面。
 2. 导航后收起左侧菜单栏。
 3. 允许用户使用导航条上的“—>”和“<—”键完成上一步和下一步的导航（利用导航日志实现）
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPHXFX3BR6NPT5ARMUEZBRDNXQ)
 
 # 坑点：
 

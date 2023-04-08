@@ -1,12 +1,64 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+# 4.8 Project Log
+1. Added opening animation effect for personalized modules.
+2. Implemented navigation function for task bar in main window.
+## Current Issues to be Resolved
+1. Display issue with task bar (various containers still not properly organized).
+2. Window pre-loading.
+3. Display issue with main window.
+## Pitfalls
+Based on the previous Prism dependency injection navigation method, I attempted to enable task bar buttons to navigate to corresponding user controls. Navigation was indeed achieved, but the main user control and the new user control overlapped, which was very frustrating.
+
+Later, I found that it was a problem with the region.
+
+Previously, I defined a region under MainView, and used this region to navigate the menu bar to various pages.
+```xml
+                <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+
+```
+And then I followed the same approach under HomeView:
+```xml
+                <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.HomeViewRegionName}" />
+
+```
+n the HomeViewModel, I wrote the method as follows:
+```csharp
+        private void Navigate(TaskBar taskBar)
+        {
+            if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
+            {
+                return;
+            }
+            regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSpace);
+        }
+
+```
+This led to the issue of overlapping user controls. Later, I attempted to remove the region registration from HomeView.xaml (actually it doesn't matter whether it's removed or not), and changed the navigation method from:
+```csharp
+regionManage.Regions[PrismManager.HomeViewRegion].RequestNavigate(taskBar.NameSpace);
+```
+to
+```csharp
+            regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
+
+```
+which successfully resolved the issue of overlapping user controls.
+
+This is because the region registered in MainView is the region of the entire page, with the area covering the entire window, and all the user controls loaded are displayed on the window. The window itself does not contain anything and is empty. On the other hand, the region registered in HomeView is the region of HomeView itself, and the user controls loaded in the HomeViewRegion will naturally be loaded onto HomeView, which leads to the overlap issue.
+
+In the words of GPT:
+![ChatGPT的解释](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-04-08%20153337.png?token=GHSAT0AAAAAAB745OPGMYCNUXB6T5JO57DSZBRDITA)
+
 # 4.7 Project Log
 1. New settings panel
 2. Add personalized features
 3. Fixed the details of the rounded window
-
+![4.7_1](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7.png?token=GHSAT0AAAAAAB745OPHOGOA6SR3MF36EAQCZBRDP7A)
+and
+![4.7_2](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.7%202.png?token=GHSAT0AAAAAAB745OPGWFIB2BFMMOLE6Z3KZBRDQQA)
 # 4.6 Project Log
 1. Most of the daily article functionality has been implemented, which calls an API to display image, title, and content information (there are still many bugs waiting to be fixed tomorrow and the day after tomorrow).
-
+![4.6](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.6.png?token=GHSAT0AAAAAAB745OPHOTLYUUIKKWERAYDMZBRDPEA)
 ## Contents waiting to be fixed:
 
 1. Implementation of rounded corner images
@@ -116,13 +168,15 @@ This is an important syntax for parsing JSON, which specializes the data labeled
 1. Finished the UI of the homepage.
 2. Replaced the window with rounded corners.
 3. Encountered a bunch of issues related to the MetarialDesign style. Damn it!
+![4.5](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.5.png?token=GHSAT0AAAAAAB745OPGQGHUXHIQQRAK2F3UZBRDOOA)
+
 # *4.4Project Log*
 # **Implemented the following features:**
 
 1. Users can navigate to corresponding pages by selecting menu items in the left side menu bar.
 2. The left side menu bar is collapsed after navigation.
 3. Users can use the "→" and "←" keys on the navigation bar to navigate forward and backward (implemented using navigation log).
-
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPHXFX3BR6NPT5ARMUEZBRDNXQ)
 # **Pitfalls:**
 
 1. Use "UserControl" to create child pages, instead of using "Window".
