@@ -191,7 +191,7 @@ Image = (string)article["image"]
 1. 用户在左侧菜单栏选中菜单的元素后导航至对应页面。
 2. 导航后收起左侧菜单栏。
 3. 允许用户使用导航条上的“—>”和“<—”键完成上一步和下一步的导航（利用导航日志实现）
-![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGNSL473Z5ROB35VOWZBRD2SA)
+![4.4](https://raw.githubusercontent.com/ShuFengYingt/SFY-Word-Book/master/READMEImage/4.4.png?token=GHSAT0AAAAAAB745OPGUVQKBOHOBWLU263EZBRD73A)
 
 # 坑点：
 
