@@ -1,0 +1,138 @@
+﻿<UserControl
+    x:Class="SFY_Word_Book.Views.AboutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SFY_Word_Book.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <materialDesign:Card Width="520" Height="370">
+            <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn}">
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Width="160"
+                        Height="160"
+                        Margin="25,20,0,0"
+                        HorizontalAlignment="Left"
+                        CornerRadius="20">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Images/头像.jpeg" />
+                        </Border.Background>
+                    </Border>
+
+                </materialDesign:TransitioningContent>
+
+                <materialDesign:TransitioningContent
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <StackPanel
+                        Margin="-30,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock
+                            Margin="0,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="书 封 影" />
+                        <TextBlock Margin="0,6" Text="@ShuFengYingt" />
+                        <TextBlock
+                            Margin="0,10,30,0"
+                            Foreground="{DynamicResource MaterialDesignBodyLight}"
+                            Text="这是书封影的C语言大作业，是一项基于Prism(MVVM)框架下的WPF界面框架，使用Material Desgin控件库，用C#和C语言混合编程的桌面应用程序。包含了作者一个半月以来的全部心血。"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+
+                </materialDesign:TransitioningContent>
+
+                <materialDesign:TransitioningContent
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <Border
+                        Margin="0,15,0,0"
+                        Padding="8"
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        BorderThickness="0,1,0,0">
+                        <DockPanel LastChildFill="False">
+                            <Button
+                                x:Name="DonateButton"
+                                Margin="0,30,10,0"
+                                DockPanel.Dock="Right"
+                                Style="{StaticResource MaterialDesignFlatButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Margin="0,2,0,0" Kind="Gift" />
+                                    <TextBlock
+                                        Margin="20,0,10,0"
+                                        VerticalAlignment="Center"
+                                        Text="捐赠" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock
+                                Margin="30,30,70,0"
+                                VerticalAlignment="Center"
+                                DockPanel.Dock="Left"
+                                Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                Text="如果你喜欢我的大作业，可以投币给我点赞。点击这个按钮支持一下头发消失的书封影"
+                                TextWrapping="Wrap" />
+
+
+                        </DockPanel>
+                    </Border>
+
+                </materialDesign:TransitioningContent>
+
+                <materialDesign:TransitioningContent
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <Border Margin="0,-15,0,0" Padding="8">
+
+                        <DockPanel LastChildFill="False">
+                            <TextBlock
+                                Margin="30,30,24,0"
+                                VerticalAlignment="Center"
+                                DockPanel.Dock="Left"
+                                Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                Text="你也可以关注一下书封影的Github，虽然上面啥也没有......"
+                                TextWrapping="Wrap" />
+
+                            <Button
+                                x:Name="GithubButton"
+                                Margin="0,30,0,0"
+                                DockPanel.Dock="Right"
+                                Style="{StaticResource MaterialDesignFlatButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Margin="0,1,0,0" Kind="Github" />
+                                    <TextBlock
+                                        Margin="20,0,10,0"
+                                        VerticalAlignment="Center"
+                                        Text="Github" />
+                                </StackPanel>
+
+                            </Button>
+
+                        </DockPanel>
+                    </Border>
+
+                </materialDesign:TransitioningContent>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

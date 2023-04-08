@@ -38,6 +38,7 @@ namespace SFY_Word_Book.ViewModels
         void CreateSettingsBar()
         {
             SettingsBars.Add(new SettingsBar { Icon = "Palette", Title = "个性化", NameSpace = "SkinView" });
+            SettingsBars.Add(new SettingsBar { Icon = "Information", Title = "关于", NameSpace = "AboutView" });
         }
 
         private void SettingsNavigate(SettingsBar settingsBar)

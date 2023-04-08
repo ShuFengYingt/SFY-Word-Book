@@ -34,7 +34,7 @@ namespace SFY_Word_Book.ViewModels
             paletteHelper.SetTheme(theme);
         }
 
-        private bool _isDarkTheme;
+        private bool _isDarkTheme = true;
         public bool IsDarkTheme
         {
             get => _isDarkTheme;
