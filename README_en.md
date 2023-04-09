@@ -1,4 +1,10 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+# 4.9 Project log
+![4.90](/READMEImage/4.90.png)
+1. Made a little UI interface for reciting words, but it needs to be improved
+2. Configure the WebAPI
+3. Created a word database, using SQLite, but I don’t quite understand how to add, delete, check and modify, and how to connect to C language.
+
 # 4.8 Project Log
 1. Added opening animation effect for personalized modules.
 2. Implemented navigation function for task bar in main window.

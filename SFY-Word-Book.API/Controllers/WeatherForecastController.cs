@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SFY_Word_Book.API.Controllers
+namespace SFY_Word_Book.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,4 +1,11 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
+
+# 4.9项目日志
+![4.90](/READMEImage/4.90.png)
+1. 稍微做了一下背单词的UI界面，不过有待改进
+2. 对WebAPI进行了相关配置
+3. 创建了单词数据库，利用的是SQLite，不过不太明白要怎么实现增删查改，以及如何对接C语言
+
 # 4.8项目日志
 1. 为个性化板块添加了打开动画效果
 2. 实现了主窗口的任务条的导航功能

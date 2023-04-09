@@ -1,4 +1,4 @@
-namespace SFY_Word_Book.API
+namespace SFY_Word_Book.Api
 {
     public class WeatherForecast
     {

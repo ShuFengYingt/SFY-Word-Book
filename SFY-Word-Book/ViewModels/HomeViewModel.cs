@@ -141,7 +141,6 @@ namespace SFY_Word_Book.ViewModels
 
 
         private readonly IRegionManager regionManage;
-        private IRegionNavigationJournal journal;
         /// <summary>
         /// 任务栏导航委托
         /// </summary>

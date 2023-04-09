@@ -25,14 +25,14 @@ namespace SFY_Word_Book.Common.Models
         /// <summary>
         /// 图标
         /// </summary>
-        public string Icon { get; set; }
+        public string Icon { get { return icon; } set { icon = value; } }
 
         //标题
         private string title;
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get;set; }
+        public string Title { get { return title; } set { title = value; } }
 
         //数据信息
         private string content;

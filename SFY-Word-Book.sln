@@ -5,12 +5,12 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book", "SFY-Word-Book\SFY-Word-Book.csproj", "{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book.API", "SFY-Word-Book.API\SFY-Word-Book.API.csproj", "{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3204A3A-6831-43C5-930E-8996918C115C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFY-Word-Book.Api", "SFY-Word-Book.Api\SFY-Word-Book.Api.csproj", "{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,14 +28,14 @@ Global
 		{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}.Release|x64.ActiveCfg = Release|x64
 		{A5BCB6DA-ED6B-460C-B4C8-60E012795FC4}.Release|x64.Build.0 = Release|x64
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Debug|x64.Build.0 = Debug|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Release|x64.ActiveCfg = Release|Any CPU
-		{E4CD4D63-6C93-41AE-AF2A-28898F0237D4}.Release|x64.Build.0 = Release|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Debug|x64.Build.0 = Debug|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Release|x64.ActiveCfg = Release|Any CPU
+		{B5D9F623-5BF3-43C2-A885-B9C13AF1BFD9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
