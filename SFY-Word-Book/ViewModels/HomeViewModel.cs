@@ -21,7 +21,7 @@ using Prism.Regions;
 using SFY_Word_Book.Extensions;
 using Prism.Modularity;
 using System.Diagnostics;
-using SFY_Word_Book.Common.Command;
+using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
 
 namespace SFY_Word_Book.ViewModels

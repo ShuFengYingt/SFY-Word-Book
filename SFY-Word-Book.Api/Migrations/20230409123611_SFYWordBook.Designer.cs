@@ -11,7 +11,7 @@ using SFY_Word_Book.Api.Context;
 namespace SFY_Word_Book.Api.Migrations
 {
     [DbContext(typeof(SFYWordBookContext))]
-    [Migration("20230409114506_SFY-Word-Book")]
+    [Migration("20230409123611_SFYWordBook")]
     partial class SFYWordBook
     {
         /// <inheritdoc />

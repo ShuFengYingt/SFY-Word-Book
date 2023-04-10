@@ -15,37 +15,45 @@
             <RowDefinition Height="auto" />
 
         </Grid.RowDefinitions>
-        <materialDesign:Card
-            Width="620"
-            Height="470"
-            Margin="0,80,0,0"
-            VerticalAlignment="Center">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition />
+        <ItemsControl ItemsSource="{Binding WordCards}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card
+                        Width="620"
+                        Height="470"
+                        Margin="0,80,0,0"
+                        VerticalAlignment="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
 
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,80,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontFamily="centaur"
-                    FontSize="120"
-                    FontWeight="ExtraBlack"
-                    Text="fantastic" />
-                <TextBlock
-                    Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    FontSize="17"
-                    Foreground="{DynamicResource MaterialDesignBodyLight}"
-                    Text="[fæn'tæstɪk]" />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0,80,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="centaur"
+                                FontSize="120"
+                                FontWeight="ExtraBlack"
+                                Text="{Binding Word}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                FontSize="17"
+                                Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                Text="[fæn'tæstɪk]" />
 
-            </Grid>
-        </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
         <StackPanel
             Grid.Row="1"
             Margin="0,30"
@@ -55,6 +63,7 @@
             <Button
                 Width="100"
                 Margin="0,0,100,0"
+                Command="{Binding ShowPageFlowCommand}"
                 Content="认识"
                 Style="{StaticResource MaterialDesignPaperLightButton}"
                 ToolTip="MaterialDesignFlatLightButton" />

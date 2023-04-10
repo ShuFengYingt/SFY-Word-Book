@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SFY_Word_Book.Common.Command
+namespace SFY_Word_Book.Common.Commands
 {
-    public class HomeViewCommand : ICommand
+    public class Command : ICommand
     {
-        public HomeViewCommand(Action action)
+        public Command(Action action)
         {
             excuteAction = action;
         }

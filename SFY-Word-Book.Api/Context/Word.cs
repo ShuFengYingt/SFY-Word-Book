@@ -41,12 +41,12 @@ namespace SFY_Word_Book.Api.Context
         /// <summary>
         /// 例句
         /// </summary>
-        public ICollection<Sentence> Sentences { get; set; }    
+        public List<Sentence> Sentences { get; set; }    
 
         /// <summary>
         /// 释义
         /// </summary>
-        public ICollection<Translation> Translations { get; set; }
+        public List<Translation> Translations { get; set; }
 
         [Key]
         public int Id { get; set; }

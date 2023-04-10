@@ -1,5 +1,5 @@
 ﻿using Prism.Mvvm;
-using SFY_Word_Book.Common.Command;
+using SFY_Word_Book.Common.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +15,7 @@ namespace SFY_Word_Book.Common.Models
     {
         public DailyPage()
         {
-            ShowPageFlowCommand = new HomeViewCommand(ShowPageFlow);
+            ShowPageFlowCommand = new Command(ShowPageFlow);
         }
         /// <summary>
         /// 文章封面
@@ -57,7 +57,7 @@ namespace SFY_Word_Book.Common.Models
             set { flow = value; RaisePropertyChanged();}
         }
 
-        public HomeViewCommand ShowPageFlowCommand { get; set; }
+        public Command ShowPageFlowCommand { get; set; }
 
 
         public void ShowPageFlow()

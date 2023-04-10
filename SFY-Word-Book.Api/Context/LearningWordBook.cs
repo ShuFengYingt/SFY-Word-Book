@@ -19,7 +19,7 @@ namespace SFY_Word_Book.Api.Context
         /// </summary>
         public string BookName { get; set; }
 
-        public ICollection<Word> Words { get; set; }
+        public List<Word> Words { get; set; }
 
         [Key]
         public int Id { get;set; }
