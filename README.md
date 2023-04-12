@@ -1,6 +1,171 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 4.11 项目日志
+
+完成了C语言后台部分的内容，包括
+
+1. 单词结构体
+2. 例句结构体
+3. 释义结构体
+4. 链表创建函数
+5. 增删改查
+
+在CS端
+
+1. Extension下新增公共类CSolve，
+
+2. 引用C语言封装dll
+
+3. 进行局部调用（也就是还没做完，而且没进行测试）
+
+
+
+## C语言封装动态链接库
+
+### 要点
+
+首先完成CSolve.c文件后，在头文件中创建CSolve.h(同名文件)，并在CSolve.c中进行如下引用
+
+```C
+#include"CSolve.h"
+```
+
+而后在CSolve.h中将函数进行引用，并添加修饰
+
+```C
+extern _declspec(dllexport) struct _Word* _CreateWordListHead();
+```
+
+修饰词为
+
+```C
+extern _declspec(dllexport)
+```
+
+这样就可以完成dll导出。
+
+注意，变量尽量用下划线进行前修饰或者后修饰，和C#区分开来，这样可以明确哪些是内部的，哪些是外来的。
+
+### 坑点
+
+1. 在VS中要关闭预编译头
+2. 要在项目属性中将项目类型转成dll
+
+完成上述步骤之后，重新生成解决方案，就可以得到动态链接库源文件了。
+
+
+
+## Csharp中引用C语言动态链接库
+
+### 基本操作
+
+1. 将动态链接库文件放入CS项目的运行环境中，也就是/bin/Debug/.net7-windows
+
+2. 创建专门的管理类，我这里创建了一个CSolve类在Extension下，与PrismManager.cs平行
+
+3. 使用DLLImport标记进行导入，示例如下：
+
+   ```c#
+   		[DllImport("CSloves.dll", EntryPoint = "_CreateWordBooks")]
+            public static extern void _CreateWordBooks();
+   
+   ```
+
+记得用EntryPoint指示入口函数
+
+### 结构体导入要点
+
+基本操作模式只能应付最简单的处理函数，但是动态链接库中的很多函数有指针变量，结构体嵌套等等，这些都需要更多的知识进行特殊处理。
+
+#### 1.重声明结构体
+
+对于动态链接库中定义好的结构体，我们需要在C#中重新再对等声明一遍，否则无法调用对应函数。但是由于C语言与C++的结构体声明是顺序的（从上至下，如果一个名为a_struct的结构体放在了最末端，那么前面的结构体和函数无法调用这个名为a_struct的结构体），所以在C#中，我们同样需要声明结构体是顺序放置的，如下示例
+
+```c#
+    using System.Runtime.InteropServices;
+
+	   [StructLayout(LayoutKind.Sequential)]
+        public struct _Word
+        {
+            
+        }
+
+```
+
+#### 2.char*  转换
+
+在C语言中，为了更方便地实现字符串功能，我在结构体中用char* 指针进行了字符串定义，类似如下
+
+```C
+            struct _Word
+            {
+                 /// <summary>
+    			/// 单词内容
+    			/// </summary>
+    			char* _wordContent;
+            };
+```
+
+虽然C#可以在unsafe修饰下使用指针变量，但是都用C#了，谁还翻指针啊XD。
+
+如果想在C#中不使用指针的情况下引用动态链接库的char* ，则需要用点新玩意了。
+
+对于上述示例中的 **_wordContent** ，我们可以在用**String**类来进行修饰(注意，是String类，不是string数据类型)
+
+```c#
+            public String _wordContent; 
+```
+
+仅是如此还不够，在调用函数或者生成方法时，需要对char* 进行String转义，MarshalAs指定编码方式为LPStr（也就是char*）
+
+假设我们有一个函数为(只是举个例子，实际代码并不是这样)
+
+```c
+struct _Word* _CreateWordInstance(char* _wordContent){}
+```
+
+那么在C#中调用为
+
+```c#
+public static extern IntPtr _CreateWordInstance([MarshalAs(UnmanagedType.LPStr)] String _wordContent);
+```
+
+**这里用到了IntPtr数据类型，之后再讲**
+
+
+
+也就是，通过
+
+```c#
+[MarshalAs(UnmanagedType.LPStr)]
+```
+
+标记，将char * 类型String化。
+
+#### 3.结构体指针
+
+在C语言的程序中，我定义了这样的函数
+
+```C	
+ struct _Word* _CreateWordListHead(){};
+```
+
+可以看到，函数类型是一个结构体指针，但是在C#中该如何调用返回结构体指针的函数呢？
+
+很简单，之前我们用到了IntPtr，这是一种System结构，宽度与指针相同，我们可以就把他当作一种泛型指针来理解。这里面还涉及到C#的非托管指针之类的语言特性，我暂时也不是很懂，就不胡说八道了。
+
+所以，在C#中调用的方式应该是
+
+```c#
+        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
+        public static extern IntPtr _CreateWordListHead();
+
+```
+
+
+
 # 4.9项目日志
+
 ![4.90](/READMEImage/4.90.png)
 1. 稍微做了一下背单词的UI界面，不过有待改进
 2. 对WebAPI进行了相关配置

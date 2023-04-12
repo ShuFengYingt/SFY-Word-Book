@@ -3,6 +3,51 @@
 #include<assert.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include"CSolves.h"
+
+/// <summary>
+/// 例句类
+/// </summary>
+struct _Sentence
+{
+    /// <summary>
+    /// 例句序号
+    /// </summary>
+    int _sentenceRank;
+
+    /// <summary>
+    /// 例句内容
+    /// </summary>
+    char* _sentenceContent;
+
+    /// <summary>
+    /// 例句释义
+    /// </summary>
+    char* _senteceCN;
+
+
+};
+
+/// <summary>
+/// 释义结构体
+/// </summary>
+struct _Translation
+{
+    /// <summary>
+    /// 序号
+    /// </summary>
+    int _transRank;
+
+    /// <summary>
+    /// 词性
+    /// </summary>
+    char* _partOfSpeech;
+
+    /// <summary>
+    /// 释义文
+    /// </summary>
+    char* _transCN;
+};
 
 
 /// <summary>
@@ -61,7 +106,7 @@ struct _Word
 
 
 /// <summary>
-/// 表头差异化处理
+/// 创建链表头节点，Null
 /// </summary>
 struct _Word* _CreateWordListHead()
 {
@@ -157,54 +202,19 @@ int _SearchByWordContent(struct _Word* _listHeadWord,char* _wordContent)
     {
         pMove = pMove->_nextWord;
     }
-    return pMove->_wordRank;
+    if (pMove != NULL)
+    {
+        return pMove->_wordRank;
+
+    }
+    else
+    {
+        return -1;
+    }
 
 }
 
 
-/// <summary>
-/// 
-/// </summary>
-struct _Sentence
-{
-    /// <summary>
-    /// 例句序号
-    /// </summary>
-    int _sentenceRank;
-
-    /// <summary>
-    /// 例句内容
-    /// </summary>
-    char* _sentenceContent;
-
-    /// <summary>
-    /// 例句释义
-    /// </summary>
-    char* _senteceCN;
-
-
-};
-
-/// <summary>
-/// 释义结构体
-/// </summary>
-struct _Translation
-{
-    /// <summary>
-    /// 序号
-    /// </summary>
-    int _transRank;
-
-    /// <summary>
-    /// 词性
-    /// </summary>
-    char* _partOfSpeech;
-
-    /// <summary>
-    /// 释义文
-    /// </summary>
-    char* _transCN;
-};
 
 /// <summary>
 /// 打印测试
@@ -220,6 +230,9 @@ void _PrintfWordList(struct _Word* headWord)
     }
 }
 
+/// <summary>
+/// 创建单词书
+/// </summary>
 void _CreateWordBooks()
 {
     //在学单词表
@@ -237,6 +250,6 @@ signed main()
 {
 
 
-
+    return 0;
 
 }

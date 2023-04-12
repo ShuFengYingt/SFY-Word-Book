@@ -1,4 +1,163 @@
-[中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)
+[中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)：
+
+# 4.11 Project Log
+
+Completed the C language backend part, including
+
+1. Word structure
+2. Sentence structure
+3. Definition structure
+4. Linked list creation function
+5. Add, delete, modify and query
+
+On the CS side
+
+1. Added a public class CSolve under Extension,
+
+2. Referenced the C language encapsulated dll
+
+3. Performed local calls (that is, not completed yet, and not tested)
+
+
+
+## C language encapsulated dynamic link library
+
+### Key points
+
+First complete the CSolve.c file, then create a CSolve.h (same name) file in the header file, and reference it in CSolve.c as follows
+
+```C
+#include"CSolve.h"
+```
+
+Then reference the function in CSolve.h and add modifiers
+
+```C
+extern _declspec(dllexport) struct _Word* _CreateWordListHead();
+```
+
+The modifier is
+
+```C
+extern _declspec(dllexport)
+```
+
+This way you can complete the dll export.
+
+Note that variables should be prefixed or suffixed with underscores to distinguish them from C#, so that you can clearly see which ones are internal and which ones are external.
+
+### Pitfalls
+
+1. Turn off precompiled headers in VS
+2. Change the project type to dll in the project properties
+
+After completing the above steps, rebuild the solution and you will get the dynamic link library source file.
+
+## Csharp reference C language dynamic link library
+
+### Basic operations
+
+1. Put the dynamic link library file into the runtime environment of the CS project, which is /bin/Debug/.net7-windows
+
+2. Create a dedicated management class, I created a CSolve class under Extension, parallel to PrismManager.cs
+
+3. Import with DLLImport tag, example as follows:
+
+   ```c#
+   		[DllImport("CSloves.dll", EntryPoint = "_CreateWordBooks")]
+            public static extern void _CreateWordBooks();
+
+Remember to use EntryPoint to indicate the entry function
+
+### Struct import points
+
+The basic operation mode can only cope with the simplest processing functions, but many functions in the dynamic link library have pointer variables, structure nesting, etc., which require more knowledge for special processing.
+
+#### 1.Re-declare structure
+
+For the structure defined in the dynamic link library, we need to re-declare it again in C#, otherwise we cannot call the corresponding function. But because C language and C++ structure declarations are sequential (from top to bottom, if a structure named a_struct is placed at the end, then the previous structures and functions cannot call this structure named a_struct), so in C#, we also need to declare that structures are sequentially placed, as shown in the following example
+
+```c#
+    using System.Runtime.InteropServices;
+
+	   [StructLayout(LayoutKind.Sequential)]
+        public struct _Word
+        {
+            
+        }
+
+```
+
+#### 2.char*  conversion
+
+In C language, in order to implement string functions more conveniently, I used char* pointers to define strings in structures, similar to the following
+
+```C
+            struct _Word
+            {
+                 /// <summary>
+    			/// Word content
+    			/// </summary>
+    			char* _wordContent;
+            };
+```
+
+Although C# can use pointer variables under unsafe modifiers, who still flips pointers with C# XD.
+
+If you want to reference char* in dynamic link library without using pointers in C#, you need some new stuff.
+
+For **_wordContent** in the above example, we can use the **String** class to modify it (note that it is the String class, not the string data type)
+
+```c#
+            public String _wordContent; 
+```
+
+That's not enough. When calling a function or generating a method, you need to escape char* as String. MarshalAs specifies the encoding method as LPStr (which is char*)
+
+Suppose we have a function like this (just an example, the actual code is not like this)
+
+```C
+struct _Word* _CreateWordInstance(char* _wordContent){}
+```
+
+Then the way to call it in C# is
+
+```c#
+public static extern IntPtr _CreateWordInstance([MarshalAs(UnmanagedType.LPStr)] String _wordContent);
+```
+
+**Here we use IntPtr data type, which will be explained later**
+
+
+
+That is, through
+
+```c#
+[MarshalAs(UnmanagedType.LPStr)]
+```
+
+tag, convert char * type to String.
+
+#### 3.Structure pointer
+
+In the C language program, I defined such a function
+
+```C	
+ struct _Word* _CreateWordListHead(){};
+```
+
+As you can see, the function type is a structure pointer. But how do you call a function that returns a structure pointer in C#?
+
+It's simple. We used IntPtr before. This is a System structure with the same width as a pointer. We can just think of it as a generic pointer. This also involves language features such as unmanaged pointers in C#, which I don't understand very well yet, so I won't talk nonsense.
+
+So, the way to call it in C# should be
+
+```c#
+        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
+        public static extern IntPtr _CreateWordListHead();
+
+```
+
 # 4.9 Project log
 ![4.90](/READMEImage/4.90.png)
 1. Made a little UI interface for reciting words, but it needs to be improved
