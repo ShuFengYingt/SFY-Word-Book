@@ -6,9 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFY_Word_Book.Extensions;
+using System.Runtime.InteropServices;
+
 namespace SFY_Word_Book.ViewModels
 {
     public class LearningViewModel:BindableBase
@@ -19,6 +23,9 @@ namespace SFY_Word_Book.ViewModels
             //初始化
             WordCards = new ObservableCollection<WordCard>();
             CreateWordCard();
+
+
+
         }
 
 
@@ -34,7 +41,9 @@ namespace SFY_Word_Book.ViewModels
 
         void CreateWordCard()
         {
-            WordCards.Add(new WordCard() { Word="fantastic", PhoneticSymbol = "[fæn'tæstɪk]" });
+           CSolves.Sentence translation = CSolves.SentenceCreate(1, "fantic", "好！");
+
+            WordCards.Add(new WordCard() { Word = translation.SentenceContent, PhoneticSymbol = translation.SentenceCN });
         }
 
 

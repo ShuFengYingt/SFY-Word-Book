@@ -4,6 +4,13 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include"CSolves.h"
+#include<wchar.h>
+
+int _add(int a, int b)
+{
+    return a + b;
+}
+
 
 /// <summary>
 /// 例句类
@@ -27,6 +34,27 @@ struct _Sentence
 
 
 };
+/// <summary>
+/// 创建例句实例
+/// </summary>
+/// <param name="例句内容"></param>
+/// <param name="例句释义"></param>
+/// <returns>例句实例</returns>
+struct _Sentence* _CreateSentenceInstance(int _sentenceRank,const char* _sentenceContent,const char* _senteceCN)
+{
+    struct _Sentence* _newSentece = (struct _Sentence*)malloc(sizeof(struct _Sentence));
+    assert(_newSentece);
+
+    _newSentece->_sentenceRank = _sentenceRank;
+    _newSentece->_senteceCN = _senteceCN;
+    _newSentece->_sentenceContent = _sentenceContent;
+
+    return _newSentece;
+}
+
+
+
+
 
 /// <summary>
 /// 释义结构体
@@ -48,6 +76,17 @@ struct _Translation
     /// </summary>
     char* _transCN;
 };
+
+struct _Translation* _CreateTranslationInstance(int _transRank,  char* _partOfSpeech,  char* _transCN)
+{
+    struct _Translation* _newTranslation = (struct _Translation*)malloc(sizeof(struct _Translation));
+    assert(_newTranslation);
+
+    _newTranslation->_transRank = _transRank;
+    _newTranslation->_transCN = _transCN;
+    _newTranslation->_partOfSpeech = _partOfSpeech;
+    return _newTranslation;
+}
 
 
 /// <summary>
@@ -91,12 +130,12 @@ struct _Word
     int _groupId;
 
     //例句组
-    int numOfSenteces;
-    struct _Sentence sentences[11];
+    int _numOfSenteces;
+    struct _Sentence _sentences[11];
 
     //释义组
-    int numOfTranslations;
-    struct _Translation translations[11];
+    int _numOfTranslations;
+    struct _Translation _translations[11];
 
 
     struct _Word* _nextWord;
@@ -133,8 +172,11 @@ struct _Word* _CreateWordListHead()
 /// <param name="所在群组"></param>
 /// <returns>实例化的单词</returns>
 struct _Word* _CreateWordInstance(int _wordRank,char* _wordContent,
-                                  char* _phoneticSymbol, char* _phoneSpeech, 
-                                  int _combo,bool _isLearned,int _groupId)
+                                    char* _phoneticSymbol, char* _phoneSpeech, 
+                                    int _combo,bool _isLearned,int _groupId,
+                                    int numOfSentences,struct _Sentence* _sentences,
+                                    int _numOfTranslations,struct _Translations* _translations)
+
 {
     //申请内存
     struct _Word* _newWord = (struct _Word*)malloc(sizeof(struct _Word));
@@ -150,10 +192,18 @@ struct _Word* _CreateWordInstance(int _wordRank,char* _wordContent,
     _newWord->_combo = _combo;
     _newWord->_isLearned = _isLearned;
     _newWord->_groupId = _groupId;
+    _newWord->_numOfSenteces = numOfSentences;
     _newWord->_nextWord = NULL;
+    _newWord->_numOfTranslations = _numOfTranslations;
+    
+    //使用memcpy复制数组
+    memcpy(_newWord->_sentences, _sentences, sizeof(struct _Sentence) * numOfSentences);
+    memcpy(_newWord->_translations, _translations, sizeof(struct _Translation) * _numOfTranslations);
 
     return _newWord;
 }
+
+
 
 /// <summary>
 /// 在表头插入新节点,用于单词书初始化以及复习书增加单词

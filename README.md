@@ -85,24 +85,24 @@ extern _declspec(dllexport)
     using System.Runtime.InteropServices;
 
 	   [StructLayout(LayoutKind.Sequential)]
-        public struct _Word
+        public struct Sentence
         {
             
         }
 
 ```
 
-#### 2.char*  转换
+#### 2.char*  转换（重中之重）
 
 在C语言中，为了更方便地实现字符串功能，我在结构体中用char* 指针进行了字符串定义，类似如下
 
 ```C
-            struct _Word
+            struct Sentence
             {
                  /// <summary>
     			/// 单词内容
     			/// </summary>
-    			char* _wordContent;
+    			char* _sentenceContent;
             };
 ```
 
@@ -110,57 +110,77 @@ extern _declspec(dllexport)
 
 如果想在C#中不使用指针的情况下引用动态链接库的char* ，则需要用点新玩意了。
 
-对于上述示例中的 **_wordContent** ，我们可以在用**String**类来进行修饰(注意，是String类，不是string数据类型)
+对于上述示例中的 **_sentenceContent** ，我们可以在C#的同等结构体中用**IntPtr**来进行定义
 
 ```c#
-            public String _wordContent; 
+            public IntPtr _sentenceContent; 
 ```
 
-仅是如此还不够，在调用函数或者生成方法时，需要对char* 进行String转义，MarshalAs指定编码方式为LPStr（也就是char*）
+仅是如此还不够，在调用函数或者生成方法时，需要对char* 进行发送和接受，而C#中接受char* 的方式我试了很多，只有一个是正常的，其他全部都会输出乱码，接下来对接受方式进行介绍。
 
 假设我们有一个函数为(只是举个例子，实际代码并不是这样)
 
 ```c
-struct _Word* _CreateWordInstance(char* _wordContent){}
+struct _Sentence* _CreateSentenceInstance(char* _sentenceContent){}
 ```
 
-那么在C#中调用为
+那么我们可以在之前的结构体中，进行一定程度的封装
 
 ```c#
-public static extern IntPtr _CreateWordInstance([MarshalAs(UnmanagedType.LPStr)] String _wordContent);
+		   struct Sentence
+            {
+                 /// <summary>
+    			/// 单词内容
+    			/// </summary>
+    			private IntPtr _sentenceContent;
+               	 public string SentenceContent
+                 {
+                     get{return Marshal.PtrToStringUTF8(_sentenceContent); }
+                 }
+            };
 ```
 
-**这里用到了IntPtr数据类型，之后再讲**
+这个过程中，我们将_sentenceContent数据成员隐藏了起来，取而代之的是string类型的SentenceContent属性，并且在返回上用了Marshal.PtrToStringUTF8()进行转化。
 
+这个步骤是将IntPtr类型的_sentenceContent转化为UTF-8编码的字符串。
 
+为什么要这么做呢，我们接着来看函数的封装
 
-也就是，通过
+为了引用在上文给出的返回结构体指针变量的*_CreateSentenceInstance*函数，我们在C#中应该进行如下导入：
 
 ```c#
-[MarshalAs(UnmanagedType.LPStr)]
+        [DllImport("CSolves.dll", EntryPoint = "_CreateSentenceInstance", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr _CreateSentenceInstance(byte[] _sentenceContent);
 ```
 
-标记，将char * 类型String化。
+不难发现，对于C语言中的char* ，在C#中，我们使用了byte[]数组来进行接收，这是因为char*的本质是一串连续地址，所以我们可以将我们需要传入的字符串转换为二进制的byte数组，也就是指定了其地址，再传入动态链接库当中。（应该是这么理解，吧）
 
-#### 3.结构体指针
-
-在C语言的程序中，我定义了这样的函数
-
-```C	
- struct _Word* _CreateWordListHead(){};
-```
-
-可以看到，函数类型是一个结构体指针，但是在C#中该如何调用返回结构体指针的函数呢？
-
-很简单，之前我们用到了IntPtr，这是一种System结构，宽度与指针相同，我们可以就把他当作一种泛型指针来理解。这里面还涉及到C#的非托管指针之类的语言特性，我暂时也不是很懂，就不胡说八道了。
-
-所以，在C#中调用的方式应该是
+进而，我们可以进一步对_CreateSentenceInstance进行封装，返回一个Struct
 
 ```c#
-        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
-        public static extern IntPtr _CreateWordListHead();
+        /// <summary>
+        /// 创建例句结构体实例
+        /// </summary>
+        /// <param name="sentenceContent"></param>
+        /// <returns>Sentence Struct</returns>
+        public static Sentence SentenceCreate(string sentenceContent)
+        {
+            byte[] _sentenceContentByte = Encoding.UTF8.GetBytes(sentenceContent);
+            IntPtr sentencePtr = _CreateSentenceInstance(_sentenceContentByte);
+            Sentence sentence = Marshal.PtrToStructure<Sentence>(sentencePtr);
+            return sentence;
+        }
 
 ```
+
+这里进行了三个步骤
+
+1. 将C#端传入的string使用`Encoding.UTF8.GetBytes()`方法转化为二进制数组
+2. 调用`_CreateSentenceInstance`方法，将byte[]传入，动态链接库端自动完成byte-》char* 的对接专化
+3. 使用`Marshal.PtrToStructure`方法完成指针的结构体化转化
+
+这样的封装方式更适合C#的调用
+
 
 
 

@@ -45,7 +45,7 @@
                                 VerticalAlignment="Top"
                                 FontSize="17"
                                 Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                Text="[fæn'tæstɪk]" />
+                                Text="{Binding PhoneticSymbol}" />
 
                         </Grid>
                     </materialDesign:Card>

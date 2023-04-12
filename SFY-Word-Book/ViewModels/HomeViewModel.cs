@@ -37,6 +37,7 @@ namespace SFY_Word_Book.ViewModels
             this.regionManage = regionManager;
 
 
+
             CreateTaskBar();
             CreateDailyPage();
         }

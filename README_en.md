@@ -88,77 +88,98 @@ For the structure defined in the dynamic link library, we need to re-declare it 
 
 ```
 
-#### 2.char*  conversion
+Here is my attempt to translate the markdown into English, keeping the markdown format.
 
-In C language, in order to implement string functions more conveniently, I used char* pointers to define strings in structures, similar to the following
+#### 2. char* conversion (the most important)
+
+In C language, in order to implement string functionality more conveniently, I used char* pointer to define strings in the structure, similar to the following
 
 ```C
-            struct _Word
+            struct Sentence
             {
                  /// <summary>
     			/// Word content
     			/// </summary>
-    			char* _wordContent;
+    			char* _sentenceContent;
             };
 ```
 
-Although C# can use pointer variables under unsafe modifiers, who still flips pointers with C# XD.
+Although C# can use pointer variables under the unsafe modifier, who still uses pointers when using C# XD.
 
-If you want to reference char* in dynamic link library without using pointers in C#, you need some new stuff.
+If you want to reference the char* of the dynamic link library in C# without using pointers, you need to use some new stuff.
 
-For **_wordContent** in the above example, we can use the **String** class to modify it (note that it is the String class, not the string data type)
-
-```c#
-            public String _wordContent; 
-```
-
-That's not enough. When calling a function or generating a method, you need to escape char* as String. MarshalAs specifies the encoding method as LPStr (which is char*)
-
-Suppose we have a function like this (just an example, the actual code is not like this)
-
-```C
-struct _Word* _CreateWordInstance(char* _wordContent){}
-```
-
-Then the way to call it in C# is
+For the **_sentenceContent** in the above example, we can use **IntPtr** to define it in the equivalent structure in C#
 
 ```c#
-public static extern IntPtr _CreateWordInstance([MarshalAs(UnmanagedType.LPStr)] String _wordContent);
+            public IntPtr _sentenceContent; 
 ```
 
-**Here we use IntPtr data type, which will be explained later**
+This alone is not enough. When calling functions or generating methods, you need to send and receive char*. I have tried many ways to receive char* in C#, but only one is normal. All others will output garbled characters. Next, I will introduce how to receive them.
 
+Suppose we have a function like (just an example, the actual code is not like this)
 
+```c
+struct _Sentence* _CreateSentenceInstance(char* _sentenceContent){}
+```
 
-That is, through
+Then we can do some encapsulation in the previous structure
 
 ```c#
-[MarshalAs(UnmanagedType.LPStr)]
+struct Sentence {
+    /// <summary>
+    /// Content of the sentence
+    /// </summary>
+    private IntPtr _sentenceContent;
+    public string SentenceContent {
+        get {
+            return Marshal.PtrToStringUTF8(_sentenceContent);
+        }
+    }
+};
+
 ```
 
-tag, convert char * type to String.
+In this process, we have hidden the data member `_sentenceContent` and replaced it with a string type property `SentenceContent`, and used `Marshal.PtrToStringUTF8()` to convert it during return. This step is to convert the `IntPtr` type `_sentenceContent` to a UTF-8 encoded string.
 
-#### 3.Structure pointer
-
-In the C language program, I defined such a function
-
-```C	
- struct _Word* _CreateWordListHead(){};
-```
-
-As you can see, the function type is a structure pointer. But how do you call a function that returns a structure pointer in C#?
-
-It's simple. We used IntPtr before. This is a System structure with the same width as a pointer. We can just think of it as a generic pointer. This also involves language features such as unmanaged pointers in C#, which I don't understand very well yet, so I won't talk nonsense.
-
-So, the way to call it in C# should be
+Why do we need to do this? Let's look at the encapsulation of the function. In order to reference the `_CreateSentenceInstance` function that was given in the previous section, we should import it into C# as follows:
 
 ```c#
-        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
-        public static extern IntPtr _CreateWordListHead();
+[DllImport("CSolves.dll", EntryPoint = "_CreateSentenceInstance", CallingConvention = CallingConvention.Cdecl)]
+private static extern IntPtr _CreateSentenceInstance(byte[] _sentenceContent);
 
 ```
+
+It is not difficult to see that for `char*` in C, we use a `byte[]` array in C# for receiving. This is because the essence of `char*` is a string of continuous addresses, so we can convert the string we need to pass in into a binary `byte` array, which specifies its address, and then pass it into the dynamic link library (DLL). (I guess this is the way to understand it.)
+
+Furthermore, we can further encapsulate `_CreateSentenceInstance` to return a `struct`.
+
+```c#
+/// <summary>
+/// Create instance of Sentence struct
+/// </summary>
+/// <param name="sentenceContent"></param>
+/// <returns>Sentence Struct</returns>
+public static Sentence SentenceCreate(string sentenceContent)
+{
+    byte[] _sentenceContentByte = Encoding.UTF8.GetBytes(sentenceContent);
+    IntPtr sentencePtr = _CreateSentenceInstance(_sentenceContentByte);
+    Sentence sentence = Marshal.PtrToStructure<Sentence>(sentencePtr);
+    return sentence;
+}
+
+```
+
+Here are three steps:
+
+1. Convert the string passed in by the C# side into a binary array using the `Encoding.UTF8.GetBytes()` method.
+2. Call the `_CreateSentenceInstance` method and pass in the `byte[]`. The dynamic link library automatically specializes the connection between `byte` and `char*`.
+3. Use the `Marshal.PtrToStructure` method to complete the conversion of the pointer to a struct.
+
+This encapsulation method is more suitable for calling in C#.
+
 
 # 4.9 Project log
+
 ![4.90](/READMEImage/4.90.png)
 1. Made a little UI interface for reciting words, but it needs to be improved
 2. Configure the WebAPI
