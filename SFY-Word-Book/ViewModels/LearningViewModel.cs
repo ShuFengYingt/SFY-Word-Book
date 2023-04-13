@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,13 +50,15 @@ namespace SFY_Word_Book.ViewModels
 
             CSolves.Word word = CSolves.WordCreate(1, "fantasy", "好", "url", 0, false, 0, 2, sentences, 2, translations);
             CSolves.Word word_1 = CSolves.WordCreate(2, "fantastic", "好", "url", 0, false, 0, 2, sentences, 2, translations);
+            CSolves.Word word_2 = CSolves.WordCreate(3, "aaa", "好", "url", 0, false, 0, 2, sentences, 2, translations);
             CSolves.Word listWordHead = CSolves.WordListHeadCreate();
             CSolves.InsertWordToFront(listWordHead, word);
             CSolves.InsertWordToFront(listWordHead, word_1);
+            CSolves.InsertWordToFront(listWordHead, word_2);
 
-            string wordRank = CSolves.SearchByWordContent(listWordHead, "fantastic").ToString();
-            Console.WriteLine(CSolves.SearchByWordRank(listWordHead, 1));
-            WordCards.Add(new WordCard() { Word = CSolves.SearchByWordRank(listWordHead,1), PhoneticSymbol = word.Translations[0].TransCN });
+            string wordRank = CSolves.SearchByWordContent(listWordHead, "aaa").ToString();
+            string wordcontent = CSolves.SearchByWordRank(listWordHead, 3);
+            WordCards.Add(new WordCard() { Word = wordRank, PhoneticSymbol = word.Translations[0].TransCN });
         }
 
 

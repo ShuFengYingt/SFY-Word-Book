@@ -3,6 +3,7 @@ using System;
 using System.Data.SqlTypes;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Diagnostics;
 using System.Windows;
 
 namespace SFY_Word_Book.Extensions
@@ -65,24 +66,24 @@ namespace SFY_Word_Book.Extensions
 
 
             private int _wordRank;
-            public IntPtr _wordContent;
-            public IntPtr _phoneticSymbol;
-            public IntPtr _phoneSpeech;
-            public int _combo;
-            public bool _isLearned;
-            public int _groupId;
+            private IntPtr _wordContent;
+            private IntPtr _phoneticSymbol;
+            private IntPtr _phoneSpeech;
+            private int _combo;
+            private bool _isLearned;
+            private int _groupId;
 
-            public int _numOfSentences;
+            private int _numOfSentences;
             //使用MarshalAs属性指定数组大小
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 11)]
-            public Sentence[] _sentences;
+            private Sentence[] _sentences;
 
-            public int _numOfTranslations;
+            private int _numOfTranslations;
             //使用MarshalAs属性指定数组大小
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 11)]
-            public Translation[] _translations;
+            private Translation[] _translations;
 
-            public IntPtr _nextWord; //用InputPtr代替struct _Word*
+            private IntPtr _nextWord; //用InputPtr代替struct _Word*
 
 
             /// <summary>
@@ -125,11 +126,50 @@ namespace SFY_Word_Book.Extensions
             /// 释义
             /// </summary>
             public Translation[] Translations { get { return _translations; } }
+            /// <summary>
+            /// 下一个单词，结构体属性
+            /// </summary>
+            public Word NextWord { get { return Marshal.PtrToStructure<Word>(_nextWord); } }
+            /// <summary>
+            /// 下一个单词节点地址属性
+            /// </summary>
+            public IntPtr PNext { get { return _nextWord; } set {_nextWord = value; } }
 
         }
 
         [DllImport("CSolves.dll", EntryPoint = "_CreateSentenceInstance", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr _CreateSentenceInstance(int _sentenceRank, byte[] _sentenceContent, byte[] _sentenceCN);
+
+        [DllImport("CSolves.dll", EntryPoint = "_CreateTranslationInstance")]
+        private static extern IntPtr _CreateTranslationInstance(int _transRank, byte[] _partOfSpeech, byte[] _transCN);
+
+        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
+        private static extern IntPtr _CreateWordListHead();
+
+        [DllImport("CSolves.dll", EntryPoint = "_CreateWordInstance")]
+        private static extern IntPtr _CreateWordInstance(int _wordRank, byte[] _wordContent, byte[] _phoneticSymbol, byte[] _phoneSpeech,
+            int _combo, bool _isLearned, int _groupId, int _numOfSentences, IntPtr _sentences, int _numOfTranslation, IntPtr _translations);
+
+        [DllImport("CSolves.dll", EntryPoint = "_InsertWordToFront")]
+        private static extern void _InsertWordToFront(IntPtr _wordListHead, IntPtr _newWord);
+
+        [DllImport("CSolves.dll", EntryPoint = "_DeleteByAppoint")]
+        private static extern void _DeleteByAppoint(IntPtr _wordListHead, int _wordRank);
+
+        [DllImport("CSolves.dll", EntryPoint = "_SearchByWordContent")]
+        private static extern int _SearchByWordContent(IntPtr _wordListHead, byte[] _wordContent);
+
+        [DllImport("CSolves.dll", EntryPoint = "_SearchByWordRank")]
+        private static extern IntPtr _SearchByWordRank(IntPtr _wordListHead, int _wordRank);
+
+        [DllImport("CSolves.dll", EntryPoint = "_PrintfWordList")]
+        private static extern void _PrintfWordList(IntPtr _listHeadWord);
+
+        [DllImport("CSolves.dll", EntryPoint = "_CreateWordBooks")]
+        public static extern void _CreateWordBooks();
+
+
+
 
         /// <summary>
         /// 创建例句结构体实例
@@ -148,9 +188,6 @@ namespace SFY_Word_Book.Extensions
             return sentence;
         }
 
-        [DllImport("CSolves.dll", EntryPoint = "_CreateTranslationInstance")]
-        private static extern IntPtr _CreateTranslationInstance(int _transRank, byte[] _partOfSpeech, byte[] _transCN);
-
         /// <summary>
         /// 创建释义实例
         /// </summary>
@@ -160,8 +197,8 @@ namespace SFY_Word_Book.Extensions
         /// <returns>Translation struct</returns>
         public static Translation TranslationCreate(int transRank, string partOfSpeech, string transCN)
         {
-            byte[] _partOfSpeechByte = Encoding.UTF8.GetBytes(partOfSpeech);
-            byte[] _transCNByte = Encoding.UTF8.GetBytes(transCN);
+            byte[] _partOfSpeechByte = Encoding.ASCII.GetBytes(partOfSpeech);
+            byte[] _transCNByte = Encoding.ASCII.GetBytes(transCN);
 
             IntPtr translationPtr = _CreateSentenceInstance(transRank, _partOfSpeechByte, _transCNByte);
             return (Translation)Marshal.PtrToStructure(translationPtr, typeof(Translation));
@@ -169,10 +206,6 @@ namespace SFY_Word_Book.Extensions
 
         }
 
-
-
-        [DllImport("CSolves.dll", EntryPoint = "_CreateWordListHead")]
-        private static extern IntPtr _CreateWordListHead();
         /// <summary>
         /// 创建单词链表头节点
         /// </summary>
@@ -181,16 +214,10 @@ namespace SFY_Word_Book.Extensions
         {
             IntPtr wordListHeadPtr = _CreateWordListHead();
             Word wordHead = Marshal.PtrToStructure<Word>(wordListHeadPtr);
+            wordHead.PNext = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+
             return wordHead;
         }
-
-
-
-
-        [DllImport("CSolves.dll", EntryPoint = "_CreateWordInstance")]
-
-        private static extern IntPtr _CreateWordInstance(int _wordRank, byte[] _wordContent, byte[] _phoneticSymbol, byte[] _phoneSpeech,
-            int _combo, bool _isLearned, int _groupId, int _numOfSentences, IntPtr _sentences, int _numOfTranslation, IntPtr _translations);
 
         /// <summary>
         /// 创建单词实例
@@ -228,31 +255,28 @@ namespace SFY_Word_Book.Extensions
 
             IntPtr wordPtr = _CreateWordInstance(wordRank, _wordContent, _phoneticSymbol, _phoneSpeech, combo, isLearned, groupId, numOfSentences, sentencePtr, numOfTranslation, translationPtr);
             Word word = Marshal.PtrToStructure<Word>(wordPtr);
+            word.PNext = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
             return word;
         }
-
-
-        [DllImport("CSolves.dll", EntryPoint = "_InsertWordToFront")]
-        private static extern void _InsertWordToFront(IntPtr _wordListHead, IntPtr _newWord);
 
         /// <summary>
         /// 插入单词结构体到链表头
         /// </summary>
         /// <param name="wordListHead"></param>
         /// <param name="newWord"></param>
-        public static void InsertWordToFront(Word wordListHead,Word newWord)
+        public static void InsertWordToFront(Word wordListHead, Word newWord)
         {
-            IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
+            //IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            //Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
 
-            IntPtr newWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            Marshal.StructureToPtr(newWord, newWordPtr, false);
+            //IntPtr newWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            //Marshal.StructureToPtr(newWord, newWordPtr, false);
 
-            _InsertWordToFront(wordListHeadPtr, newWordPtr);
+            //_InsertWordToFront(wordListHeadPtr, newWordPtr);
+            Marshal.StructureToPtr(wordListHead.NextWord, newWord.PNext, false);
+            Marshal.StructureToPtr(newWord, wordListHead.PNext, false);
         }
 
-        [DllImport("CSolves.dll", EntryPoint = "_DeleteByAppoint")]
-        private static extern void _DeleteByAppoint(IntPtr _wordListHead, int _wordRank);
         /// <summary>
         /// 根据序号删除单词
         /// </summary>
@@ -261,21 +285,18 @@ namespace SFY_Word_Book.Extensions
         public static void DeleteByAppoint(Word wordListHead, int _wordRank)
         {
             IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            Marshal.StructureToPtr(wordListHead,wordListHeadPtr, false);
+            Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
 
             _DeleteByAppoint(wordListHeadPtr, _wordRank);
         }
 
-
-        [DllImport("CSolves.dll", EntryPoint = "_SearchByWordContent")]
-        private static extern int _SearchByWordContent(IntPtr _wordListHead, byte[] _wordContent);
         /// <summary>
         /// 根据单词内容查找单词
         /// </summary>
         /// <param name="wordListHead"></param>
         /// <param name="wordContent"></param>
         /// <returns>单词序号</returns>
-        public static int SearchByWordContent(Word wordListHead,string wordContent)
+        public static int SearchByWordContent(Word wordListHead, string wordContent)
         {
             IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
             Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
@@ -286,15 +307,13 @@ namespace SFY_Word_Book.Extensions
 
         }
 
-        [DllImport("CSolves.dll", EntryPoint = "_SearchByWordRank")]
-        private static extern IntPtr _SearchByWordRank(IntPtr _wordListHead, int _wordRank);
         /// <summary>
         /// 根据单词序号进行查找
         /// </summary>
         /// <param name="wordListHead"></param>
         /// <param name="wordRank"></param>
         /// <returns>单词内容</returns>
-        public static string SearchByWordRank(Word wordListHead,int wordRank)
+        public static string SearchByWordRank(Word wordListHead, int wordRank)
         {
             IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
             Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
@@ -305,9 +324,6 @@ namespace SFY_Word_Book.Extensions
 
         }
 
-
-        [DllImport("CSolves.dll", EntryPoint = "_PrintfWordList")]
-        private static extern void _PrintfWordList(IntPtr _listHeadWord);
         public static void PrintfWordList(Word listHeadWord)
         {
             IntPtr listHeadWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
@@ -315,14 +331,6 @@ namespace SFY_Word_Book.Extensions
 
             _PrintfWordList(listHeadWordPtr);
         }
-
-
-
-
-        [DllImport("CSolves.dll", EntryPoint = "_CreateWordBooks")]
-        public static extern void _CreateWordBooks();
-
-
 
     }
 }

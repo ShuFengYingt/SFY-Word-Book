@@ -42,7 +42,8 @@ struct _Sentence
 /// <returns>例句实例</returns>
 struct _Sentence* _CreateSentenceInstance(int _sentenceRank,const char* _sentenceContent,const char* _senteceCN)
 {
-    struct _Sentence* _newSentece = (struct _Sentence*)malloc(sizeof(struct _Sentence));
+    struct _Sentence* _newSentece;
+     _newSentece   = (struct _Sentence*)malloc(sizeof(struct _Sentence));
     assert(_newSentece);
 
     _newSentece->_sentenceRank = _sentenceRank;
@@ -141,7 +142,6 @@ struct _Word
     struct _Word* _nextWord;
      
 };
-
 
 
 /// <summary>
@@ -289,6 +289,7 @@ char* _SearchByWordRank(struct _Word* _listHeadWord, int _wordRank)
 /// <param name="headWord"></param>
 void _PrintfWordList(struct _Word* headWord)
 {
+    printf("enterd\n");
     struct _Word* pMove = headWord->_nextWord; 
     while (pMove != NULL)
     {

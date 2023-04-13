@@ -24,6 +24,7 @@
     <ProjectGuid>{9ac4c5e8-f56b-4bbd-bc6e-c32fb985603a}</ProjectGuid>
     <RootNamespace>SFYWordBookC</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CSolves</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
