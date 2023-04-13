@@ -248,7 +248,7 @@ void _DeleteByAppoint(struct _Word* _listHeadWord,int _wordRank)
 int _SearchByWordContent(struct _Word* _listHeadWord,char* _wordContent)
 {
     struct _Word* pMove = _listHeadWord->_nextWord;
-    while (pMove != NULL && pMove->_wordContent != _wordContent)
+    while (pMove != NULL && strcmp(pMove->_wordContent, _wordContent) != 0)
     {
         pMove = pMove->_nextWord;
     }
@@ -262,6 +262,23 @@ int _SearchByWordContent(struct _Word* _listHeadWord,char* _wordContent)
         return -1;
     }
 
+}
+
+char* _SearchByWordRank(struct _Word* _listHeadWord, int _wordRank)
+{
+    struct _Word* pMove = _listHeadWord->_nextWord;
+    while (pMove != NULL && pMove->_wordRank != _wordRank)
+    {
+        pMove = pMove->_nextWord;
+    }
+    if (pMove != NULL)
+    {
+        return pMove->_wordContent;
+    }
+    else
+    {
+        return "-1";
+    }
 }
 
 

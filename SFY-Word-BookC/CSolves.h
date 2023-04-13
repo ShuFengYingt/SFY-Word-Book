@@ -18,6 +18,8 @@ extern _declspec(dllexport) void _DeleteByAppoint(struct _Word* _listHeadWord, i
 
 extern _declspec(dllexport) int _SearchByWordContent(struct _Word* _listHeadWord, char* _wordContent);
 
+extern _declspec(dllexport) char* _SearchByWordRank(struct _Word* _listHeadWord, int _wordRank);
+
 extern _declspec(dllexport) void _PrintfWordList(struct _Word* _headWord);
 
 extern _declspec(dllexport) void _CreateWordBooks();
