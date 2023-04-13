@@ -1,3 +1,5 @@
+
+
 extern _declspec(dllexport) int _add(int a, int b);
 
 extern _declspec(dllexport) struct _Sentence* _CreateSentenceInstance(int _sentenceRank,  char* _sentenceContent,  char* _senteceCN);

@@ -40,25 +40,10 @@ namespace SFY_Word_Book.ViewModels
 
         void CreateWordCard()
         {
-            CSolves.Sentence sentence_1 = CSolves.SentenceCreate(1, "fantic", "好！");
-            CSolves.Sentence sentence1_2 = CSolves.SentenceCreate(2, "fantasy", "！");
-            CSolves.Translation translation_1 = CSolves.TranslationCreate(1, "fantasy", "成功！");
-            CSolves.Translation translation_2 = CSolves.TranslationCreate(2, "fantasy", "！");
 
-            CSolves.Translation[] translations = new CSolves.Translation[] { translation_1, translation_2 };
-            CSolves.Sentence[] sentences = new CSolves.Sentence[] { sentence_1, sentence1_2 };
+            CET4 cET4 = new CET4("CET6.json");
 
-            CSolves.Word word = CSolves.WordCreate(1, "fantasy", "好", "url", 0, false, 0, 2, sentences, 2, translations);
-            CSolves.Word word_1 = CSolves.WordCreate(2, "fantastic", "好", "url", 0, false, 0, 2, sentences, 2, translations);
-            CSolves.Word word_2 = CSolves.WordCreate(3, "aaa", "好", "url", 0, false, 0, 2, sentences, 2, translations);
-            CSolves.Word listWordHead = CSolves.WordListHeadCreate();
-            CSolves.InsertWordToFront(listWordHead, word);
-            CSolves.InsertWordToFront(listWordHead, word_1);
-            CSolves.InsertWordToFront(listWordHead, word_2);
-
-            string wordRank = CSolves.SearchByWordContent(listWordHead, "aaa").ToString();
-            string wordcontent = CSolves.SearchByWordRank(listWordHead, 3);
-            WordCards.Add(new WordCard() { Word = wordRank, PhoneticSymbol = word.Translations[0].TransCN });
+            WordCards.Add(new WordCard() { Word = cET4.Word_1.headWord, PhoneticSymbol = "asd" });
         }
 
 

@@ -234,7 +234,7 @@ void _DeleteByAppoint(struct _Word* _listHeadWord,int _wordRank)
     }
     if (_posword != NULL)
     {
-        _preWord->_nextWord = _posword->_nextWord;
+        _preWord->_nextWord = _posword->_nextWord->_nextWord;
         free(_posword);
     }
 }

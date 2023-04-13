@@ -85,6 +85,8 @@ namespace SFY_Word_Book.Extensions
 
             private IntPtr _nextWord; //用InputPtr代替struct _Word*
 
+            public GCHandle next;
+
 
             /// <summary>
             /// 单词序号
@@ -169,6 +171,45 @@ namespace SFY_Word_Book.Extensions
         public static extern void _CreateWordBooks();
 
 
+        /// <summary>
+        /// 创建单词实例
+        /// </summary>
+        /// <param name="wordRank"></param>
+        /// <param name="wordContent"></param>
+        /// <param name="phoneticSymbol"></param>
+        /// <param name="phoneSpeech"></param>
+        /// <param name="combo"></param>
+        /// <param name="isLearned"></param>
+        /// <param name="groupId"></param>
+        /// <param name="numOfSentences"></param>
+        /// <param name="sentences"></param>
+        /// <param name="numOfTranslation"></param>
+        /// <param name="translations"></param>
+        /// <returns>Word Struct</returns>
+        public static Word WordCreate(int wordRank, string wordContent, string phoneticSymbol, string phoneSpeech, int combo, bool isLearned, int groupId,
+            int numOfSentences, Sentence[] sentences, int numOfTranslation, Translation[] translations)
+        {
+            byte[] _wordContent = Encoding.UTF8.GetBytes(wordContent);
+            byte[] _phoneticSymbol = Encoding.UTF8.GetBytes(phoneticSymbol);
+            byte[] _phoneSpeech = Encoding.UTF8.GetBytes(phoneSpeech);
+
+            // 将托管数组转换为非托管指针
+            IntPtr sentencePtr = Marshal.AllocHGlobal(sentences.Length * Marshal.SizeOf<Sentence>());
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                Marshal.StructureToPtr(sentences[i], IntPtr.Add(sentencePtr, i * Marshal.SizeOf<Sentence>()), false);
+            }
+            IntPtr translationPtr = Marshal.AllocHGlobal(translations.Length * Marshal.SizeOf<Translation>());
+            for (int i = 0; i < translations.Length; i++)
+            {
+                Marshal.StructureToPtr(translations[i], IntPtr.Add(translationPtr, i * Marshal.SizeOf<Translation>()), false);
+            }
+
+            IntPtr wordPtr = _CreateWordInstance(wordRank, _wordContent, _phoneticSymbol, _phoneSpeech, combo, isLearned, groupId, numOfSentences, sentencePtr, numOfTranslation, translationPtr);
+            Word word = Marshal.PtrToStructure<Word>(wordPtr);
+            word.PNext = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            return word;
+        }
 
 
         /// <summary>
@@ -219,45 +260,6 @@ namespace SFY_Word_Book.Extensions
             return wordHead;
         }
 
-        /// <summary>
-        /// 创建单词实例
-        /// </summary>
-        /// <param name="wordRank"></param>
-        /// <param name="wordContent"></param>
-        /// <param name="phoneticSymbol"></param>
-        /// <param name="phoneSpeech"></param>
-        /// <param name="combo"></param>
-        /// <param name="isLearned"></param>
-        /// <param name="groupId"></param>
-        /// <param name="numOfSentences"></param>
-        /// <param name="sentences"></param>
-        /// <param name="numOfTranslation"></param>
-        /// <param name="translations"></param>
-        /// <returns>Word Struct</returns>
-        public static Word WordCreate(int wordRank, string wordContent, string phoneticSymbol, string phoneSpeech, int combo, bool isLearned, int groupId,
-            int numOfSentences, Sentence[] sentences, int numOfTranslation, Translation[] translations)
-        {
-            byte[] _wordContent = Encoding.UTF8.GetBytes(wordContent);
-            byte[] _phoneticSymbol = Encoding.UTF8.GetBytes(phoneticSymbol);
-            byte[] _phoneSpeech = Encoding.UTF8.GetBytes(phoneSpeech);
-
-            // 将托管数组转换为非托管指针
-            IntPtr sentencePtr = Marshal.AllocHGlobal(sentences.Length * Marshal.SizeOf<Sentence>());
-            for (int i = 0; i < sentences.Length; i++)
-            {
-                Marshal.StructureToPtr(sentences[i], IntPtr.Add(sentencePtr, i * Marshal.SizeOf<Sentence>()), false);
-            }
-            IntPtr translationPtr = Marshal.AllocHGlobal(translations.Length * Marshal.SizeOf<Translation>());
-            for (int i = 0; i < translations.Length; i++)
-            {
-                Marshal.StructureToPtr(translations[i], IntPtr.Add(translationPtr, i * Marshal.SizeOf<Translation>()), false);
-            }
-
-            IntPtr wordPtr = _CreateWordInstance(wordRank, _wordContent, _phoneticSymbol, _phoneSpeech, combo, isLearned, groupId, numOfSentences, sentencePtr, numOfTranslation, translationPtr);
-            Word word = Marshal.PtrToStructure<Word>(wordPtr);
-            word.PNext = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            return word;
-        }
 
         /// <summary>
         /// 插入单词结构体到链表头
@@ -266,15 +268,15 @@ namespace SFY_Word_Book.Extensions
         /// <param name="newWord"></param>
         public static void InsertWordToFront(Word wordListHead, Word newWord)
         {
-            //IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            //Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
+            IntPtr wordListHeadPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            Marshal.StructureToPtr(wordListHead, wordListHeadPtr, false);
 
-            //IntPtr newWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
-            //Marshal.StructureToPtr(newWord, newWordPtr, false);
+            IntPtr newWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            Marshal.StructureToPtr(newWord, newWordPtr, false);
 
-            //_InsertWordToFront(wordListHeadPtr, newWordPtr);
-            Marshal.StructureToPtr(wordListHead.NextWord, newWord.PNext, false);
-            Marshal.StructureToPtr(newWord, wordListHead.PNext, false);
+            _InsertWordToFront(wordListHeadPtr, newWordPtr);
+            //Marshal.StructureToPtr(wordListHead.NextWord, newWord.PNext, false);
+            //Marshal.StructureToPtr(newWord, wordListHead.PNext, false);
         }
 
         /// <summary>
@@ -323,6 +325,16 @@ namespace SFY_Word_Book.Extensions
             return wordContent;
 
         }
+
+        public static void InsertToFront(Word wordListHead,Word newWord)
+        {
+            newWord.PNext = wordListHead.PNext;
+            IntPtr newWordPtr = Marshal.AllocHGlobal(Marshal.SizeOf<Word>());
+            Marshal.StructureToPtr<Word>(newWord,newWordPtr, false);
+
+
+        }
+
 
         public static void PrintfWordList(Word listHeadWord)
         {
