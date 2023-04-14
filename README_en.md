@@ -9,6 +9,8 @@ The following tasks have been completed:
 1. Imported the CET6.json vocabulary.
 2. Implemented some UI effects for the word learning interface.
 
+![4.14](/READMEImage/4.14.png)
+
 ## How to hide a control when a button is pressed
 
 When designing the frontend interface, it is necessary to hide two buttons ("I know" and "I don't know") after they are pressed. However, in the MVVM pattern, additional processing is required. How to do it?
