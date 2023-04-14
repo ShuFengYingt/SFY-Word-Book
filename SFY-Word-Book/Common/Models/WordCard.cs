@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,10 @@ namespace SFY_Word_Book.Common.Models
 {
     public class WordCard:BindableBase
     {
-        public WordCard() { }
+        public WordCard()
+        {
+            Translations = new ObservableCollection<Translation>();
+        }
 
         /// <summary>
         /// 单词内容
@@ -21,6 +25,20 @@ namespace SFY_Word_Book.Common.Models
         /// </summary>
         public string PhoneticSymbol { get;set; }
 
+        private ObservableCollection<Translation> translations;
+        public ObservableCollection<Translation> Translations
+        {
+            get { return translations; }
+            set { translations = value; RaisePropertyChanged(); }
+        }
+
+        public bool IsShowTrans { get;set; }
+
+        public class Translation
+        {
+            public string PartOfSpeech { get;set; }
+            public string TransCN { get;set; }
+        }
 
     }
 }

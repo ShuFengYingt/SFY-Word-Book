@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
@@ -22,8 +23,7 @@ namespace SFY_Word_Book.Extensions
 
         public string BookName { get; private set; }
         TempExtension.Word ListHeadList { get; set; }
-        public List<Word> words = new List<Word>();
-        public Word Word_1 { get; private set; }
+        public List<Root> words = new List<Root>();
         /// <summary>
         /// 读取
         /// </summary>
@@ -31,15 +31,15 @@ namespace SFY_Word_Book.Extensions
         /// <returns></returns>
         private void ReadJson(string filePath)
         {
-            string json = string.Empty;
-            using (FileStream file = new FileStream(filePath,FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.ReadWrite))
+            using (StreamReader r = new StreamReader(filePath))
             {
-                using (StreamReader sr = new StreamReader(file,Encoding.UTF8)) 
+                string line = string.Empty;
+                while ((line = r.ReadLine()) != null)
                 {
-                    json = sr.ReadToEnd().ToString();
+                    Root wordItem = JsonConvert.DeserializeObject<Root>(line);
+                    words.Add(wordItem);
                 }
             }
-            Word_1 = JsonConvert.DeserializeObject<Word>("{\"wordRank\":1,\"headWord\":\"refuse\",\"content\":{\"word\":{\"wordHead\":\"refuse\",\"wordId\":\"CET4luan_2_1\",\"content\":{\"sentence\":{\"sentences\":[{\"sContent\":\"She asked him to leave, but he refused.\",\"sCn\":\"她叫他走，但他不肯。\"},{\"sContent\":\"When he offered all that money, I could hardly refuse (= could not refuse ) , could I?\",\"sCn\":\"他愿意给那么多钱，我怎么可能拒绝呢？\"}],\"desc\":\"例句\"},\"usphone\":\"ri'fjʊz\",\"syno\":{\"synos\":[{\"pos\":\"n\",\"tran\":\"垃圾；[环境]废物\",\"hwds\":[{\"w\":\"garbage\"},{\"w\":\"waste\"},{\"w\":\"junk\"},{\"w\":\"rubbish\"},{\"w\":\"trash\"}]},{\"pos\":\"vt\",\"tran\":\"拒绝；不愿；抵制\",\"hwds\":[{\"w\":\"negative\"},{\"w\":\"turn down\"}]},{\"pos\":\"vi\",\"tran\":\"拒绝\",\"hwds\":[{\"w\":\"object\"},{\"w\":\"turn down\"}]}],\"desc\":\"同近\"},\"ukphone\":\"rɪ'fjuːz\",\"ukspeech\":\"refuse&type=1\",\"star\":0,\"phrase\":{\"phrases\":[{\"pContent\":\"municipal refuse\",\"pCn\":\"城市垃圾\"},{\"pContent\":\"refuse to do\",\"pCn\":\"拒绝做某事\"},{\"pContent\":\"refuse treatment\",\"pCn\":\"垃圾处理；废物处理\"},{\"pContent\":\"refuse collection\",\"pCn\":\"垃圾收集\"},{\"pContent\":\"refuse disposal\",\"pCn\":\"废物处理\"},{\"pContent\":\"coal refuse\",\"pCn\":\"煤矸石\"},{\"pContent\":\"refuse dump\",\"pCn\":\"n. 垃圾场\"},{\"pContent\":\"refuse transfer station\",\"pCn\":\"垃圾转运站；废物转运站\"}],\"desc\":\"短语\"},\"phone\":\"ri'fju:z, ri:-\",\"speech\":\"refuse\",\"relWord\":{\"desc\":\"同根\",\"rels\":[{\"pos\":\"n\",\"words\":[{\"hwd\":\"refusal\",\"tran\":\"拒绝；优先取舍权；推却；取舍权\"}]}]},\"usspeech\":\"refuse&type=2\",\"trans\":[{\"tranCn\":\"拒绝\",\"descOther\":\"英释\",\"pos\":\"v\",\"descCn\":\"中释\",\"tranOther\":\"to say firmly that you will not do something that someone has asked you to do\"}]}}},\"bookId\":\"CET4luan_2\"}\r\n");
 
             
             
@@ -49,118 +49,228 @@ namespace SFY_Word_Book.Extensions
 
 
 
-
-        // Word 类型的定义
-        public class Word
+        /// <summary>
+        /// 例句
+        /// </summary>
+        public class Sentences
         {
-            public int wordRank { get; set; }
-            public string headWord { get; set; }
-            public Content content { get; set; }
-            public string bookId { get; set; }
-        }
-
-        public class Content
-        {
-            public WordContent word { get; set; }
-        }
-
-        public class WordContent
-        {
-            public string wordHead { get; set; }
-            public string wordId { get; set; }
-            public Exam[] exam { get; set; }
-            public Sentence sentence { get; set; }
-            public string usphone { get; set; }
-            public Syno syno { get; set; }
-            public string ukphone { get; set; }
-            public string ukspeech { get; set; }
-            public Phrase phrase { get; set; }
-            public RelWord relWord { get; set; }
-            public Trans[] trans { get; set; }
-        }
-
-        public class Exam
-        {
-            public string question { get; set; }
-            public Answer answer { get; set; }
-            public int examType { get; set; }
-            public Choice[] choices { get; set; }
-        }
-
-        public class Answer
-        {
-            public string explain { get; set; }
-            public int rightIndex { get; set; }
-        }
-
-        public class Choice
-        {
-            public int choiceIndex { get; set; }
-            public string choice { get; set; }
-        }
-
-        public class Sentence
-        {
-            public Sent[] sentences { get; set; }
-            public string desc { get; set; }
-        }
-
-        public class Sent
-        {
+            /// <summary>
+            /// 例句内容
+            /// </summary>
             public string sContent { get; set; }
+            /// <summary>
+            /// 例句释义
+            /// </summary>
             public string sCn { get; set; }
         }
 
-        public class Syno
+        /// <summary>
+        /// 例句列表
+        /// </summary>
+        public class Sentence
         {
-            public Syn[] synos { get; set; }
-            public string desc { get; set; }
+            /// <summary>
+            /// 例句列表
+            /// </summary>
+            public List<Sentences> sentences { get; set; }
         }
 
-        public class Syn
-        {
-            public string pos { get; set; }
-            public string tran { get; set; }
-            public Hwd[] hwds { get; set; }
-        }
 
-        public class Hwd
+
+        /// <summary>
+        /// 近义词
+        /// </summary>
+        public class Hwds
         {
+            /// <summary>
+            /// 内容
+            /// </summary>
             public string w { get; set; }
         }
 
-        public class Phrase
+        /// <summary>
+        /// 近义词
+        /// </summary>
+        public class Synos
         {
-            public Ph[] phrases { get; set; }
-            public string desc { get; set; }
+            /// <summary>
+            /// 词性
+            /// </summary>
+            public string pos { get; set; }
+            /// <summary>
+            /// 释义
+            /// </summary>
+            public string tran { get; set; }
+            /// <summary>
+            /// 同释义词列表
+            /// </summary>
+            public List<Hwds> hwds { get; set; }
         }
 
-        public class Ph
+        /// <summary>
+        /// 近义词列表
+        /// </summary>
+        public class Syno
         {
+            /// <summary>
+            /// 近义词列表
+            /// </summary>
+            public List<Synos> synos { get; set; }
+        }
+
+        /// <summary>
+        /// 短语
+        /// </summary>
+        public class Phrases
+        {
+            /// <summary>
+            /// 内容
+            /// </summary>
             public string pContent { get; set; }
+            /// <summary>
+            /// 中文
+            /// </summary>
             public string pCn { get; set; }
         }
 
+        /// <summary>
+        /// 短语列表
+        /// </summary>
+        public class Phrase
+        {
+            /// <summary>
+            /// 短语列表
+            /// </summary>
+            public List<Phrases> phrases { get; set; }
+        }
+
+        public class Words
+        {
+            /// <summary>
+            /// 内容
+            /// </summary>
+            public string hwd { get; set; }
+            /// <summary>
+            /// 翻译
+            /// </summary>
+            public string tran { get; set; }
+        }
+
+        public class Rels
+        {
+            /// <summary>
+            /// 词性
+            /// </summary>
+            public string pos { get; set; }
+            /// <summary>
+            /// 单词体
+            /// </summary>
+            public List<Words> words { get; set; }
+        }
+        /// <summary>
+        /// 同根词
+        /// </summary>
         public class RelWord
         {
-            public Rel[] rels { get; set; }
-            public string desc { get; set; }
+            /// <summary>
+            /// 同根词
+            /// </summary>
+            public List<Rels> rels { get; set; }
         }
-
-        public class Rel
-        {
-            public string pos { get; set; }
-            public Word[] words { get; set; }
-        }
-
+        /// <summary>
+        /// 释义
+        /// </summary>
         public class Trans
         {
+            /// <summary>
+            /// 释义中文
+            /// </summary>
             public string tranCn { get; set; }
-            public string descOther { get; set; }
+            /// <summary>
+            /// 词性
+            /// </summary>
             public string pos { get; set; }
-            public string descCn { get; set; }
-            public string tranOther { get; set; }
         }
 
+        public class Contents
+        {
+            /// <summary>
+            /// 例句
+            /// </summary>
+            public Sentence sentence { get; set; }
+            /// <summary>
+            /// 美式发音
+            /// </summary>
+            public string usphone { get; set; }
+            /// <summary>
+            /// 英式发音请求url
+            /// </summary>
+            public string ukspeech { get; set; }
+            /// <summary>
+            /// 美式发音请求url
+            /// </summary>
+            public string usspeech { get; set; }
+            /// <summary>
+            /// 近义词
+            /// </summary>
+            public Syno syno { get; set; }
+            /// <summary>
+            /// 英式音标
+            /// </summary>
+            public string ukphone { get; set; }
+            /// <summary>
+            /// 短语
+            /// </summary>
+            public Phrase phrase { get; set; }
+            /// <summary>
+            /// 同根词
+            /// </summary>
+            public RelWord relWord { get; set; }
+            /// <summary>
+            /// 释义
+            /// </summary>
+            public List<Trans> trans { get; set; }
+        }
+
+        /// <summary>
+        /// 详细内容Word，请继续展开
+        /// </summary>
+        public class Word
+        {
+            /// <summary>
+            /// 继续展开
+            /// </summary>
+            public Contents content { get; set; }
+        }
+
+        /// <summary>
+        /// 一级内容，请继续展开，次级为Word
+        /// </summary>
+        public class Content
+        {
+            /// <summary>
+            /// 详细内容，继续展开
+            /// </summary>
+            public Word word { get; set; }
+        }
+
+        /// <summary>
+        /// 根类
+        /// </summary>
+        public class Root
+        {
+            /// <summary>
+            /// 单词序号
+            /// </summary>
+            public int wordRank { get; set; }
+            /// <summary>
+            /// 单词名
+            /// </summary>
+            public string headWord { get; set; }
+            /// <summary>
+            /// 详细内容，一级，需要继续展开，很麻烦
+            /// </summary>
+            public Content content { get; set; }
+        }
     }
 }

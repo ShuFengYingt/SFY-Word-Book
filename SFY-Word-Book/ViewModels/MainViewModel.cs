@@ -25,12 +25,13 @@ namespace SFY_Word_Book.ViewModles
             CreateMenuBar();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
+            CET4 = new CET4("CET6.json");
 
             //方法实现
             FowardAndBack();
 
         }
-
+        public static CET4 CET4 { get; set; }
         //菜单在主页的声明和更新
         private ObservableCollection<MenuBar> menuBars;
         public ObservableCollection<MenuBar> MenuBars

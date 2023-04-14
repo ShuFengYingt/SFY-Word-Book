@@ -5,3 +5,21 @@ dotnet_diagnostic.CS8618.severity = none
 
 # IDE1006: 命名样式
 dotnet_diagnostic.IDE1006.severity = none
+
+# CS8600: 将 null 字面量或可能为 null 的值转换为非 null 类型。
+dotnet_diagnostic.CS8600.severity = none
+
+# CS8625: 无法将 null 字面量转换为非 null 的引用类型。
+dotnet_diagnostic.CS8625.severity = none
+
+# CS8604: 引用类型参数可能为 null。
+dotnet_diagnostic.CS8604.severity = none
+
+# CS0067: 从不使用事件“Command.CanExecuteChanged”
+dotnet_diagnostic.CS0067.severity = none
+
+# CS8605: 取消装箱可能为 null 的值。
+dotnet_diagnostic.CS8605.severity = none
+
+# CS8603: 可能返回 null 引用。
+dotnet_diagnostic.CS8603.severity = none

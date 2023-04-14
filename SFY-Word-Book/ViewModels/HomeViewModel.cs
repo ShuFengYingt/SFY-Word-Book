@@ -76,7 +76,7 @@ namespace SFY_Word_Book.ViewModels
         /// <summary>
         /// 生成每日文章
         /// </summary>
-        async void CreateDailyPage()
+        /*async*/ void CreateDailyPage()
         {
             DailyPages.Add(new DailyPage
             {
@@ -87,7 +87,7 @@ namespace SFY_Word_Book.ViewModels
             });
 
 
-            //调取API
+            ////调取API
             //using (HttpClient client = new HttpClient())
             //{
             //    HttpResponseMessage responseMessage = await client.GetAsync("http://api.mediastack.com/v1/news?access_key=1c9403cd7c4a8b2c8940ad941477fd69");

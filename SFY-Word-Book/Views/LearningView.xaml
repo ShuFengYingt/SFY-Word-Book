@@ -9,12 +9,17 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <!--<UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>-->
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
 
         </Grid.RowDefinitions>
+        <!--  单词卡  -->
         <ItemsControl ItemsSource="{Binding WordCards}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -25,11 +30,17 @@
                         VerticalAlignment="Center">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <!--  单词文本内容  -->
                                 <RowDefinition Height="auto" />
+
+                                <!--  音标  -->
                                 <RowDefinition Height="auto" />
+
+                                <!--  翻译  -->
                                 <RowDefinition />
 
                             </Grid.RowDefinitions>
+                            <!--  单词文本  -->
                             <TextBlock
                                 Grid.Row="0"
                                 Margin="0,80,0,0"
@@ -39,6 +50,7 @@
                                 FontSize="120"
                                 FontWeight="ExtraBlack"
                                 Text="{Binding Word}" />
+                            <!--  音标  -->
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
@@ -46,6 +58,44 @@
                                 FontSize="17"
                                 Foreground="{DynamicResource MaterialDesignBodyLight}"
                                 Text="{Binding PhoneticSymbol}" />
+                            <ItemsControl
+                                Grid.Row="2"
+                                Margin="0,40"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                ItemsSource="{Binding Translations}"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                                            <StackPanel
+                                                Margin="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="0,0,20,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="20"
+                                                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                                    Text="{Binding PartOfSpeech}" />
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="20"
+                                                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                                    Text="{Binding TransCN}" />
+                                            </StackPanel>
+
+                                        </materialDesign:TransitioningContent>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+
+                            </ItemsControl>
 
                         </Grid>
                     </materialDesign:Card>
@@ -54,6 +104,7 @@
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
+
         <StackPanel
             Grid.Row="1"
             Margin="0,30"
@@ -61,21 +112,34 @@
             VerticalAlignment="Center"
             Orientation="Horizontal">
             <Button
+                x:Name="KnowButton"
                 Width="100"
                 Margin="0,0,100,0"
-                Command="{Binding ShowPageFlowCommand}"
+                Command="{Binding ShowTransKnowCommand}"
                 Content="认识"
                 Style="{StaticResource MaterialDesignPaperLightButton}"
-                ToolTip="MaterialDesignFlatLightButton" />
+                ToolTip="MaterialDesignFlatLightButton"
+                Visibility="{Binding IsKnowButtonShow, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Button
+                x:Name="UnknowButton"
                 Width="100"
                 Margin="100,0,0,0"
+                Command="{Binding ShowTransUnknowCommand}"
                 Content="不认识"
                 Style="{StaticResource MaterialDesignPaperLightButton}"
-                ToolTip="MaterialDesignFlatLightButton" />
-
+                ToolTip="MaterialDesignFlatLightButton"
+                Visibility="{Binding IsKnowButtonShow, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
-
+        <Grid Grid.Row="1">
+            <Button
+                Width="320"
+                Height="40"
+                Margin="0,25"
+                Command="{Binding ToNextWordCommand}"
+                Content="下一个"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                Visibility="{Binding IsNextButtonShow, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
 
     </Grid>
 </UserControl>

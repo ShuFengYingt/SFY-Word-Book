@@ -1,5 +1,68 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)：
 
+# 4.14 Project Log
+
+I temporarily gave up the implementation of the C language backend and replaced it with C# for the time being. I will try again in the future (
+
+The following tasks have been completed:
+
+1. Imported the CET6.json vocabulary.
+2. Implemented some UI effects for the word learning interface.
+
+## How to hide a control when a button is pressed
+
+When designing the frontend interface, it is necessary to hide two buttons ("I know" and "I don't know") after they are pressed. However, in the MVVM pattern, additional processing is required. How to do it?
+
+Here, I will not go into the basics of button binding command Command. Instead, I will focus on the Visibility property.
+
+This property has three enumeration values:
+
+1. Visible
+2. Hidden
+3. Collapsed
+
+The characteristics of these three values are not discussed here. The key point is to perform binding operations.
+
+For a control, similar to the following:
+
+```xaml	
+<YourControl Visibility = "Visible"/>
+```
+
+To implement binding, we modify it as follows:
+
+```xaml
+<YourControl Visibility = "{Binding IsShow , Converter = {StaticResource BooleanToVisibilityConverter}}"/>
+```
+
+As can be seen, we bind the IsHidden property under a ViewModel (business separation under the Prism framework), and also use a boolean-to-visibility converter.
+
+For the IsHidden property, we need to define it in the ViewModel as follows:
+
+```c#
+private bool isShow;
+public bool IsShow
+{
+    get{return isShow;}
+    set{SetProperty(ref isShow, value);}
+    
+}//Remember to initialize it in the constructor
+```
+
+In addition to this, in the function called by the Command, we need to write:
+
+```c#
+public void Show()
+{
+    //Skip other code
+    
+    IsShow = false;
+    OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsShow)));
+}
+```
+
+This way, when calling the Command (the called function), we can change the Visibility of a control that binds the IsShow property.
+
 # 4.11 Project Log
 
 Completed the C language backend part, including

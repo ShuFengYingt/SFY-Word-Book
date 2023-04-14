@@ -1,5 +1,68 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 4.14 项目日志
+
+暂时放弃了C语言后台的写法，暂时纯用C#代替实现，等以后再尝试（
+
+完成了以下内容
+
+1. 导入CET6.json词汇
+2. 学习单词界面的部分UI效果实现
+
+## 如何实现按下按钮隐藏控件
+
+在写前台界面的时候，需要按下“认识”或者“不认识”按钮后将二者隐藏，但是在MVVM的模式下，需要进行额外的处理，怎么做呢？
+
+这里就不踢按钮绑定命令Command的基本操作了，单纯来讲Visibility这个属性
+
+这个属性有三个枚举值，分别为：
+
+1. Visible
+2. Hidden
+3. Collasp
+
+三个值的特点此处不表，重点是要进行绑定操作。
+
+对于一个控件，类似如下
+
+```xaml
+<YourControl Visibility = "Visible"/>
+```
+
+为了实现绑定，我们这样改
+
+```xaml
+<YourControl Visibility = "{Binding IsShow , Converter = {StaticResource BooleanToVisibilityConverter}}"/>
+```
+
+可以看到，绑定了一个ViewModel（Prism框架下的业务分离）下的IsHidden属性，同时用了一个布尔转可视性的转换器。
+
+对于IsHidden属性，我们需要在ViewModel下这样定义：
+
+```C#
+private bool isShow;
+public bool IsShow
+{
+    get{return isShow;}
+    set{SetProperty(ref isShow, value);}
+    
+}//记得在构造函数中初始化
+```
+
+除此之外，在Command调用的函数中，需要这样写：
+
+```C#
+public void Show()
+{
+    //略去其他代码
+    
+    IsShow = false;
+    OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsShow)));
+}
+```
+
+这样在调用Command（调用函数时）,就能改变某个绑定了IsShow属性的控件的Visibility了。
+
 # 4.11 项目日志
 
 完成了C语言后台部分的内容，包括
