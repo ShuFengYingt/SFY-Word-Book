@@ -1,5 +1,98 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 4.15 项目日志
+
+完成了以下内容：
+
+1. 每NumOfGroup一组的单词记忆模式（默认为10）
+2. 单词模糊查找
+
+![4.15_0](READMEImage\4.150.png)
+
+
+
+## 如何利用ComboBox实现模糊查找
+
+在今天的码中，我利用ComboBox实现了简单的单词模糊查找效果，接下来进行总结：
+
+## 1.基本结构
+
+首先，一个基本的ComboBox的xaml如下(样式基于MaterialDesign)：
+
+```xaml
+ <ComboBox
+	materialDesign:HintAssist.Hint="Search for unknown word"
+	materialDesign:TextFieldAssist.HasClearButton="True"
+	IsEditable="True"
+	Style="{StaticResource MaterialDesignComboBox}">
+	<ComboBox.SelectedItem>
+		<Binding
+			Mode="TwoWay"
+			Path="SelectedValidationFilled"
+			UpdateSourceTrigger="PropertyChanged" />
+		</ComboBox.SelectedItem>
+</ComboBox>
+```
+
+设置了其可编辑`IsEditable="True"`,搜索框内容填充`materialDesign:HintAssist.Hint="Search for unknown word"`,这都是基础操作，没什么好讲的。
+
+## 2. 数据绑定
+
+本项目中，我想要实现输入单词（的一部分），实现搜索单词效果。这需要在ComboBox中，指定其数据来源，特性标签如下：
+
+```xaml
+ItemsSource="{Binding YourDataSource}"
+```
+
+`YourDataSource`是我们在Model下定义的List属性。为填充内容的集合。也就是这样声明
+
+```C#
+public List<int/string/double> YourDataSource { get; set; }
+```
+
+完成`YourDataSource`的初始化和数据载入后，绑定就做好了。
+
+## 3.拓展1——类嵌套
+
+那如果我的`YourDataSource`是一个类的集合怎么办？我想绑定类中的某个元素怎么办？
+
+很好，假设我们的`YourDataSource`长这样
+
+```c#
+public class YourDataSourceClass
+{
+    public int Rank{get;set;}
+    public string Name{get;set};
+}
+```
+
+我们只想绑定其Name，那么，我们可以在ComboBox中添加这一行特性
+
+```xaml	
+DisplayMemberPath="Name"
+```
+
+完事
+
+## 4. 拓展2——序列
+
+在以上的基础上，如果我想选择我搜索的内容后，接着实现xxxxx怎么办？
+
+这就需要绑定元素的某个属性了，在以上的例子中，我们既可以绑定Rank，也可以绑定Name用来把元素的数据传出去。我们以Rank举例
+
+我们可以在ComboBox中添加以下特性标签
+
+```xa
+SelectedValuePath="Rank"
+SelectedValue="{Binding SelectedRank}"
+```
+
+
+
+
+
+
+
 # 4.14 项目日志
 
 暂时放弃了C语言后台的写法，暂时纯用C#代替实现，等以后再尝试（

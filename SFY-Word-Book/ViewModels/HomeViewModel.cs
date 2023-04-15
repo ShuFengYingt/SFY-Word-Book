@@ -23,6 +23,7 @@ using Prism.Modularity;
 using System.Diagnostics;
 using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
+using SFY_Word_Book.ViewModles;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -33,14 +34,22 @@ namespace SFY_Word_Book.ViewModels
             //初始化
             TaskBars = new ObservableCollection<TaskBar>();
             dailyPages = new ObservableCollection<DailyPage>();
+            TransCNs = new ObservableCollection<SearchTransCN>();
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
             this.regionManage = regionManager;
+            Random random = new Random();
+            selectedWordRank = random.Next(1, 2000);
 
+            Words = MainViewModel.CET4.words;
 
 
             CreateTaskBar();
             CreateDailyPage();
         }
+
+
+
+        #region 任务栏
 
         //任务栏的通知更新
         private ObservableCollection<TaskBar> taskBars;
@@ -62,8 +71,24 @@ namespace SFY_Word_Book.ViewModels
             TaskBars.Add(new TaskBar { Icon = "Bookshelf", Title = "单词书", Content = "四级大纲词汇", Color = "#866e66", NameSpace = "" });
 
         }
+        private readonly IRegionManager regionManage;
+        /// <summary>
+        /// 任务栏导航委托
+        /// </summary>
+        public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
 
+        private void Navigate(TaskBar taskBar)
+        {
+            if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
+            {
+                return;
+            }
+            regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
+        }
 
+        #endregion
+
+        #region 每日文章
         //每日文章通知更新
         private ObservableCollection<DailyPage> dailyPages;
         public ObservableCollection<DailyPage> DailyPages
@@ -135,29 +160,59 @@ namespace SFY_Word_Book.ViewModels
 
         }
 
+        #endregion
 
+        #region 单词查找
 
-
-
-
-
-        private readonly IRegionManager regionManage;
         /// <summary>
-        /// 任务栏导航委托
+        /// 单词查找列表
         /// </summary>
-        public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
+        public List<CET4.Root> Words { get; set; }
 
-        private void Navigate(TaskBar taskBar)
+        private int selectedWordRank { get;set; }
+        /// <summary>
+        /// 选中单词的序号
+        /// </summary>
+        public int SelectedWordRank
         {
-            if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
-            {
-                return;
-            }
-            regionManage.Regions[PrismManager.MainViewRegionName].RequestNavigate(taskBar.NameSpace);
+            get { return selectedWordRank; }
+            set { selectedWordRank = value; RaisePropertyChanged();RaisePropertyChanged(nameof(SelectedWord)); }
+        }
+        private string selectedWord;
+        /// <summary>
+        /// 被选中的单词
+        /// </summary>
+        public string SelectedWord
+        {
+            get { ShowTransCN(); return Words[SelectedWordRank - 1].headWord;  }
+            set { selectedWord = value; RaisePropertyChanged(); }
         }
 
+        private ObservableCollection<SearchTransCN> transCNs;
+        public ObservableCollection<SearchTransCN> TransCNs
+        {
+            get { return transCNs; }
+            set { transCNs = value; RaisePropertyChanged(); }
+        }
+
+        public void ShowTransCN()
+        {
+            TransCNs.Clear();
+
+            for (int i = 0;i < Words[selectedWordRank - 1].content.word.content.trans.Count;i++)
+            {
+                SearchTransCN transCN = new SearchTransCN();
+                transCN.PartOfSpeech = Words[selectedWordRank - 1].content.word.content.trans[i].pos;
+                transCN.TransCN = Words[selectedWordRank - 1].content.word.content.trans[i].tranCn;
+                TransCNs.Add(transCN);
 
 
+            }
+
+
+
+        }
+        #endregion
     }
 }
 

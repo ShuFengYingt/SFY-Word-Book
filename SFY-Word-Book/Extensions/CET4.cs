@@ -19,6 +19,7 @@ namespace SFY_Word_Book.Extensions
         public CET4(string filePath)
         {
             ReadJson(filePath);
+            BookName = "六级大纲词汇";
         }
 
         public string BookName { get; private set; }

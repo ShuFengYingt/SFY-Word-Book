@@ -58,6 +58,7 @@
                                 FontSize="17"
                                 Foreground="{DynamicResource MaterialDesignBodyLight}"
                                 Text="{Binding PhoneticSymbol}" />
+                            <!--  释义  -->
                             <ItemsControl
                                 Grid.Row="2"
                                 Margin="0,40"
@@ -70,7 +71,7 @@
                                     <DataTemplate>
                                         <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
                                             <StackPanel
-                                                Margin="0"
+                                                Margin="0,8"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Orientation="Horizontal">
@@ -104,6 +105,15 @@
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
+        <!--  十个一组  -->
+        <materialDesign:Card
+            Width="620"
+            Height="470"
+            Margin="0,80,0,0"
+            VerticalAlignment="Center"
+            Visibility="{Binding IsToNextGroup, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="非常棒" />
+        </materialDesign:Card>
 
         <StackPanel
             Grid.Row="1"
@@ -139,7 +149,25 @@
                 Content="下一个"
                 Style="{StaticResource MaterialDesignPaperLightButton}"
                 Visibility="{Binding IsNextButtonShow, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Button
+                Width="320"
+                Height="40"
+                Margin="0,25"
+                Command="{Binding FinishThisGroupCommand}"
+                Content="本组单词完成"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                Visibility="{Binding IsFinishTen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Button
+                Width="320"
+                Height="40"
+                Margin="0,25"
+                Command="{Binding ToNextGroupCommand}"
+                Content="开启下一组单词"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                Visibility="{Binding IsToNextGroup, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
         </Grid>
 
     </Grid>
+
 </UserControl>

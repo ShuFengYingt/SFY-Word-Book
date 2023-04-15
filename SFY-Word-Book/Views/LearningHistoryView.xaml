@@ -2,6 +2,7 @@
     x:Class="SFY_Word_Book.Views.LearningHistoryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:all="clr-namespace:SFY_Word_Book"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SFY_Word_Book.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,5 +11,7 @@
     mc:Ignorable="d">
     <Grid>
         <TextBlock FontSize="80" Text="LearningHistory" />
+        <all:SearchBox Width="499" />
+
     </Grid>
 </UserControl>

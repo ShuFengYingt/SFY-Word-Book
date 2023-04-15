@@ -1,5 +1,93 @@
 [中文日志](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README.md)：
 
+# 4.15 Project Log
+
+Completed the following:
+
+1. Word memorization mode for every group of NumOfGroup (default is 10)
+2. Fuzzy search for words
+
+![4.15_0](/READMEImage/4.150.png)
+
+## How to Use ComboBox to Achieve Fuzzy Search
+
+In today's code, I implemented a simple word fuzzy search effect using ComboBox. Here's a summary:
+
+## 1. Basic Structure
+
+First, a basic ComboBox xaml with MaterialDesign styling:
+
+```xaml
+<ComboBox
+    materialDesign:HintAssist.Hint="Search for unknown word"
+    materialDesign:TextFieldAssist.HasClearButton="True"
+    IsEditable="True"
+    Style="{StaticResource MaterialDesignComboBox}">
+    <ComboBox.SelectedItem>
+        <Binding
+            Mode="TwoWay"
+            Path="SelectedValidationFilled"
+            UpdateSourceTrigger="PropertyChanged" />
+    </ComboBox.SelectedItem>
+</ComboBox>
+```
+
+It sets `IsEditable="True"` to make it editable, and `materialDesign:HintAssist.Hint="Search for unknown word"` to fill the search box content. These are basic operations and there is nothing special to explain.
+
+## 2. Data Binding
+
+In this project, I want to input part of a word and search for it. This requires specifying the data source in the ComboBox. The relevant tags are:
+
+```xaml
+ItemsSource="{Binding YourDataSource}"
+```
+
+`YourDataSource` is a List property defined in our Model. It is the collection used for filling the content. It is declared like this:
+
+```c#
+public List<int/string/double> YourDataSource { get; set; }
+```
+
+After initializing and loading data for `YourDataSource`, the binding is done.
+
+## 3. Extension 1 - Class Nesting
+
+What if my `YourDataSource` is a collection of classes? How do I bind an element in a class?
+
+Assuming that our `YourDataSource` looks like this:
+
+```c#
+public class YourDataSourceClass
+{
+    public int Rank{get;set;}
+    public string Name{get;set};
+}
+```
+
+And we only want to bind `Name`, then we can add this attribute in ComboBox:
+
+```xaml
+Copy code
+DisplayMemberPath="Name"
+```
+
+Done.
+
+## 4. Extension 2 - Sequence
+
+On the basis of the above, what if I want to achieve xxxx after selecting my search content?
+
+This requires binding an attribute of the element. In the above example, we can bind Rank or Name to pass the data of the element to the backend Model. Let's take Rank as an example.
+
+We can add the following attribute tags to the ComboBox:
+
+```xaml
+SelectedValuePath="Rank"
+SelectedValue="{Binding SelectedRank}"
+```
+
+This way, we can achieve passing data from the selected element in the front-end UI to the backend Model through binding. Of course, don't forget to declare the SelectedRank property. I won't talk about it here.
+
 # 4.14 Project Log
 
 I temporarily gave up the implementation of the C language backend and replaced it with C# for the time being. I will try again in the future (

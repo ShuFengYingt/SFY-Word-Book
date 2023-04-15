@@ -24,19 +24,29 @@ namespace SFY_Word_Book.ViewModels
         {
             //初始化
             WordCards = new ObservableCollection<WordCard>();
-            
+            NumOfGroup = 10;
+
             ShowTransKnowCommand = new Command(ShowTransFromKnow);
             ShowTransUnknowCommand = new Command(ShowTransFromUnknow);
             ToNextWordCommand = new Command(ToNextWord);
+            FinishThisGroupCommand = new Command(FinishThisGroup);
+            ToNextGroupCommand = new Command(ToNextGroup);
+
             CET4 = MainViewModel.CET4;
             IsKnowButtonShow = true;
             IsNextButtonShow = false;
-            WordRank = 1;
+            isFinishTen = false;
+            isToNextGroup = false;
+            WordRank = 0;
 
             CreateWordCard();
 
 
         }
+        /// <summary>
+        /// 一组多少个
+        /// </summary>
+        public int NumOfGroup { get; set; }
 
         /// <summary>
         /// 词书迁移
@@ -128,38 +138,112 @@ namespace SFY_Word_Book.ViewModels
             set { SetProperty (ref isNextButtonShow, value); }
         }
 
+        private bool isFinishTen;
+        /// <summary>
+        /// 是否展示十个一组下次继续
+        /// </summary>
+        public bool IsFinishTen
+        {
+            get { return isFinishTen; }
+            set { SetProperty(ref isFinishTen, value); }
+        }
 
+        private bool isToNextGroup;
+        /// <summary>
+        /// 是否进行下一组
+        /// </summary>
+        public bool IsToNextGroup
+        {
+            get { return isFinishTen; }
+            set { SetProperty(ref isFinishTen, value); }
+
+        }
+
+        /// <summary>
+        /// 认识该单词
+        /// </summary>
         public Command ShowTransKnowCommand { get; set; }
+        /// <summary>
+        /// 显示释义
+        /// </summary>
         public void ShowTransFromKnow()
         {
             //显示释义
             CreateTranslation();
-            //隐藏认识按钮
-            IsKnowButtonShow = false;
-            //显示下一个按钮
-            IsNextButtonShow = true;
+            if ((WordRank + 1) % NumOfGroup == 0)
+            {
+                IsKnowButtonShow = false;
+                IsNextButtonShow = false;
+                isFinishTen = true;
 
-            //通知更新
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+                //通知更新
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(isFinishTen)));
+
+
+            }
+            else
+            {
+                //隐藏认识按钮
+                IsKnowButtonShow = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+
+                //显示下一个按钮
+                IsNextButtonShow = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+
+
+            }
+
         }
+        /// <summary>
+        /// 不认识该单词
+        /// </summary>
         public Command ShowTransUnknowCommand { get; set; }
+        /// <summary>
+        /// 认识单词
+        /// </summary>
         public void ShowTransFromUnknow()
         {
             //显示释义
             CreateTranslation();
-            //隐藏认识按钮
-            IsKnowButtonShow = false;
-            //显示下一个按钮
-            IsNextButtonShow = true;
 
-            //通知更新
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+            //当记忆完十个之后
+            if ((WordRank + 1) % NumOfGroup == 0)
+            {
+                IsKnowButtonShow = false;
+                IsNextButtonShow = false;
+                isFinishTen = true;
+
+                //通知更新
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(isFinishTen)));
+
+            }
+            else
+            {
+
+                //隐藏认识按钮
+                IsKnowButtonShow = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+
+                //显示下一个按钮
+                IsNextButtonShow = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+
+            }
+
 
         }
-
+        /// <summary>
+        /// 下一个单词命令
+        /// </summary>
         public Command ToNextWordCommand { get; set; }
+        /// <summary>
+        /// 不认识该单词
+        /// </summary>
         public void ToNextWord()
         {
             //序列增加
@@ -167,13 +251,39 @@ namespace SFY_Word_Book.ViewModels
             //新单词卡
             CreateWordCard();
 
-            //按钮显示控制
-            IsNextButtonShow = false;
             isKnowButtonShow = true;
-
-            //通知更新
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+
+
+            IsNextButtonShow = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+
+
+
+        }
+
+        public Command FinishThisGroupCommand { get;set; }
+        public void FinishThisGroup()
+        {
+            IsToNextGroup = true;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
+
+
+            IsFinishTen = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFinishTen)));
+
+        }
+        public Command ToNextGroupCommand { get; set; } 
+        public void ToNextGroup()
+        {
+            WordRank++;
+            CreateWordCard();
+
+            IsToNextGroup = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
+
+            IsKnowButtonShow = true;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
 
         }
