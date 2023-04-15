@@ -291,6 +291,7 @@
                     Opacity="0.1" />
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -347,23 +348,47 @@
 
                         </DockPanel>
                     </DockPanel>
+                    <StackPanel Grid.Row="1" Margin="40,20">
+                        <Border
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Right">
+                            <Button Click="AddToNew_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="Transparent">
+
+                                            <materialDesign:PackIcon
+                                                x:Name="PART_PackIcon"
+                                                Width="25"
+                                                Height="25"
+                                                Kind="StarOutline" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                        </Border>
+                    </StackPanel>
                     <!--  中间显示单词  -->
-                    <materialDesign:TransitioningContent Grid.Row="1" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
                         <StackPanel
-                            Margin="0,-50,0,0"
+                            Margin="0,-70,0,0"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
                             <TextBlock
                                 FontFamily="centaur"
                                 FontSize="110"
                                 FontWeight="DemiBold"
                                 Text="{Binding SelectedWord}" />
+
                         </StackPanel>
 
                     </materialDesign:TransitioningContent>
 
                     <!--  下方显示意思  -->
-                    <ItemsControl Grid.Row="2" ItemsSource="{Binding TransCNs}">
+                    <ItemsControl Grid.Row="3" ItemsSource="{Binding TransCNs}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel

@@ -32,14 +32,14 @@ namespace SFY_Word_Book.Common.Models
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get { return title; } set { title = value; } }
+        public string Title { get { return title; } set { title = value;RaisePropertyChanged(); } }
 
         //数据信息
         private string content;
         /// <summary>
         /// 数据信息
         /// </summary>
-        public string Content { get { return content; } set { content = value; } }
+        public string Content { get { return content; } set { content = value;RaisePropertyChanged(); } }
 
         //颜色
         private string color;

@@ -12,6 +12,7 @@ using SFY_Word_Book.Extensions;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using SFY_Word_Book.Views;
+using SFY_Word_Book.WordBook;
 
 namespace SFY_Word_Book.ViewModles
 {
@@ -25,13 +26,26 @@ namespace SFY_Word_Book.ViewModles
             CreateMenuBar();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
-            CET4 = new CET4("CET6.json");
+            //读取词汇
+            CET6 = new CET6("CET6.json");
+
+
+            //待复习的词书
+            ReviewWordBook = new ReviewWordBook();
+
+
 
             //方法实现
             FowardAndBack();
 
         }
-        public static CET4 CET4 { get; set; }
+
+        public static ReviewWordBook ReviewWordBook { get; set; }
+        
+        /// <summary>
+        /// 词书
+        /// </summary>
+        public static CET6 CET6 { get; set; }
         //菜单在主页的声明和更新
         private ObservableCollection<MenuBar> menuBars;
         public ObservableCollection<MenuBar> MenuBars

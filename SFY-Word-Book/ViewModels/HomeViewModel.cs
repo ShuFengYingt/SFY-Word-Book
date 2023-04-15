@@ -40,7 +40,8 @@ namespace SFY_Word_Book.ViewModels
             Random random = new Random();
             selectedWordRank = random.Next(1, 2000);
 
-            Words = MainViewModel.CET4.words;
+            //供给查找使用
+            Words = MainViewModel.CET6.words;
 
 
             CreateTaskBar();
@@ -66,7 +67,7 @@ namespace SFY_Word_Book.ViewModels
         {
 
             TaskBars.Add(new TaskBar { Icon = "BookOpenPageVariant", Title = "待学习", Content = "2677", Color = "#48815a", NameSpace = "LearningView" });
-            TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = "0", Color = "#008184", NameSpace = "ReviewView" });
+            TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = MainViewModel.ReviewWordBook.ReviewWords.Count.ToString(), Color = "#008184", NameSpace = "ReviewView" });
             TaskBars.Add(new TaskBar { Icon = "BookCheck", Title = "已学习", Content = "121", Color = "#965fa0", NameSpace = "LearningHistoryView" });
             TaskBars.Add(new TaskBar { Icon = "Bookshelf", Title = "单词书", Content = "四级大纲词汇", Color = "#866e66", NameSpace = "" });
 
@@ -167,7 +168,7 @@ namespace SFY_Word_Book.ViewModels
         /// <summary>
         /// 单词查找列表
         /// </summary>
-        public List<CET4.Root> Words { get; set; }
+        public List<WordRoot.Root> Words { get; set; }
 
         private int selectedWordRank { get;set; }
         /// <summary>
