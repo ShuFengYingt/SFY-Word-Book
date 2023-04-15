@@ -7,7 +7,7 @@
 1. 每NumOfGroup一组的单词记忆模式（默认为10）
 2. 单词模糊查找
 
-![4.15_0](READMEImage\4.150.png)
+![4.15_0](READMEImage/4.150.png)
 
 
 
