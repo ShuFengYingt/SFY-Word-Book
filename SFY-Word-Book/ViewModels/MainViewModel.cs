@@ -31,8 +31,6 @@ namespace SFY_Word_Book.ViewModles
 
 
             //待复习的词书
-            ReviewWordBook = new ReviewWordBook();
-
 
 
             //方法实现
@@ -40,7 +38,6 @@ namespace SFY_Word_Book.ViewModles
 
         }
 
-        public static ReviewWordBook ReviewWordBook { get; set; }
         
         /// <summary>
         /// 词书

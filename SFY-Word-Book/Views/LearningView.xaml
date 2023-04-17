@@ -20,7 +20,7 @@
 
         </Grid.RowDefinitions>
         <!--  单词卡  -->
-        <ItemsControl ItemsSource="{Binding WordCards}">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding WordCards}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <materialDesign:Card
@@ -30,8 +30,6 @@
                         VerticalAlignment="Center">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <!--  星标  -->
-                                <RowDefinition />
 
                                 <!--  单词文本内容  -->
                                 <RowDefinition Height="auto" />
@@ -45,7 +43,7 @@
                             </Grid.RowDefinitions>
                             <!--  单词文本  -->
                             <TextBlock
-                                Grid.Row="1"
+                                Grid.Row="0"
                                 Margin="0,80,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -55,7 +53,7 @@
                                 Text="{Binding Word}" />
                             <!--  音标  -->
                             <TextBlock
-                                Grid.Row="2"
+                                Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 FontSize="17"
@@ -63,7 +61,7 @@
                                 Text="{Binding PhoneticSymbol}" />
                             <!--  释义  -->
                             <ItemsControl
-                                Grid.Row="3"
+                                Grid.Row="2"
                                 Margin="0,40"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"

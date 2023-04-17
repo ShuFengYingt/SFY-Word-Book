@@ -1,13 +1,22 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SFY_Word_Book.Extensions
 {
-    public class WordRoot
+    public class WordRoot:BindableBase
     {
+        public WordRoot() 
+        {
+            
+        
+        }   
+
         /// <summary>
         /// 例句
         /// </summary>
@@ -185,10 +194,11 @@ namespace SFY_Word_Book.Extensions
             /// 同根词
             /// </summary>
             public RelWord relWord { get; set; }
+
             /// <summary>
             /// 释义
             /// </summary>
-            public List<Trans> trans { get; set; }
+            public ObservableCollection<Trans> trans { get; set; }
         }
 
         /// <summary>
@@ -216,8 +226,10 @@ namespace SFY_Word_Book.Extensions
         /// <summary>
         /// 根类
         /// </summary>
-        public class Root
+        public class Root:BindableBase
         {
+
+
             /// <summary>
             /// 单词序号
             /// </summary>
@@ -230,6 +242,17 @@ namespace SFY_Word_Book.Extensions
             /// 详细内容，一级，需要继续展开，很麻烦
             /// </summary>
             public Content content { get; set; }
+
+            private bool isSettingNew;
+            /// <summary>
+            /// 是否在生词本中
+            /// </summary>
+            public bool IsSettingNew
+            {
+                get { return isSettingNew; }  
+                set { isSettingNew = value; RaisePropertyChanged(); }
+            }
+
         }
 
     }

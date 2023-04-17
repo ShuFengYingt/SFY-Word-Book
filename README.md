@@ -1,5 +1,131 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+
+
+# 4.17 项目日志
+
+完成了以下内容
+
+1. 生词本功能，目前在首页点击Toggle标记可以将单词添加到生词本当中
+2. 生词本界面
+
+## 坑点
+
+**xaml不支持索引器计算，**
+
+也就是说，不能使用
+
+```xaml
+{Binding Word[Rank].headWord}
+```
+
+这样的语句
+
+## 如何实现数据实时更新？（订阅更新）
+
+在WordBook的namespace下，我定义了一个NewWordBook公共类，作为存储生词的介质，如下：
+
+```csharp
+
+namespace SFY_Word_Book.WordBook
+{
+    public class NewWordBook:BindableBase
+    {
+        public NewWordBook() {  }
+
+        
+        public static List<WordRoot.Root> NewWords { get; set; } = new List<WordRoot.Root>();
+
+    }
+}
+
+```
+
+当用户在单词卡上进行标记时，单词便会完成向类中NewWords属性的迁移。
+
+我希望有一个用户控件能够显示用户所有的生词信息，所以我建立了一个NewWordBookView以及其NewWordBookViewModel，Model如下：
+
+```csharp
+        public NewWordBookViewModel() 
+        {
+            NewWords = new ObservableCollection<WordRoot.Root>();
+            foreach(var word in NewWordBook.NewWords)
+            {
+                NewWords.Add(word);
+            }
+
+        }
+
+        private ObservableCollection<WordRoot.Root> newWords;
+        /// <summary>
+        /// 单词集合
+        /// </summary>
+        public ObservableCollection<WordRoot.Root> NewWords
+        {
+            get { return newWords; }    
+            set { newWords = value; RaisePropertyChanged(); }
+        }
+
+```
+
+这里略去xaml中简单的数据绑定。
+
+不过一个问题，那就是当NewWordBookView被首次创建时，其中能够正确显示用户添加的单词，但是如果如果用户在首次打开NewWordBookView后继续添加单词，NewWordBookView并不会随之更新。
+
+这可不好，于是，我学习了一下如何进行订阅更新。
+
+### 订阅更新
+
+订阅更新是Prism框架下的一个特色，Prism框架提供了一个新的泛型集合取代LINQ的List，即为`ObservableCollection`,在`ObservableCollection`下提供了CollectionChanged事件属性进行订阅更新，下面介绍一下如何使用。
+
+首先是将NewWordBook的
+
+```csharp
+ public static List<WordRoot.Root> NewWords { get; set; } = new List<WordRoot.Root>();
+```
+
+替换为
+
+```csharp
+public static ObservableCollection<WordRoot.Root> NewWords { get; set; } = new ObservableCollection<WordRoot.Root>();
+```
+
+而后在NewWordBookViewModel中添加如下方法
+
+```csharp
+        private void OnNewWordBookCollectionChanged(object sendet, NotifyCollectionChangedEventArgs  e)
+        {
+            //当事件端有数据增加
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                //这里跟着增加
+                foreach (var item in e.NewItems)
+                {
+                    NewWords.Add((WordRoot.Root)item);  
+                }
+            }
+            //如果有减少
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                //跟着减少
+                foreach(var item in e.OldItems)
+                {
+                    NewWords.Remove((WordRoot.Root)item);   
+                }
+            }
+            //其他的变更如出一辙
+        }
+
+```
+
+而后在构造函数中进行绑定
+
+```csharp
+NewWordBook.NewWords.CollectionChanged += OnNewWordBookCollectionChanged;
+```
+
+则完成了订阅更新
+
 # 4.15 项目日志
 
 完成了以下内容：

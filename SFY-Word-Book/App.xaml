@@ -68,6 +68,13 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="HorizontalDividerBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource MaterialDesignDivider}" />
+                <Setter Property="Height" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

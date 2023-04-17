@@ -168,8 +168,8 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public bool IsToNextGroup
         {
-            get { return isFinishTen; }
-            set { SetProperty(ref isFinishTen, value); }
+            get { return isToNextGroup; }
+            set { SetProperty(ref isToNextGroup, value); }
 
         }
 
@@ -304,7 +304,7 @@ namespace SFY_Word_Book.ViewModels
 
             for (int i = WordRank + 1 - NumOfGroup; i < WordRank;i++)
             {
-                MainViewModel.ReviewWordBook.ReviewWords.Add(CET6.words[i]);
+                ReviewWordBook.ReviewWords.Add(CET6.words[i]);
             }
 
 

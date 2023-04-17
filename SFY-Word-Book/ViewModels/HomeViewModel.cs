@@ -24,6 +24,7 @@ using System.Diagnostics;
 using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.ViewModles;
+using SFY_Word_Book.WordBook;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -35,10 +36,14 @@ namespace SFY_Word_Book.ViewModels
             TaskBars = new ObservableCollection<TaskBar>();
             dailyPages = new ObservableCollection<DailyPage>();
             TransCNs = new ObservableCollection<SearchTransCN>();
+
+            AddToNewWordBookCommand = new Command(AddToNewWordBook);
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
+
+
             this.regionManage = regionManager;
             Random random = new Random();
-            selectedWordRank = random.Next(1, 2000);
+            SelectedWordRank = random.Next(1, 2000);
 
             //供给查找使用
             Words = MainViewModel.CET6.words;
@@ -67,7 +72,7 @@ namespace SFY_Word_Book.ViewModels
         {
 
             TaskBars.Add(new TaskBar { Icon = "BookOpenPageVariant", Title = "待学习", Content = "2677", Color = "#48815a", NameSpace = "LearningView" });
-            TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = MainViewModel.ReviewWordBook.ReviewWords.Count.ToString(), Color = "#008184", NameSpace = "ReviewView" });
+            TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = ReviewWordBook.ReviewWords.Count.ToString() , Color = "#008184", NameSpace = "ReviewView" });
             TaskBars.Add(new TaskBar { Icon = "BookCheck", Title = "已学习", Content = "121", Color = "#965fa0", NameSpace = "LearningHistoryView" });
             TaskBars.Add(new TaskBar { Icon = "Bookshelf", Title = "单词书", Content = "四级大纲词汇", Color = "#866e66", NameSpace = "" });
 
@@ -162,15 +167,20 @@ namespace SFY_Word_Book.ViewModels
         }
 
         #endregion
-
+            
         #region 单词查找
 
+        private List<WordRoot.Root> words;
         /// <summary>
         /// 单词查找列表
         /// </summary>
-        public List<WordRoot.Root> Words { get; set; }
+        public List<WordRoot.Root> Words
+        {
+            get { return words; }
+            set { words = value; RaisePropertyChanged(); }  
+        }
 
-        private int selectedWordRank { get;set; }
+        private int selectedWordRank;
         /// <summary>
         /// 选中单词的序号
         /// </summary>
@@ -179,13 +189,16 @@ namespace SFY_Word_Book.ViewModels
             get { return selectedWordRank; }
             set { selectedWordRank = value; RaisePropertyChanged();RaisePropertyChanged(nameof(SelectedWord)); }
         }
-        private string selectedWord;
+        private WordRoot.Root selectedWord;
         /// <summary>
         /// 被选中的单词
         /// </summary>
-        public string SelectedWord
+        public WordRoot.Root SelectedWord
         {
-            get { ShowTransCN(); return Words[SelectedWordRank - 1].headWord;  }
+            get 
+            {   ShowTransCN(); 
+                return Words[SelectedWordRank - 1]; 
+            }
             set { selectedWord = value; RaisePropertyChanged(); }
         }
 
@@ -196,15 +209,18 @@ namespace SFY_Word_Book.ViewModels
             set { transCNs = value; RaisePropertyChanged(); }
         }
 
+        /// <summary>
+        /// 显示释义
+        /// </summary>
         public void ShowTransCN()
         {
             TransCNs.Clear();
 
-            for (int i = 0;i < Words[selectedWordRank - 1].content.word.content.trans.Count;i++)
+            for (int i = 0;i < Words[SelectedWordRank - 1].content.word.content.trans.Count;i++)
             {
                 SearchTransCN transCN = new SearchTransCN();
-                transCN.PartOfSpeech = Words[selectedWordRank - 1].content.word.content.trans[i].pos;
-                transCN.TransCN = Words[selectedWordRank - 1].content.word.content.trans[i].tranCn;
+                transCN.PartOfSpeech = Words[SelectedWordRank - 1].content.word.content.trans[i].pos+".";
+                transCN.TransCN = Words[SelectedWordRank - 1].content.word.content.trans[i].tranCn;
                 TransCNs.Add(transCN);
 
 
@@ -213,6 +229,35 @@ namespace SFY_Word_Book.ViewModels
 
 
         }
+
+        /// <summary>
+        /// 生词本命令
+        /// </summary>
+        public Command AddToNewWordBookCommand { get;set; }
+        /// <summary>
+        /// 生词本函数
+        /// </summary>
+        public void AddToNewWordBook()
+        {
+            //如果toggle被点击加入单词本
+            if (Words[SelectedWordRank - 1].IsSettingNew == true)
+            {
+
+                //添加至生词本
+                NewWordBook.NewWords.Add(SelectedWord);
+            }
+            else
+            {
+
+                //从单词本中移除
+                NewWordBook.NewWords.Remove(SelectedWord);
+
+
+
+            }
+        }
+
+
         #endregion
     }
 }

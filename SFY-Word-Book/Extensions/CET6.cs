@@ -38,6 +38,7 @@ namespace SFY_Word_Book.Extensions
                 while ((line = r.ReadLine()) != null)
                 {
                     WordRoot.Root wordItem = JsonConvert.DeserializeObject<WordRoot.Root>(line);
+                    wordItem.IsSettingNew = false;
                     words.Add(wordItem);
                 }
             }

@@ -12,10 +12,9 @@ namespace SFY_Word_Book.WordBook
      {
         public ReviewWordBook()
         {
-            ReviewWords = new List<WordRoot.Root>();
         }
 
-        public List<WordRoot.Root> ReviewWords { get; set; }
+        public static List<WordRoot.Root> ReviewWords { get; set; } = new List<WordRoot.Root>();
 
      }
 }

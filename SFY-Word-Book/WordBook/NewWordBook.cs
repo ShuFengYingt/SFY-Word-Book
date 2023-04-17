@@ -1,15 +1,20 @@
-﻿using SFY_Word_Book.Extensions;
+﻿using Prism.Mvvm;
+using SFY_Word_Book.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SFY_Word_Book.WordBook
 {
-    class NewWordBook
+    public class NewWordBook:BindableBase
     {
-        public List<WordRoot.Root> NewWords { get; set; }
+        public NewWordBook() {  }
+
+        
+        public static ObservableCollection<WordRoot.Root> NewWords { get; set; } = new ObservableCollection<WordRoot.Root>();
 
     }
 }

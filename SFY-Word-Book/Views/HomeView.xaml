@@ -161,6 +161,7 @@
                     Opacity="0.1" />
                 <!--#endregion-->
 
+                <!--#region 每日文章-->
                 <ItemsControl>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -281,8 +282,7 @@
                 <!--#endregion-->
 
 
-
-                <!--  单词查找板块  -->
+                <!--#region 单词查找-->
                 <Border
                     Grid.Column="1"
                     Margin="10,0"
@@ -348,12 +348,30 @@
 
                         </DockPanel>
                     </DockPanel>
+                    <!--  生词标记  -->
                     <StackPanel Grid.Row="1" Margin="40,20">
-                        <Border
+                        <ToggleButton
+                            Width="40"
+                            HorizontalAlignment="Right"
+                            Command="{Binding AddToNewWordBookCommand}"
+                            IsChecked="{Binding SelectedWord.IsSettingNew, Mode=TwoWay}"
+                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                            ToolTip="MaterialDesignSwitchToggleButton with Content and ToggleButtonAssist.OnContent">
+                            <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                <materialDesign:PackIcon.RenderTransform>
+                                    <RotateTransform Angle="45" />
+                                </materialDesign:PackIcon.RenderTransform>
+                            </materialDesign:PackIcon>
+                            <materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon Kind="Pin" />
+                            </materialDesign:ToggleButtonAssist.OnContent>
+
+                        </ToggleButton>
+                        <!--<Border
                             Width="30"
                             Height="30"
                             HorizontalAlignment="Right">
-                            <Button Click="AddToNew_Click">
+                            <Button Click="AddToNew_Click" Command="{Binding AddToNewWordBookCommand}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Grid Background="Transparent">
@@ -368,7 +386,7 @@
                                 </Button.Template>
                             </Button>
 
-                        </Border>
+                        </Border>-->
                     </StackPanel>
                     <!--  中间显示单词  -->
                     <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
@@ -381,7 +399,7 @@
                                 FontFamily="centaur"
                                 FontSize="110"
                                 FontWeight="DemiBold"
-                                Text="{Binding SelectedWord}" />
+                                Text="{Binding SelectedWord.headWord}" />
 
                         </StackPanel>
 
@@ -416,7 +434,7 @@
 
 
             </Grid>
-
+            <!--#endregion-->
         </materialDesign:TransitioningContent>
 
 

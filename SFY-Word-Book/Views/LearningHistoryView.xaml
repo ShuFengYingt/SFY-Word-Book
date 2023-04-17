@@ -10,8 +10,8 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock FontSize="80" Text="LearningHistory" />
-        <all:SearchBox Width="499" />
-
+        <ToggleButton IsChecked="{Binding IsChecked}">
+            
+        </ToggleButton>
     </Grid>
 </UserControl>
