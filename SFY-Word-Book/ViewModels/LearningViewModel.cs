@@ -23,26 +23,32 @@ namespace SFY_Word_Book.ViewModels
 
         public LearningViewModel()
         {
-            //初始化
+            #region 列表初始化
             WordCards = new ObservableCollection<WordCard>();
             WordGroups = new ObservableCollection<WordGroupItem>();
-
-            NumOfGroup = 10;
-
+            #endregion
+             
+            #region 命令
             ShowTransKnowCommand = new Command(ShowTransFromKnow);
             ShowTransUnknowCommand = new Command(ShowTransFromUnknow);
             ToNextWordCommand = new Command(ToNextWord);
             FinishThisGroupCommand = new Command(FinishThisGroup);
             ToNextGroupCommand = new Command(ToNextGroup);
+            #endregion
 
-            CET6 = MainViewModel.CET6;
+
+            #region 属性初始化
+            NumOfGroup = 10;
             IsKnowButtonShow = true;
             IsNextButtonShow = false;
             isFinishTen = false;
             isToNextGroup = false;
-            WordRank = 0;
+            WordIndex = 0;
+            #endregion
 
+            #region 方法调用
             CreateWordCard();
+            #endregion
 
 
         }
@@ -51,14 +57,10 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public int NumOfGroup { get; set; }
 
-        /// <summary>
-        /// 词书迁移
-        /// </summary>
-        private CET6 CET6 { get; set; }
 
         private ObservableCollection<WordGroupItem> wordGroups;
         /// <summary>
-        /// 单词组，每完成一组单词进行一次文件读写
+        /// 单词组，每完成一组单词进行一次文件读写，用于每组完成后的显示
         /// </summary>
         public ObservableCollection<WordGroupItem> WordGroups
         {
@@ -79,9 +81,9 @@ namespace SFY_Word_Book.ViewModels
         }
 
         /// <summary>
-        /// 单词序号,比词书中的单词rank低1
+        /// 当前单词索引
         /// </summary>
-        private int WordRank { get; set; }
+        private int WordIndex { get; set; }
 
         /// <summary>
         /// 单词卡后台对象
@@ -89,14 +91,14 @@ namespace SFY_Word_Book.ViewModels
         private WordCard TempWordCard { get; set; }
 
         /// <summary>
-        /// 创建单词卡后台对象，从单词书中完成迁移
+        /// 创建单词卡后台对象，从LearningWordBook中完成迁移
         /// </summary>
         private void TempWordCreate()
         {
             TempWordCard = new WordCard
             {
-                Word = CET6.words[WordRank].headWord,
-                PhoneticSymbol = "[" + CET6.words[WordRank].content.word.content.ukphone + "]",
+                Word = LearningWordBook.LearningWords[WordIndex].headWord,
+                PhoneticSymbol = "[" + LearningWordBook.LearningWords[WordIndex].content.word.content.ukphone + "]",
 
 
             };
@@ -120,12 +122,12 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         private void CreateTranslation()
         {
-            for (int i = 0; i < CET6.words[WordRank].content.word.content.trans.Count; i++)
+            for (int i = 0; i < LearningWordBook.LearningWords[WordIndex].content.word.content.trans.Count; i++)
             {
                 WordCards[WordCards.Count - 1].Translations.Add(new WordCard.Translation
                 {
-                    TransCN = CET6.words[WordRank].content.word.content.trans[i].tranCn,
-                    PartOfSpeech = CET6.words[WordRank].content.word.content.trans[i].pos + "."
+                    TransCN = LearningWordBook.LearningWords[WordIndex].content.word.content.trans[i].tranCn,
+                    PartOfSpeech = LearningWordBook.LearningWords[WordIndex].content.word.content.trans[i].pos + "."
                 });
             }
         }
@@ -185,10 +187,10 @@ namespace SFY_Word_Book.ViewModels
             //显示释义
             CreateTranslation();
 
-            //加入单词群组
+            //加入单词群组，用于本组结束后的显示
             WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
-            if ((WordRank + 1) % NumOfGroup == 0)
+            if ((WordIndex + 1) % NumOfGroup == 0)
             {
                 IsKnowButtonShow = false;
                 IsNextButtonShow = false;
@@ -233,7 +235,7 @@ namespace SFY_Word_Book.ViewModels
 
 
             //当记忆完十个之后
-            if ((WordRank + 1) % NumOfGroup == 0)
+            if ((WordIndex + 1) % NumOfGroup == 0)
             {
 
 
@@ -284,15 +286,20 @@ namespace SFY_Word_Book.ViewModels
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
             //序列增加
-            WordRank++;
+            WordIndex++;
             //新单词卡
             CreateWordCard();
 
 
 
         }
-
+        /// <summary>
+        /// 本组结束命令
+        /// </summary>
         public Command FinishThisGroupCommand { get;set; }
+        /// <summary>
+        /// 本组结束
+        /// </summary>
         public void FinishThisGroup()
         {
             IsToNextGroup = true;
@@ -302,17 +309,36 @@ namespace SFY_Word_Book.ViewModels
             IsFinishTen = false;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFinishTen)));
 
-            for (int i = WordRank + 1 - NumOfGroup; i < WordRank;i++)
+            WordIndex++;
+
+            WordBookMoveAndSet();
+        }
+
+        /// <summary>
+        /// 对单词书的操作
+        /// </summary>
+        private void WordBookMoveAndSet()
+        {
+            //单词迁移至待复习词书当中
+            for (int i = WordIndex - NumOfGroup; i < WordIndex; i++)
             {
-                ReviewWordBook.ReviewWords.Add(CET6.words[i]);
+                ReviewWordBook.ReviewWords.Add(LearningWordBook.LearningWords[i]);
+            }
+            //WordIndex归零，并删除LearningWords的内容
+            while (WordIndex-- == 0)
+            {
+                LearningWordBook.LearningWords.RemoveAt(0);
             }
 
-
+            LearningWordBook.OutLearningWordBook();
         }
+
         public Command ToNextGroupCommand { get; set; } 
+        /// <summary>
+        /// 前往下一组单词
+        /// </summary>
         public void ToNextGroup()
         {
-            WordRank++;
             CreateWordCard();
 
             IsToNextGroup = false;
@@ -323,7 +349,11 @@ namespace SFY_Word_Book.ViewModels
 
             WordGroups.Clear();
 
+
+
         }
+        
+
 
 
 

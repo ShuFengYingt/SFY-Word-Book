@@ -16,11 +16,20 @@ namespace SFY_Word_Book.ViewModels
     {
         public NewWordBookViewModel() 
         {
+
+
+
+            //声明
             NewWords = new ObservableCollection<WordRoot.Root>();
+
+
+            //显示在页面中
             foreach(var word in NewWordBook.NewWords)
             {
                 NewWords.Add(word);
             }
+
+            //订阅更新
             NewWordBook.NewWords.CollectionChanged += OnNewWordBookCollectionChanged;
 
         }

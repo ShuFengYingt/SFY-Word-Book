@@ -13,6 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+using SFY_Word_Book.WordBook;
+using System.IO;
+using SFY_Word_Book.ViewModels;
+using SFY_Word_Book.Extensions;
 
 namespace SFY_Word_Book.Views
 {
@@ -24,7 +29,7 @@ namespace SFY_Word_Book.Views
         public MainView(IRegionManager regionManager)
         {
             InitializeComponent();
-            //基础窗口交互
+            #region 基础窗口交互
             Button_WindowMin.Click += (s, e) =>
             {
                 WindowState = WindowState.Minimized;
@@ -42,6 +47,12 @@ namespace SFY_Word_Book.Views
             };
             Button_WindowClose.Click += (s, e) =>
             {
+                //保存单词本
+                CET6.OutCET6WordBook();
+                //保存生词本
+                NewWordBook.OutNewWordBook();
+                
+                
                 Close();
             };
 
@@ -64,6 +75,9 @@ namespace SFY_Word_Book.Views
                     this.DragMove();
                 }
             };
+            # endregion
+
+
 
             //设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager);
@@ -75,6 +89,8 @@ namespace SFY_Word_Book.Views
             };
 
         }
+
+
 
 
 

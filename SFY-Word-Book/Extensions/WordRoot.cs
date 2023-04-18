@@ -15,7 +15,48 @@ namespace SFY_Word_Book.Extensions
         {
             
         
-        }   
+        }
+        /// <summary>
+        /// 根类
+        /// </summary>
+        public class Root : BindableBase
+        {
+
+
+            /// <summary>
+            /// 单词序号
+            /// </summary>
+            public int wordRank { get; set; }
+            /// <summary>
+            /// 单词名
+            /// </summary>
+            public string headWord { get; set; }
+            /// <summary>
+            /// 详细内容，一级，需要继续展开，很麻烦
+            /// </summary>
+            public Content content { get; set; }
+
+            private bool isSettingNew;
+            /// <summary>
+            /// 是否在生词本中
+            /// </summary>
+            public bool IsSettingNew
+            {
+                get { return isSettingNew; }
+                set { isSettingNew = value; RaisePropertyChanged(); }
+            }
+
+            /// <summary>
+            /// 连过次数
+            /// </summary>
+            public int Combo { get; set; }
+
+            /// <summary>
+            /// 下次复习时间，默认-1
+            /// </summary>
+            public int ReviewDays { get; set; }
+        }
+
 
         /// <summary>
         /// 例句
@@ -223,37 +264,6 @@ namespace SFY_Word_Book.Extensions
             public Word word { get; set; }
         }
 
-        /// <summary>
-        /// 根类
-        /// </summary>
-        public class Root:BindableBase
-        {
-
-
-            /// <summary>
-            /// 单词序号
-            /// </summary>
-            public int wordRank { get; set; }
-            /// <summary>
-            /// 单词名
-            /// </summary>
-            public string headWord { get; set; }
-            /// <summary>
-            /// 详细内容，一级，需要继续展开，很麻烦
-            /// </summary>
-            public Content content { get; set; }
-
-            private bool isSettingNew;
-            /// <summary>
-            /// 是否在生词本中
-            /// </summary>
-            public bool IsSettingNew
-            {
-                get { return isSettingNew; }  
-                set { isSettingNew = value; RaisePropertyChanged(); }
-            }
-
-        }
 
     }
 }

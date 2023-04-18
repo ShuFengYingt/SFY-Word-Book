@@ -23,26 +23,30 @@ namespace SFY_Word_Book.ViewModles
         {
             //实例化
             MenuBars = new ObservableCollection<MenuBar>();
-            CreateMenuBar();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
-            //读取词汇
-            CET6 = new CET6("CET6.json");
 
 
-            //待复习的词书
+            //读入单词本
+            CET6.ReadJson();
+
+            //读取生词本
+            NewWordBook.ReadJson();
+
+            //读入待学习单词
+            LearningWordBook.ReadJson();
 
 
             //方法实现
             FowardAndBack();
+            CreateMenuBar();
+
 
         }
 
-        
-        /// <summary>
-        /// 词书
-        /// </summary>
-        public static CET6 CET6 { get; set; }
+
+
+        #region 导航功能实现
         //菜单在主页的声明和更新
         private ObservableCollection<MenuBar> menuBars;
         public ObservableCollection<MenuBar> MenuBars
@@ -143,5 +147,6 @@ namespace SFY_Word_Book.ViewModles
             });
 
         }
+        #endregion
     }
 }

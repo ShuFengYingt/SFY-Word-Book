@@ -25,6 +25,7 @@ using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.ViewModles;
 using SFY_Word_Book.WordBook;
+using System.Collections.Specialized;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -32,25 +33,35 @@ namespace SFY_Word_Book.ViewModels
     {
         public HomeViewModel(IRegionManager regionManager)
         {
-            //初始化
+            #region 初始化列表
             TaskBars = new ObservableCollection<TaskBar>();
             dailyPages = new ObservableCollection<DailyPage>();
             TransCNs = new ObservableCollection<SearchTransCN>();
+            #endregion
 
+            #region 命令
             AddToNewWordBookCommand = new Command(AddToNewWordBook);
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
+            #endregion
 
-
+            #region 属性初始化
             this.regionManage = regionManager;
             Random random = new Random();
             SelectedWordRank = random.Next(1, 2000);
+            NumOfLearn = LearningWordBook.LearningWords.Count;
+            NumOfReview = ReviewWordBook.ReviewWords.Count;
+            #endregion
 
-            //供给查找使用
-            Words = MainViewModel.CET6.words;
+            ReviewWordBook.ReviewWords.CollectionChanged += OnReviewWordBookCollectionChanged;
 
+            #region 单词查找用Words，迁移CET6
+            Words = CET6.words;
+            #endregion
 
+            #region 方法调用
             CreateTaskBar();
             CreateDailyPage();
+            #endregion
         }
 
 
@@ -65,24 +76,140 @@ namespace SFY_Word_Book.ViewModels
             set { taskBars = value; RaisePropertyChanged(); }
         }
 
+        private int numOfReview;
+        /// <summary>
+        /// 待复习的词数
+        /// </summary>
+        public int NumOfReview
+        {
+            get { return numOfReview; } 
+            set {  numOfReview = value; RaisePropertyChanged(); }
+        }
+
+        private int numOfLearn;
+        /// <summary>
+        /// 待学习个数
+        /// </summary>
+        public int NumOfLearn
+        {
+            get { return  numOfLearn; }
+            set { numOfLearn = value; RaisePropertyChanged(); }
+        }
+
+        private int numOfHasLearn;
+        /// <summary>
+        /// 当日学过的单词
+        /// </summary>
+        public int NumOfHasLearn
+        {
+            get { return numOfHasLearn; }
+            set { numOfHasLearn = value;RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 订阅待复习词书变更时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnReviewWordBookCollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
+        {
+            //若有增加
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                //先这样，以后再过滤哪些是今天学的，或者单独存
+                NumOfHasLearn = ReviewWordBook.ReviewWords.Count;
+                UpdateTaskBar();
+            }
+            //减少
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                NumOfHasLearn = ReviewWordBook.ReviewWords.Count;
+                UpdateTaskBar();
+            }
+        }
+
+        /// <summary>
+        /// 待学习
+        /// </summary>
+        private TaskBar waitingToLearnTaskBar = new TaskBar() 
+        {
+            Icon = "BookOpenPageVariant",
+            Title = "待学习",
+            Content = "2677",
+            Color = "#48815a",
+            NameSpace = "LearningView" 
+        };
+        /// <summary>
+        /// 待复习
+        /// </summary>
+        private TaskBar waitingToReiviewTaskBar = new TaskBar()
+        {
+            Icon = "BookClock",
+            Title = "待复习",
+            Content = "0",
+            Color = "#008184",
+            NameSpace = "ReviewView"
+        };
+        /// <summary>
+        /// 已学习
+        /// </summary>
+        private TaskBar hasLearnedTaskBar = new TaskBar()
+        {
+            Icon = "BookCheck",
+            Title = "已学习",
+            Content = "0",
+            Color = "#965fa0",
+            NameSpace = "LearningHistoryView"
+        };
+        /// <summary>
+        /// 词书
+        /// </summary>
+        private TaskBar typeOfBookTaskBar = new TaskBar()
+        {
+            Icon = "Bookshelf",
+            Title = "单词书",
+            Content = "四级大纲词汇",
+            Color = "#866e66",
+            NameSpace = ""
+        };
+
+
+        
+
         /// <summary>
         /// 生成任务栏
         /// </summary>
         void CreateTaskBar()
         {
 
-            TaskBars.Add(new TaskBar { Icon = "BookOpenPageVariant", Title = "待学习", Content = "2677", Color = "#48815a", NameSpace = "LearningView" });
-            TaskBars.Add(new TaskBar { Icon = "BookClock", Title = "待复习", Content = ReviewWordBook.ReviewWords.Count.ToString() , Color = "#008184", NameSpace = "ReviewView" });
-            TaskBars.Add(new TaskBar { Icon = "BookCheck", Title = "已学习", Content = "121", Color = "#965fa0", NameSpace = "LearningHistoryView" });
-            TaskBars.Add(new TaskBar { Icon = "Bookshelf", Title = "单词书", Content = "四级大纲词汇", Color = "#866e66", NameSpace = "" });
+            TaskBars.Add(waitingToLearnTaskBar);
+            TaskBars.Add(waitingToReiviewTaskBar);
+            TaskBars.Add(hasLearnedTaskBar);
+            TaskBars.Add(typeOfBookTaskBar);
 
         }
+
+        /// <summary>
+        /// 当已学习词书或者待复习词书发生变动时，更新任务栏
+        /// </summary>
+        private void UpdateTaskBar()
+        {
+            hasLearnedTaskBar.Content = NumOfHasLearn.ToString();
+
+            TaskBars.Clear();
+            CreateTaskBar();
+        }
+
+
         private readonly IRegionManager regionManage;
         /// <summary>
         /// 任务栏导航委托
         /// </summary>
         public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
-
+        /// <summary>
+        /// 导航
+        /// </summary>
+        /// <param name="taskBar"></param>
         private void Navigate(TaskBar taskBar)
         {
             if (taskBar == null || string.IsNullOrWhiteSpace(taskBar.NameSpace))
