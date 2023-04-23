@@ -1,5 +1,16 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+
+
+# 4.23
+
+完成了以下内容
+
+1. 复习日期显示
+2. 单词复习完毕提示
+3. 今日复习完成提示
+4. 生词本更多内容
+
 # 4.22
 
 完成了以下内容

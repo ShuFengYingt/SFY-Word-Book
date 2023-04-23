@@ -25,6 +25,11 @@ namespace SFY_Word_Book.Common.Models
         /// </summary>
         public string PhoneticSymbol { get;set; }
 
+        /// <summary>
+        /// 下次复习时间
+        /// </summary>
+        public string ReviewDay { get; set; }
+
         private ObservableCollection<Translation> translations;
         public ObservableCollection<Translation> Translations
         {

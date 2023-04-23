@@ -148,13 +148,19 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="40">
                                 <TextBlock
                                     Margin="50,0"
                                     VerticalAlignment="Center"
                                     FontFamily="Calibri"
                                     FontSize="20"
                                     Text="{Binding HeadWord}" />
+                                <TextBlock
+                                    Margin="0,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="微软雅黑"
+                                    FontSize="20"
+                                    Text="{Binding ReviewDay}" />
                                 <TextBlock />
                             </StackPanel>
                         </DataTemplate>

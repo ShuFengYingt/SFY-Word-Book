@@ -102,7 +102,52 @@
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
-        <!--  十个一组  -->
+        <!--  提示没有了  -->
+        <materialDesign:Card
+            Width="620"
+            Height="470"
+            Margin="0,80,0,0"
+            VerticalAlignment="Center"
+            Visibility="{Binding IsAllFinished, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,35,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    FontFamily="centaur"
+                    FontSize="50"
+                    FontWeight="ExtraBold"
+                    Text="Today's review over!" />
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0,20"
+                    HorizontalAlignment="Center"
+                    FontFamily="微软雅黑"
+                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                    Text="今天的单词复习完啦！开始今天的学习吧！" />
+                <Border
+                    Grid.Row="2"
+                    Margin="0,10"
+                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                    BorderThickness="0,0,0,1" />
+                <materialDesign:PackIcon
+                    Grid.Row="3"
+                    Width="130"
+                    Height="130"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Kind="ThumbUpOutline" />
+
+
+            </Grid>
+        </materialDesign:Card>
         <materialDesign:Card
             Width="620"
             Height="470"
@@ -131,7 +176,7 @@
                     HorizontalAlignment="Center"
                     FontFamily="微软雅黑"
                     Foreground="{DynamicResource MaterialDesignBodyLight}"
-                    Text="你已经完成了本组单词，下列单词已加入复习计划" />
+                    Text="你的复习是英语前进的最大动力，加油啊书封影" />
                 <Border
                     Grid.Row="2"
                     Margin="0,10"
@@ -144,13 +189,23 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Height="40" Orientation="Horizontal">
                                 <TextBlock
-                                    Margin="50,0"
+                                    Width="100"
+                                    Margin="30,0,100,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontFamily="Calibri"
                                     FontSize="20"
                                     Text="{Binding HeadWord}" />
+                                <TextBlock
+                                    Margin="320,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontFamily="微软雅黑"
+                                    FontSize="15"
+                                    Text="{Binding ReviewDay}" />
+
                                 <TextBlock />
                             </StackPanel>
                         </DataTemplate>
@@ -212,6 +267,10 @@
                 Visibility="{Binding IsToNextGroup, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         </Grid>
+        <materialDesign:Snackbar
+            x:Name="SnackBar"
+            IsActive="{Binding IsSnackBarShow}"
+            Message="该单词复习计划已重置" />
 
     </Grid>
 </UserControl>

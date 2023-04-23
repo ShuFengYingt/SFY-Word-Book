@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using ImTools;
+using Prism.Mvvm;
 using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Common.Models;
 using SFY_Word_Book.WordBook;
@@ -8,13 +9,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFY_Word_Book.ViewModels
 {
-    public class ReviewViewModel:BindableBase
+    public class ReviewViewModel : BindableBase
     {
-        public ReviewViewModel() 
+        public ReviewViewModel()
         {
             //属性初始化
             NumOfGroup = 10;
@@ -23,6 +25,8 @@ namespace SFY_Word_Book.ViewModels
             IsNextButtonShow = false;
             isFinishTen = false;
             isToNextGroup = false;
+            IsAllFinished = false;
+            isSnackBarShow = false;
 
             #region 命令
             ShowTransKnowCommand = new Command(ShowTransFromKnow);
@@ -51,7 +55,7 @@ namespace SFY_Word_Book.ViewModels
 
         private ObservableCollection<WordGroupItem> wordGroups;
         /// <summary>
-        /// 单词组，每完成一组单词进行一次文件读写，用于每组完成后的显示
+        /// 单词组，用于每组完成后的显示
         /// </summary>
         public ObservableCollection<WordGroupItem> WordGroups
         {
@@ -86,15 +90,15 @@ namespace SFY_Word_Book.ViewModels
         {
             if (WordIndex >= ToDayReviewWords.TodayReviewWords.Count)
             {
+                isAllFinished = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(isAllFinished)));
+
+                IsToNextGroup = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
+
                 IsKnowButtonShow = false;
-                TempWordCard = new WordCard
-                {
-                    Word = "啥也没有，这个判断得写主页",
-                    PhoneticSymbol = "",
-                    
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
-
-                };
             }
             else
             {
@@ -146,6 +150,7 @@ namespace SFY_Word_Book.ViewModels
             set { SetProperty(ref isKnowButtonShow, value); }
         }
 
+
         private bool isNextButtonShow;
         /// <summary>
         /// 是否展示下一个个按钮
@@ -177,20 +182,25 @@ namespace SFY_Word_Book.ViewModels
 
         }
 
+        private bool isAllFinished;
+        public bool IsAllFinished
+        {
+            get { return isAllFinished; }
+            set { SetProperty(ref isAllFinished, value); }
+        }
+
         /// <summary>
         /// 认识该单词
         /// </summary>
         public Command ShowTransKnowCommand { get; set; }
         /// <summary>
-        /// 显示释义
+        /// 认识，显示释义
         /// </summary>
         public void ShowTransFromKnow()
         {
             //显示释义
             CreateTranslation();
 
-            //加入单词群组，用于本组结束后的显示
-            WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
             if ((WordIndex + 1) % NumOfGroup == 0)
             {
@@ -219,6 +229,27 @@ namespace SFY_Word_Book.ViewModels
 
         }
 
+        private bool isSnackBarShow;
+        /// <summary>
+        /// 显示重置提示
+        /// </summary>
+        public bool IsSnackBarShow
+        {
+            get { return isSnackBarShow; }
+            set { isSnackBarShow = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 异步显示重置提示
+        /// </summary>
+        /// <returns></returns>
+        private async Task ShowSnackBarAsync()
+        {
+            IsSnackBarShow = true; // 显示snackBar
+            await Task.Delay(2000); // 等待3秒
+            IsSnackBarShow = false; // 隐藏snackBar
+        }
+
         /// <summary>
         /// 不认识该单词
         /// </summary>
@@ -226,14 +257,14 @@ namespace SFY_Word_Book.ViewModels
         /// <summary>
         /// 不认识单词
         /// </summary>
-        public void ShowTransFromUnknow()
+        public async void ShowTransFromUnknow()
         {
             //显示释义
             CreateTranslation();
 
-            //加入单词群组
-            WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
-
+            //归一
+            ToDayReviewWords.TodayReviewWords[WordIndex].Combo = 1;
+            ShowSnackBarAsync();
 
             //当记忆完十个之后
             if ((WordIndex + 1) % NumOfGroup == 0)
@@ -320,33 +351,38 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         private void WordBookMoveAndSet()
         {
-            for (int i = WordIndex - NumOfGroup;i < WordIndex;i++)
+            for (int i = WordIndex - NumOfGroup; i < WordIndex; i++)
             {
                 ToDayReviewWords.TodayReviewWords[i].DateTime = DateTime.Today;
-
                 //设置下次复习时间
                 if (ToDayReviewWords.TodayReviewWords[i].Combo == 1)
                 {
-                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(2);
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt = 2;
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt);
                 }
                 else if (ToDayReviewWords.TodayReviewWords[i].Combo == 2)
                 {
-                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(4);
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt = 4;
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt);
 
                 }
                 else if (ToDayReviewWords.TodayReviewWords[i].Combo == 3)
                 {
-                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(7);
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt = 7;
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt);
 
                 }
                 else if (ToDayReviewWords.TodayReviewWords[i].Combo == 4)
                 {
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt = 15;
                     ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(15);
 
                 }
                 else if (ToDayReviewWords.TodayReviewWords[i].Combo == 5)
                 {
-                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(30);
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt = 30;
+
+                    ToDayReviewWords.TodayReviewWords[i].ReviewDays = DateTime.Today.AddDays(ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt);
 
                 }
                 else//记忆完成
@@ -354,12 +390,19 @@ namespace SFY_Word_Book.ViewModels
                     ToDayReviewWords.TodayReviewWords[i].Combo = -1;
 
                 }
-                ToDayReviewWords.TodayReviewWords[i].Combo++;
 
                 if (ToDayReviewWords.TodayReviewWords[i].Combo != -1)
                 {
+                    ToDayReviewWords.TodayReviewWords[i].Combo++;
+
                     //添加至待复习
                     ReviewWordBook.ReviewWords.Add(ToDayReviewWords.TodayReviewWords[i]);
+                    WordGroups.Add(new WordGroupItem { HeadWord = ToDayReviewWords.TodayReviewWords[i].headWord, ReviewDay = ToDayReviewWords.TodayReviewWords[i].ReviewDaysInt.ToString() + "天" });
+
+                }
+                else
+                {
+                    WordGroups.Add(new WordGroupItem { HeadWord = ToDayReviewWords.TodayReviewWords[i].headWord, ReviewDay = "已完成" });
 
                 }
                 //添加至今日已学习
@@ -367,8 +410,9 @@ namespace SFY_Word_Book.ViewModels
 
 
 
+
             }
-            for (int i = 0;i < WordIndex;i++)
+            for (int i = 0; i < WordIndex; i++)
             {
                 ToDayReviewWords.TodayReviewWords.RemoveAt(0);
             }
@@ -382,30 +426,35 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public void ToNextGroup()
         {
-            CreateWordCard();
+            //如果没有了
+            if (WordIndex >= ToDayReviewWords.TodayReviewWords.Count)
+            {
+                isAllFinished = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(isAllFinished)));
 
-            IsToNextGroup = false;
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
+                IsToNextGroup = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
 
-            IsKnowButtonShow = true;
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+                IsKnowButtonShow = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
-            WordGroups.Clear();
+            }
+            else
+            {
+                CreateWordCard();
+
+                IsToNextGroup = false;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsToNextGroup)));
+
+                IsKnowButtonShow = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+
+                WordGroups.Clear();
 
 
+            }
 
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 
 

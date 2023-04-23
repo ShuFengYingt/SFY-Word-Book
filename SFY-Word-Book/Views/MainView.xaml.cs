@@ -49,7 +49,6 @@ namespace SFY_Word_Book.Views
             {
                 //保存单词本
                 CET6.OutCET6WordBook();
-                CET6.OutCET6TXT();
                 //保存生词本
                 NewWordBook.OutNewWordBook();
                 //保存待复习词本

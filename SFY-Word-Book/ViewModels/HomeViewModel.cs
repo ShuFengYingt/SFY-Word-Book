@@ -54,6 +54,8 @@ namespace SFY_Word_Book.ViewModels
 
             #endregion
             ToDayHasLearnBook.ToDayHasLearnWords.CollectionChanged += OnTodayHasLearnWordBookCollectionChanged;
+            ToDayReviewWords.TodayReviewWords.CollectionChanged += OnTodayReviewWordsCollectionChanged;
+            LearningWordBook.LearningWords.CollectionChanged += OnLearningWordBookCollectionChanged;
 
 
             #region 单词查找用Words，迁移CET6
@@ -84,8 +86,8 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public int NumOfReview
         {
-            get { return numOfReview; } 
-            set {  numOfReview = value; RaisePropertyChanged(); }
+            get { return numOfReview; }
+            set { numOfReview = value; RaisePropertyChanged(); }
         }
 
         private int numOfLearn;
@@ -94,7 +96,7 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public int NumOfLearn
         {
-            get { return  numOfLearn; }
+            get { return numOfLearn; }
             set { numOfLearn = value; RaisePropertyChanged(); }
         }
 
@@ -105,15 +107,30 @@ namespace SFY_Word_Book.ViewModels
         public int NumOfHasLearn
         {
             get { return numOfHasLearn; }
-            set { numOfHasLearn = value;RaisePropertyChanged(); }
+            set { numOfHasLearn = value; RaisePropertyChanged(); }
+        }
+
+        private void OnLearningWordBookCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                NumOfLearn = LearningWordBook.LearningWords.Count;
+                UpdateTaskBar();
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                NumOfLearn = LearningWordBook.LearningWords.Count;
+                UpdateTaskBar();
+
+            }
         }
 
         /// <summary>
-        /// 订阅待复习词书变更时间
+        /// 订阅今日学习变更
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnTodayHasLearnWordBookCollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
+        private void OnTodayHasLearnWordBookCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //若有增加
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -131,15 +148,34 @@ namespace SFY_Word_Book.ViewModels
         }
 
         /// <summary>
+        /// 订阅待复习变更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTodayReviewWordsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                NumOfReview = ToDayReviewWords.TodayReviewWords.Count;
+                UpdateTaskBar();
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                NumOfReview = ToDayReviewWords.TodayReviewWords.Count;
+                UpdateTaskBar();
+            }
+        }
+
+        /// <summary>
         /// 待学习
         /// </summary>
-        private TaskBar waitingToLearnTaskBar = new TaskBar() 
+        private TaskBar waitingToLearnTaskBar = new TaskBar()
         {
             Icon = "BookOpenPageVariant",
             Title = "待学习",
             Content = "2677",
             Color = "#48815a",
-            NameSpace = "LearningView" 
+            NameSpace = "LearningView"
         };
         /// <summary>
         /// 待复习
@@ -176,15 +212,16 @@ namespace SFY_Word_Book.ViewModels
         };
 
 
-        
+
 
         /// <summary>
         /// 生成任务栏
         /// </summary>
         void CreateTaskBar()
         {
-
+            waitingToLearnTaskBar.Content = NumOfLearn.ToString();
             hasLearnedTaskBar.Content = NumOfHasLearn.ToString();
+            waitingToReiviewTaskBar.Content = NumOfReview.ToString();
 
             TaskBars.Add(waitingToLearnTaskBar);
             TaskBars.Add(waitingToReiviewTaskBar);
@@ -238,7 +275,8 @@ namespace SFY_Word_Book.ViewModels
         /// <summary>
         /// 生成每日文章
         /// </summary>
-        /*async*/ void CreateDailyPage()
+        /*async*/
+        void CreateDailyPage()
         {
             DailyPages.Add(new DailyPage
             {
@@ -298,7 +336,7 @@ namespace SFY_Word_Book.ViewModels
         }
 
         #endregion
-            
+
         #region 单词查找
 
         private List<WordRoot.Root> words;
@@ -308,7 +346,7 @@ namespace SFY_Word_Book.ViewModels
         public List<WordRoot.Root> Words
         {
             get { return words; }
-            set { words = value; RaisePropertyChanged(); }  
+            set { words = value; RaisePropertyChanged(); }
         }
 
         private int selectedWordRank;
@@ -318,7 +356,7 @@ namespace SFY_Word_Book.ViewModels
         public int SelectedWordRank
         {
             get { return selectedWordRank; }
-            set { selectedWordRank = value; RaisePropertyChanged();RaisePropertyChanged(nameof(SelectedWord)); }
+            set { selectedWordRank = value; RaisePropertyChanged(); RaisePropertyChanged(nameof(SelectedWord)); }
         }
         private WordRoot.Root selectedWord;
         /// <summary>
@@ -326,9 +364,10 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public WordRoot.Root SelectedWord
         {
-            get 
-            {   ShowTransCN(); 
-                return Words[SelectedWordRank - 1]; 
+            get
+            {
+                ShowTransCN();
+                return Words[SelectedWordRank - 1];
             }
             set { selectedWord = value; RaisePropertyChanged(); }
         }
@@ -347,10 +386,10 @@ namespace SFY_Word_Book.ViewModels
         {
             TransCNs.Clear();
 
-            for (int i = 0;i < Words[SelectedWordRank - 1].content.word.content.trans.Count;i++)
+            for (int i = 0; i < Words[SelectedWordRank - 1].content.word.content.trans.Count; i++)
             {
                 SearchTransCN transCN = new SearchTransCN();
-                transCN.PartOfSpeech = Words[SelectedWordRank - 1].content.word.content.trans[i].pos+".";
+                transCN.PartOfSpeech = Words[SelectedWordRank - 1].content.word.content.trans[i].pos + ".";
                 transCN.TransCN = Words[SelectedWordRank - 1].content.word.content.trans[i].tranCn;
                 TransCNs.Add(transCN);
 
@@ -364,7 +403,7 @@ namespace SFY_Word_Book.ViewModels
         /// <summary>
         /// 生词本命令
         /// </summary>
-        public Command AddToNewWordBookCommand { get;set; }
+        public Command AddToNewWordBookCommand { get; set; }
         /// <summary>
         /// 生词本函数
         /// </summary>

@@ -2,6 +2,7 @@
 using SFY_Word_Book.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace SFY_Word_Book.WordBook
     {
         public LearningWordBook() { }
 
-        public static List<WordRoot.Root> LearningWords { get; set; } = new List<WordRoot.Root>();
+        public static ObservableCollection<WordRoot.Root> LearningWords { get; set; } = new ObservableCollection<WordRoot.Root>();
 
         /// <summary>
         /// 读取待学习单词

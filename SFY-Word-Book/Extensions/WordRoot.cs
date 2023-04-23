@@ -60,6 +60,8 @@ namespace SFY_Word_Book.Extensions
             /// 单词记背时间
             /// </summary>
             public DateTime DateTime { get; set; }
+
+            public int ReviewDaysInt { get;set; }
         }
 
 

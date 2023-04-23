@@ -1,6 +1,7 @@
 ﻿using SFY_Word_Book.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace SFY_Word_Book.WordBook
     {
         public ToDayReviewWords() { ReadReviewWordBook(); }
 
-        public static List<WordRoot.Root> TodayReviewWords { get; set; } = new List<WordRoot.Root>();
+        public static ObservableCollection<WordRoot.Root> TodayReviewWords { get; set; } = new ObservableCollection<WordRoot.Root>();
 
         /// <summary>
         /// 在ReviewWordBook的基础上，读取当日需要记忆的单词

@@ -22,20 +22,47 @@
                         <materialDesign:Card>
                             <StackPanel>
                                 <Expander HorizontalAlignment="Stretch" Header="{Binding headWord}">
-                                    <!--<Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding content.word.content.trans[0].pos}"/>
-                                    <ItemsControl ItemsSource="{Binding content.word.content.trans}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding pos}"/>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>-->
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="0"
+                                            Margin="24,-7,0,10"
+                                            Orientation="Horizontal">
+                                            <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="[" />
+                                            <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="{Binding content.word.content.ukphone}" />
+                                            <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="]" />
+
+                                        </StackPanel>
+                                        <!--  释义  -->
+                                        <ItemsControl Grid.Row="1" ItemsSource="{Binding content.word.content.trans}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="25,0,0,10" Orientation="Horizontal">
+                                                        <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="{Binding pos}" />
+                                                        <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="{Binding tranCn}" />
+
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <!--  例句  -->
+                                        <ItemsControl Grid.Row="2" ItemsSource="{Binding content.word.content.sentence.sentences}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="25,0,0,10" Orientation="Vertical">
+                                                        <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="{Binding sContent}" />
+                                                        <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}" Text="{Binding sCn}" />
+
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                    </Grid>
                                 </Expander>
                                 <!--<Border Style="{StaticResource HorizontalDividerBorder}" />-->
                             </StackPanel>
