@@ -48,7 +48,6 @@ namespace SFY_Word_Book.Extensions
                 {
                     WordRoot.Root wordItem = JsonConvert.DeserializeObject<WordRoot.Root>(line);
                     wordItem.Combo = 0;
-                    wordItem.ReviewDays = -1;
                     words.Add(wordItem);
                 }
             }
@@ -82,6 +81,7 @@ namespace SFY_Word_Book.Extensions
             }
 
         }
+
 
 
 

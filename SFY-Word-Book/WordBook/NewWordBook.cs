@@ -62,7 +62,7 @@ namespace SFY_Word_Book.WordBook
                 Formatting = Formatting.None,  //添加缩进
             };
             string NewWordBookJson = "";
-            foreach (var word in NewWordBook.NewWords)
+            foreach (var word in NewWords)
             {
                 NewWordBookJson += JsonConvert.SerializeObject(word, settings) + Environment.NewLine;
             }

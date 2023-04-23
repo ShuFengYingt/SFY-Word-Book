@@ -36,7 +36,7 @@ namespace SFY_Word_Book.Extensions
             /// </summary>
             public Content content { get; set; }
 
-            private bool isSettingNew;
+            private bool isSettingNew;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
             /// <summary>
             /// 是否在生词本中
             /// </summary>
@@ -54,7 +54,12 @@ namespace SFY_Word_Book.Extensions
             /// <summary>
             /// 下次复习时间，默认-1
             /// </summary>
-            public int ReviewDays { get; set; }
+            public DateTime ReviewDays { get; set; }
+
+            /// <summary>
+            /// 单词记背时间
+            /// </summary>
+            public DateTime DateTime { get; set; }
         }
 
 

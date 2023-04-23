@@ -25,7 +25,11 @@ namespace SFY_Word_Book.WordBook
             //不存在就返回,而且说明是第一次使用，将CET6全部添加进去
             if (!File.Exists(filePath))
             {
-                LearningWords = CET6.words;
+                //这里有指针问题，得一个个加进去,不然修改LeaningWordBook时会造成CET6的变动
+                for (int i = 0;i < CET6.words.Count;i++)
+                {
+                    LearningWords.Add(CET6.words[i]);
+                }
                 return;
             }
             using (StreamReader r = new StreamReader(filePath))
@@ -58,14 +62,14 @@ namespace SFY_Word_Book.WordBook
             {
                 Formatting = Formatting.None,  //添加缩进
             };
-            string NewWordBookJson = "";
-            foreach (var word in NewWordBook.NewWords)
+            string LearingWordBookJson = "";
+            foreach (var word in LearningWords)
             {
-                NewWordBookJson += JsonConvert.SerializeObject(word, settings) + Environment.NewLine;
+                LearingWordBookJson += JsonConvert.SerializeObject(word, settings) + Environment.NewLine;
             }
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                writer.WriteLine(NewWordBookJson);
+                writer.WriteLine(LearingWordBookJson);
             }
 
         }

@@ -1,5 +1,19 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 4.22
+
+完成了以下内容
+
+1. 复习功能
+2. 复习词汇保存
+3. 艾宾浩斯记忆曲线（大部分）
+
+本模块待完成
+
+1. 下次复习日期显示
+2. 完全记忆完成提示
+3. 遗忘时Combo清零
+
 
 
 # 4.18 项目日志

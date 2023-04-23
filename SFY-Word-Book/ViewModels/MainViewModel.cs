@@ -36,6 +36,15 @@ namespace SFY_Word_Book.ViewModles
             //读入待学习单词
             LearningWordBook.ReadJson();
 
+            //读入当日学习的单词
+            ToDayHasLearnBook.ReadJson();
+
+            //读入待复习单词
+            ReviewWordBook.ReadJson();
+
+            //读入当日待复习单词
+            ToDayReviewWords.ReadReviewWordBook();
+
 
             //方法实现
             FowardAndBack();

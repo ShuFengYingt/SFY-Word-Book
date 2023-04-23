@@ -50,9 +50,11 @@ namespace SFY_Word_Book.ViewModels
             SelectedWordRank = random.Next(1, 2000);
             NumOfLearn = LearningWordBook.LearningWords.Count;
             NumOfReview = ReviewWordBook.ReviewWords.Count;
-            #endregion
+            NumOfHasLearn = ToDayHasLearnBook.ToDayHasLearnWords.Count;
 
-            ReviewWordBook.ReviewWords.CollectionChanged += OnReviewWordBookCollectionChanged;
+            #endregion
+            ToDayHasLearnBook.ToDayHasLearnWords.CollectionChanged += OnTodayHasLearnWordBookCollectionChanged;
+
 
             #region 单词查找用Words，迁移CET6
             Words = CET6.words;
@@ -111,19 +113,19 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnReviewWordBookCollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
+        private void OnTodayHasLearnWordBookCollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
         {
             //若有增加
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 //先这样，以后再过滤哪些是今天学的，或者单独存
-                NumOfHasLearn = ReviewWordBook.ReviewWords.Count;
+                NumOfHasLearn = ToDayHasLearnBook.ToDayHasLearnWords.Count;
                 UpdateTaskBar();
             }
             //减少
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                NumOfHasLearn = ReviewWordBook.ReviewWords.Count;
+                NumOfHasLearn = ToDayHasLearnBook.ToDayHasLearnWords.Count;
                 UpdateTaskBar();
             }
         }
@@ -181,6 +183,8 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         void CreateTaskBar()
         {
+
+            hasLearnedTaskBar.Content = NumOfHasLearn.ToString();
 
             TaskBars.Add(waitingToLearnTaskBar);
             TaskBars.Add(waitingToReiviewTaskBar);

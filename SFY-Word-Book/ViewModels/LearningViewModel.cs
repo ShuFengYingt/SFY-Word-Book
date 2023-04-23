@@ -315,22 +315,35 @@ namespace SFY_Word_Book.ViewModels
         }
 
         /// <summary>
-        /// 对单词书的操作
+        /// 对单词书的操作,迁移进待复习词书以及当日学习词书
         /// </summary>
         private void WordBookMoveAndSet()
         {
-            //单词迁移至待复习词书当中
+            //单词迁移进待复习词书以及当日学习词书
             for (int i = WordIndex - NumOfGroup; i < WordIndex; i++)
             {
+                //记录连对次数
+                LearningWordBook.LearningWords[i].Combo++;
+                //记录记忆时间
+                LearningWordBook.LearningWords[i].DateTime = DateTime.Today;
+                //下一次复习的时间,明日
+                LearningWordBook.LearningWords[i].ReviewDays = DateTime.Today.AddDays(1);
+
                 ReviewWordBook.ReviewWords.Add(LearningWordBook.LearningWords[i]);
+                ToDayHasLearnBook.ToDayHasLearnWords.Add(LearningWordBook.LearningWords[i]);
             }
+
+
             //WordIndex归零，并删除LearningWords的内容
-            while (WordIndex-- == 0)
+            for(int i = 0;i < 10;i++)
             {
                 LearningWordBook.LearningWords.RemoveAt(0);
             }
+            WordIndex = 0;
 
             LearningWordBook.OutLearningWordBook();
+
+            
         }
 
         public Command ToNextGroupCommand { get; set; } 
