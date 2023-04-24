@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SFY_Word_Book.Api.Context
 {
+    /// <summary>
+    /// 用户数据，数据传输层
+    /// </summary>
     public class UserInfo
     {
         [Key]

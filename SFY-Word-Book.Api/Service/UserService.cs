@@ -1,7 +1,9 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using AutoMapper;
 using Microsoft.IdentityModel.Abstractions;
 using SFY_Word_Book.Api.Context;
 using SFY_Word_Book.Api.Service;
+using SFY_Word_Book.Shared.Dtos;
 
 namespace SFY_Word_Book.Api.Serviece
 {
@@ -11,18 +13,22 @@ namespace SFY_Word_Book.Api.Serviece
     public class UserService : IUserInfoServiece
     {
         private readonly IUnitOfWork work;
+        private readonly IMapper mapper;
 
-        public UserService(IUnitOfWork work)
+        public UserService(IUnitOfWork work,IMapper mapper)
         {
             this.work = work;
+            this.mapper = mapper;
         }
 
 
-        async Task<APIResponse> IBaseService<UserInfo>.AddAsync(UserInfo model)
+        async Task<APIResponse> IBaseService<UserDto>.AddAsync(UserDto model)
         {
             try
             {
-                await work.GetRepository<UserInfo>().InsertAsync(model);
+                var user =  mapper.Map<UserInfo>(model);
+
+                await work.GetRepository<UserInfo>().InsertAsync(user);
                 if (await work.SaveChangesAsync() > 0)
                 {
                     return new APIResponse(true, model);
@@ -36,7 +42,7 @@ namespace SFY_Word_Book.Api.Serviece
             }
         }
 
-        async Task<APIResponse> IBaseService<UserInfo>.DeleteAsync(int id)
+        async Task<APIResponse> IBaseService<UserDto>.DeleteAsync(int id)
         {
             try
             {
@@ -60,7 +66,7 @@ namespace SFY_Word_Book.Api.Serviece
             }
         }
 
-        async Task<APIResponse> IBaseService<UserInfo>.GetAllAsync()
+        async Task<APIResponse> IBaseService<UserDto>.GetAllAsync()
         {
             try
             {
@@ -77,7 +83,7 @@ namespace SFY_Word_Book.Api.Serviece
             }
         }
 
-        async Task<APIResponse> IBaseService<UserInfo>.GetSingleAsync(int id)
+        async Task<APIResponse> IBaseService<UserDto>.GetSingleAsync(int id)
         {
             try
             {
@@ -94,18 +100,20 @@ namespace SFY_Word_Book.Api.Serviece
             }
         }
 
-        async Task<APIResponse> IBaseService<UserInfo>.UpdateAsync(UserInfo model)
+        async Task<APIResponse> IBaseService<UserDto>.UpdateAsync(UserDto model)
         {
             try
             {
+                var dbUser = mapper.Map<UserInfo>(model);
+
                 //获得数据库
                 var repository = work.GetRepository<UserInfo>();
                 //查找
-                var user = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(model.Id));
+                var user = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(dbUser.Id));
 
-                user.Name = model.Name;
-                user.Email = model.Email;
-                user.Password = model.Password;
+                user.Name = dbUser.Name;
+                user.Email = dbUser.Email;
+                user.Password = dbUser.Password;
 
                 repository.Update(user);
 

@@ -4,6 +4,8 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using SFY_Word_Book.Api.Context.Repository;
 using SFY_Word_Book.Api.Service;
 using SFY_Word_Book.Api.Serviece;
+using SFY_Word_Book.Api.Extension;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,15 @@ builder.Services.AddDbContext<SFYWordBookContext>(options =>
 
 builder.Services.AddTransient<IUserInfoServiece, UserService>();
 builder.Services.AddControllers();
+
+#region Ìí¼ÓAutoMapper
+var autoMapperProfile = new MapperConfiguration(config =>
+{
+    config.AddProfile(new AutoMapperProfile());
+});
+builder.Services.AddSingleton(autoMapperProfile.CreateMapper());
+#endregion
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
