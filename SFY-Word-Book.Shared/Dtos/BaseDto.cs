@@ -12,7 +12,7 @@ namespace SFY_Word_Book.Shared.Dtos
     /// <summary>
     /// 数据实体层
     /// </summary>
-    public class BaseUser:INotifyPropertyChanged
+    public class BaseDto:INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler? PropertyChanged;

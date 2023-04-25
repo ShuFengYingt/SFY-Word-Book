@@ -17,7 +17,8 @@ builder.Services.AddDbContext<SFYWordBookContext>(options =>
 }).AddUnitOfWork<SFYWordBookContext>()
 .AddCustomRepository<UserInfo, UserInfoRepository>();
 
-builder.Services.AddTransient<IUserInfoServiece, UserService>();
+builder.Services.AddTransient<IUserInfoService, UserService>();
+builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddControllers();
 
 #region Ìí¼ÓAutoMapper

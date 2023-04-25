@@ -1,4 +1,5 @@
 ﻿using SFY_Word_Book.Api.Serviece;
+using SFY_Word_Book.Shared.Parameter;
 
 namespace SFY_Word_Book.Api.Service
 {
@@ -8,7 +9,7 @@ namespace SFY_Word_Book.Api.Service
     /// <typeparam name="T"></typeparam>
     public interface IBaseService<T>
     {
-        Task<APIResponse> GetAllAsync();
+        Task<APIResponse> GetAllAsync(QueryParameter queryParameter);
         Task<APIResponse> GetSingleAsync(int id);
 
         Task<APIResponse> AddAsync(T model);

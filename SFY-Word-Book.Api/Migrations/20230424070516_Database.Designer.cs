@@ -11,8 +11,8 @@ using SFY_Word_Book.Api.Context;
 namespace SFY_Word_Book.Api.Migrations
 {
     [DbContext(typeof(SFYWordBookContext))]
-    [Migration("20230409123611_SFYWordBook")]
-    partial class SFYWordBook
+    [Migration("20230424070516_Database")]
+    partial class Database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,22 +110,28 @@ namespace SFY_Word_Book.Api.Migrations
 
             modelBuilder.Entity("SFY_Word_Book.Api.Context.UserInfo", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("Account")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreateDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("userName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Account");
 
                     b.ToTable("Users");
                 });

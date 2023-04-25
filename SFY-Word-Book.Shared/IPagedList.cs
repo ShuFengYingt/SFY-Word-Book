@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
+namespace SFY_Word_Book.Shared.Models
 {
     /// <summary>
     /// Provides the interface(s) for paged list of any type.

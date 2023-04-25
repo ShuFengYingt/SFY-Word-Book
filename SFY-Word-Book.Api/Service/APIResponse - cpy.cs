@@ -3,7 +3,7 @@
     /// <summary>
     /// 通用返回
     /// </summary>
-    public class APIResponse<T>
+    public class APIResponse
     {
         public APIResponse(string message, bool statue = false)
         {

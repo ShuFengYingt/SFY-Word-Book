@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SFY_Word_Book.Api.Context;
 using SFY_Word_Book.Api.Service;
 using SFY_Word_Book.Api.Serviece;
+using SFY_Word_Book.Shared;
 using SFY_Word_Book.Shared.Dtos;
 using System.Threading.Tasks;
 
@@ -15,9 +16,9 @@ namespace SFY_Word_Book.Api.Controllers
     [Route("api/[controller]/[action]")]
     public class WordBookController:ControllerBase  
     {
-        private readonly IUserInfoServiece userInfoServiece;
+        private readonly IUserInfoService userInfoServiece;
 
-        public WordBookController(IUserInfoServiece userInfoServiece) 
+        public WordBookController(IUserInfoService userInfoServiece) 
         {
             this.userInfoServiece = userInfoServiece;
         }
@@ -25,8 +26,6 @@ namespace SFY_Word_Book.Api.Controllers
         [HttpGet]
         public async Task<APIResponse> Get(int id) => await userInfoServiece.GetSingleAsync(id);
 
-        [HttpGet]
-        public async Task<APIResponse> GetAll(int id) => await userInfoServiece.GetAllAsync();
 
         [HttpPost]
         public async Task<APIResponse> Add([FromBody] UserDto model) => await userInfoServiece.AddAsync(model);

@@ -4,13 +4,14 @@ using Microsoft.IdentityModel.Abstractions;
 using SFY_Word_Book.Api.Context;
 using SFY_Word_Book.Api.Service;
 using SFY_Word_Book.Shared.Dtos;
+using SFY_Word_Book.Shared.Parameter;
 
 namespace SFY_Word_Book.Api.Serviece
 {
     /// <summary>
     /// 用户实现
     /// </summary>
-    public class UserService : IUserInfoServiece
+    public class UserService : IUserInfoService
     {
         private readonly IUnitOfWork work;
         private readonly IMapper mapper;
@@ -21,6 +22,10 @@ namespace SFY_Word_Book.Api.Serviece
             this.mapper = mapper;
         }
 
+        public Task<APIResponse> GetAllAsync(QueryParameter queryParameter)
+        {
+            throw new NotImplementedException();
+        }
 
         async Task<APIResponse> IBaseService<UserDto>.AddAsync(UserDto model)
         {
@@ -66,22 +71,6 @@ namespace SFY_Word_Book.Api.Serviece
             }
         }
 
-        async Task<APIResponse> IBaseService<UserDto>.GetAllAsync()
-        {
-            try
-            {
-                //获得数据库
-                var repository = work.GetRepository<UserInfo>();
-                //查找
-                var users = await repository.GetAllAsync(); 
-                return new APIResponse(true,users);
-
-            }
-            catch (Exception ex)
-            {
-                return new APIResponse(ex.Message);
-            }
-        }
 
         async Task<APIResponse> IBaseService<UserDto>.GetSingleAsync(int id)
         {
@@ -111,7 +100,7 @@ namespace SFY_Word_Book.Api.Serviece
                 //查找
                 var user = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(dbUser.Id));
 
-                user.Name = dbUser.Name;
+                user.userName = dbUser.userName;
                 user.Email = dbUser.Email;
                 user.Password = dbUser.Password;
 

@@ -10,12 +10,14 @@ namespace SFY_Word_Book.Shared.Dtos
     /// <summary>
     /// 用户数据实体
     /// </summary>
-    public class UserDto:BaseUser
+    public class UserDto:BaseDto
     {
         private int id;
-        private string name;
+        private string userName;
         private string email;
         private string password;
+        private string account;
+        private DateTime createDate;
 
 
         [Key]
@@ -24,9 +26,9 @@ namespace SFY_Word_Book.Shared.Dtos
             get { return id; } set {  id = value; OnPropertyChanged(); }
         }
 
-        public string Name
+        public string UserName
         {
-            get { return name; } set { name = value; OnPropertyChanged(); }
+            get { return userName; } set { userName = value; OnPropertyChanged(); }
         }
         public string Email
         {
@@ -35,6 +37,15 @@ namespace SFY_Word_Book.Shared.Dtos
         public string Password
         {
             get { return password; } set { password = value;OnPropertyChanged(); }
+        }
+
+        public string Account
+        {
+            get { return account; } set { account = value; OnPropertyChanged(); }
+        }
+        public DateTime CreateDate
+        {
+            get { return  createDate; } set {  createDate = value; OnPropertyChanged(); }
         }
 
 

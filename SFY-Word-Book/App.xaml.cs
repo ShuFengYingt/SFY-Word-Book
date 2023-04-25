@@ -1,5 +1,8 @@
-﻿using Prism.DryIoc;
+﻿using Microsoft.Extensions.Configuration;
+using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Services.Dialogs;
+using SFY_Word_Book.Service;
 using SFY_Word_Book.ViewModels;
 using SFY_Word_Book.Views;
 using System;
@@ -22,9 +25,32 @@ namespace SFY_Word_Book
             return Container.Resolve<MainView>();
         }
 
+        protected override void OnInitialized()
+        {
+            //获得弹窗
+            var dialog = Container.Resolve<IDialogService>();
+
+            //弹窗
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                //如果异常，则关闭
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Application.Current.Shutdown();
+                    return;
+                }
+
+
+            });
+            base.OnInitialized();
+
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //注册子页面导航,基于PrismApplication，containerRegistry.RegisterForNavigation<View, ViewModel>();
+            containerRegistry.Register<ILoginService, LoginService>();
+
+            //依赖注入，注册子页面导航,基于PrismApplication，containerRegistry.RegisterForNavigation<View, ViewModel>();
             containerRegistry.RegisterForNavigation<HomeView,HomeViewModel> ();
             containerRegistry.RegisterForNavigation<NewWordBookView, NewWordBookViewModel>();
             containerRegistry.RegisterForNavigation<LearningHistoryView, LearningHistoryViewModel>();
@@ -33,6 +59,8 @@ namespace SFY_Word_Book
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<AboutView, AboutViewModel>();
             containerRegistry.RegisterForNavigation<ReviewView, ReviewViewModel>();
+
+            containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
         }
     }
 }
