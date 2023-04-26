@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.WordBook;
+using SFY_Word_Book.Common.Models;
 using SFY_Word_Book.Common;
 using Prism.Ioc;
 
