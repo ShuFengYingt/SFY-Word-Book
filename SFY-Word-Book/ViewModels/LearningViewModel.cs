@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using SFY_Word_Book.Extensions;
 using System.Runtime.InteropServices;
-using SFY_Word_Book.ViewModles;
 using Microsoft.VisualStudio.Services.Profile;
 using SFY_Word_Book.WordBook;
 

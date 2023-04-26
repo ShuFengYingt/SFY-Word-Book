@@ -5,6 +5,7 @@ using SFY_Word_Book.Api.Serviece;
 using SFY_Word_Book.Shared;
 using SFY_Word_Book.Shared.Dtos;
 using SFY_Word_Book.Shared.Extension;
+using APIResponse = SFY_Word_Book.Api.Serviece.APIResponse;
 
 namespace SFY_Word_Book.Api.Service
 {
@@ -25,7 +26,7 @@ namespace SFY_Word_Book.Api.Service
                 //MD5加密
                 password = password.GetMD5();
                 //注意，GetRepository是传输层的,泛型也要填传输层的类
-                var model = await unitOfWork.GetRepository<UserInfo>().GetFirstOrDefaultAsync(predicate: x => x.Account.Equals(account) && x.Password.Equals(password));
+                var model = await unitOfWork.GetRepository<UserInfo>().GetFirstOrDefaultAsync(predicate: x => x.userName.Equals(account) && x.Password.Equals(password));
                 if (model == null)
                 {
                     return new APIResponse("账号或密码错误，请重试");

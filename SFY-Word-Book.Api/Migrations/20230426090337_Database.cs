@@ -43,7 +43,6 @@ namespace SFY_Word_Book.Api.Migrations
                     Account = table.Column<string>(type: "TEXT", nullable: false),
                     Id = table.Column<int>(type: "INTEGER", nullable: false),
                     userName = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },

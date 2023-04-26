@@ -7,6 +7,7 @@ namespace SFY_Word_Book.Api.Context.Repository
     {
         public UserInfoRepository(SFYWordBookContext dbContext) : base(dbContext)
         {
+
         }
     }
 }

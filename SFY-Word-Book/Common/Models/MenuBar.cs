@@ -6,7 +6,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFY_Word_Book.Common.Modles
+namespace SFY_Word_Book.Common.Models
 {
     /// <summary>
     /// 系统导航菜单实体类

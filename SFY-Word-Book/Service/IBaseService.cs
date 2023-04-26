@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFY_Word_Book.Api.Serviece;
+using APIResponse = SFY_Word_Book.Shared.APIResponse;
 
 namespace SFY_Word_Book.Service
 {

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using APIResponse = SFY_Word_Book.Shared.APIResponse;
+
 
 namespace SFY_Word_Book.Service
 {
@@ -27,7 +29,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse> LoginAsync(UserDto userDto)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
+            request.Method = RestSharp.Method.POST;
             request.Route = $"api/{serviceName}/Login";
             request.Parameter = userDto;
             return await httpRestClient.ExecuteAsync(request);
@@ -41,7 +43,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse> RegisterAsync(UserDto userDto)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
+            request.Method = RestSharp.Method.POST;
             request.Route = $"api/{serviceName}/Register";
             request.Parameter = userDto;
             return await httpRestClient.ExecuteAsync(request);

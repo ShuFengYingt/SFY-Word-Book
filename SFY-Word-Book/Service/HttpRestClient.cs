@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFY_Word_Book.Shared;
+using APIResponse = SFY_Word_Book.Shared.APIResponse;
 
 namespace SFY_Word_Book.Service
 {
@@ -18,12 +20,12 @@ namespace SFY_Word_Book.Service
         /// api请求地址
         /// </summary>
         private readonly string apiUrl;
-        protected readonly RestClient restClient;
+        protected  readonly RestClient restClient;
 
         public HttpRestClient(string apiUrl) 
         {
             this.apiUrl = apiUrl;
-            restClient = new RestClient(apiUrl);
+            restClient = new RestClient();
         }
 
         /// <summary>
@@ -33,25 +35,29 @@ namespace SFY_Word_Book.Service
         /// <returns></returns>
         public async Task<APIResponse> ExecuteAsync(BaseRequest baseRequest)
         {
-            var request = new RestRequest(baseRequest.Route + apiUrl, baseRequest.Method);
+            var request = new RestRequest(baseRequest.Method);
             request.AddHeader("Content-Type", baseRequest.ContentType);
             if (baseRequest.Parameter != null)
             {
-                request.AddParameter("parameter",JsonConvert.SerializeObject(baseRequest.Parameter),ParameterType.RequestBody );
+                request.AddParameter("param",JsonConvert.SerializeObject(baseRequest.Parameter),ParameterType.RequestBody );
             }
+            restClient.BaseUrl = new Uri(apiUrl + baseRequest.Route);
             var response = await restClient.ExecuteAsync(request);
             return JsonConvert.DeserializeObject<APIResponse>(response.Content);
+
         }
         public async Task<APIResponse<T>> ExecuteAsync<T>(BaseRequest baseRequest)
         {
-            var request = new RestRequest(baseRequest.Route + apiUrl, baseRequest.Method);
+            var request = new RestRequest(baseRequest.Method);
             request.AddHeader("Content-Type", baseRequest.ContentType);
             if (baseRequest.Parameter != null)
             {
-                request.AddParameter("parameter",JsonConvert.SerializeObject(baseRequest.Parameter),ParameterType.RequestBody );
+                request.AddParameter("param", JsonConvert.SerializeObject(baseRequest.Parameter), ParameterType.RequestBody);
             }
+            restClient.BaseUrl = new Uri(apiUrl + baseRequest.Route);
             var response = await restClient.ExecuteAsync(request);
             return JsonConvert.DeserializeObject<APIResponse<T>>(response.Content);
+
         }
 
     }

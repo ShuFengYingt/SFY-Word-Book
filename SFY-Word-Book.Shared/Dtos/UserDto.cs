@@ -14,13 +14,11 @@ namespace SFY_Word_Book.Shared.Dtos
     {
         private int id;
         private string userName;
-        private string email;
         private string password;
         private string account;
         private DateTime createDate;
 
 
-        [Key]
         public int Id
         {
             get { return id; } set {  id = value; OnPropertyChanged(); }
@@ -29,10 +27,6 @@ namespace SFY_Word_Book.Shared.Dtos
         public string UserName
         {
             get { return userName; } set { userName = value; OnPropertyChanged(); }
-        }
-        public string Email
-        {
-            get { return email; } set { email = value;OnPropertyChanged(); }
         }
         public string Password
         {

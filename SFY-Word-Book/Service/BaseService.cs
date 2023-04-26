@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using APIResponse = SFY_Word_Book.Shared.APIResponse;
 using QueryParameter = SFY_Word_Book.Shared.Parameter.QueryParameter;
 
 namespace SFY_Word_Book.Service
@@ -28,7 +29,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse<TEntity>> AddAsync(TEntity entity)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
+            request.Method = RestSharp.Method.POST;
             request.Route = $"api/{serviceName}/Add";
             request.Parameter = entity;
             return await client.ExecuteAsync<TEntity>(request);
@@ -37,7 +38,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse> DeleteAsync(int id)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Delete;
+            request.Method = RestSharp.Method.DELETE;
             request.Route = $"api/{serviceName}/Delete?id={id}";
             return await client.ExecuteAsync(request);
         }
@@ -45,7 +46,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse<PagedList<TEntity>>> GetAllAsync(QueryParameter queryParameter)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Get;
+            request.Method = RestSharp.Method.GET;
             request.Route = $"api/{serviceName}/GetAll?pageIndex={queryParameter.PageIndex}&pageSize={queryParameter.PageSize}&search={queryParameter.Search}";
             request.Parameter = queryParameter;
             return await client.ExecuteAsync<PagedList<TEntity>>(request);
@@ -54,7 +55,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse<TEntity>> GetFirstOfDefaultAsync(int id)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Get;
+            request.Method = RestSharp.Method.GET;
             request.Route = $"api/{serviceName}/Get?id={id}";
             return await client.ExecuteAsync<TEntity>(request);
         }
@@ -62,7 +63,7 @@ namespace SFY_Word_Book.Service
         public async Task<APIResponse<TEntity>> UpdateAsync(TEntity entity)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
+            request.Method = RestSharp.Method.POST;
             request.Route = $"api/{serviceName}/Update";
             request.Parameter = entity;
             return await client.ExecuteAsync<TEntity>(request);

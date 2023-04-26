@@ -1,5 +1,4 @@
 ﻿using Prism.Regions;
-using SFY_Word_Book.ViewModles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +83,7 @@ namespace SFY_Word_Book.Views
 
 
 
-            //设置主页面xaml上下文
+            ////设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager);
 
             //左侧菜单栏选中页面后，收回菜单栏

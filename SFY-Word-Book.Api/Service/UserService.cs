@@ -101,7 +101,6 @@ namespace SFY_Word_Book.Api.Serviece
                 var user = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(dbUser.Id));
 
                 user.userName = dbUser.userName;
-                user.Email = dbUser.Email;
                 user.Password = dbUser.Password;
 
                 repository.Update(user);

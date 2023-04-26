@@ -113,10 +113,6 @@ namespace SFY_Word_Book.Api.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 

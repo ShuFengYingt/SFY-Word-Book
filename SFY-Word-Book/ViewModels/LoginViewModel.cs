@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -17,9 +18,11 @@ namespace SFY_Word_Book.ViewModels
     {
         public LoginViewModel(ILoginService loginService)
         {
+            registerUserDto = new RegisterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
             this.loginService = loginService;
         }
+
         #region 接口实现
         public string Title { get; set; } = "我的单词书";
 
@@ -39,6 +42,7 @@ namespace SFY_Word_Book.ViewModels
         {
         }
         #endregion
+
         private string account;
         /// <summary>
         /// 账号
@@ -48,10 +52,19 @@ namespace SFY_Word_Book.ViewModels
             get { return account; }
             set { account = value; RaisePropertyChanged(); }
         }
+        private string userName;
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; RaisePropertyChanged(); }
+        }
 
         private string password;
         private readonly ILoginService loginService;
-
+          
         /// <summary>
         /// 密码
         /// </summary>
@@ -115,7 +128,7 @@ namespace SFY_Word_Book.ViewModels
                     //返回登录界面
                 case "Return":
                     {
-                        selectedIndex = 0;
+                        SelectedIndex = 0;
                         break;
                     }
 
@@ -128,9 +141,9 @@ namespace SFY_Word_Book.ViewModels
         private async void Register()
         {
             //为空则不执行
-            if (string.IsNullOrWhiteSpace(registerUserDto.Account) ||
+            if (registerUserDto == null ||
+                string.IsNullOrWhiteSpace(registerUserDto.Account) ||
                 string.IsNullOrWhiteSpace(registerUserDto.UserName) ||
-                string.IsNullOrWhiteSpace(registerUserDto.Email) || 
                 string.IsNullOrWhiteSpace(registerUserDto.Password) ||
                 string.IsNullOrWhiteSpace(registerUserDto.RepeatPassword))
             {
@@ -143,21 +156,21 @@ namespace SFY_Word_Book.ViewModels
                 //提示还没写
                 return;
             }
-            var registerResult = await loginService.RegisterAsync(new Shared.Dtos.UserDto()
-            {
-                Account = registerUserDto.Account,
-                UserName = registerUserDto.UserName,
-                Password = registerUserDto.Password,
-            });
+            UserDto userDto = new UserDto();
+            userDto.Account = registerUserDto.Account;
+            userDto.UserName = registerUserDto.UserName;
+            userDto.Password = registerUserDto.Password;
+
+            var registerResult = await loginService.RegisterAsync(userDto);
 
             if (registerResult != null && registerResult.Statue)
             {
                 //注册成功,返回
-                selectedIndex = 0;
+                SelectedIndex = 0;
             }
             else
             {
-                //注册失败
+                MessageBox.Show("注册失败");
             }
         }
 
@@ -166,24 +179,28 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         private async void Login()
         {
-            if (string.IsNullOrWhiteSpace(Account) || string.IsNullOrWhiteSpace(Password))
+            if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
             {
                 return;
             }
-            var loginResult = await loginService.LoginAsync(new Shared.Dtos.UserDto()
-            {
-                Account = Account,
-                Password = Password,
 
-            });
+            UserDto userDto = new UserDto();
+            userDto.Account = UserName;
+            userDto.UserName = UserName;
+            userDto.Password = Password;
+            var loginResult = await loginService.LoginAsync(userDto);
 
             //登录成功
             if (loginResult.Statue)
             {
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
+            else
+            {
+                //登录失败提示。。
+                MessageBox.Show("登录失败");
 
-            //登录失败提示。。
+            }
 
 
         }

@@ -1,7 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using SFY_Word_Book.Common.Modles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,10 +12,12 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.WordBook;
+using SFY_Word_Book.Common;
+using Prism.Ioc;
 
-namespace SFY_Word_Book.ViewModles
+namespace SFY_Word_Book.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : BindableBase, IConfigureService
     {
         //需要传入区域接口，对接主页面上下文
         public MainViewModel(IRegionManager regionManager)
@@ -53,6 +54,23 @@ namespace SFY_Word_Book.ViewModles
 
         }
 
+
+        private string userName;
+
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; RaisePropertyChanged(); }
+        }
+        /// <summary>
+        /// 配置首页初始化参数
+        /// </summary>
+        public void Configure()
+        {
+            UserName = AppSession.UserName;
+            CreateMenuBar();
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+        }
 
 
         #region 导航功能实现
@@ -97,6 +115,7 @@ namespace SFY_Word_Book.ViewModles
         /// 下一步导航，用导航日志实现
         /// </summary>
         public DelegateCommand GoForwardCommand { get; private set; }
+        public IContainerProvider ContainerProvider { get; }
 
         /// <summary>
         /// 用于设置主页面区域以及上下文
@@ -157,5 +176,6 @@ namespace SFY_Word_Book.ViewModles
 
         }
         #endregion
+
     }
 }

@@ -11,7 +11,7 @@ using SFY_Word_Book.Api.Context;
 namespace SFY_Word_Book.Api.Migrations
 {
     [DbContext(typeof(SFYWordBookContext))]
-    [Migration("20230424070516_Database")]
+    [Migration("20230426090337_Database")]
     partial class Database
     {
         /// <inheritdoc />
@@ -114,10 +114,6 @@ namespace SFY_Word_Book.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Id")

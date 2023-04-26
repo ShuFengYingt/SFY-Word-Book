@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using Prism.Mvvm;
 using SFY_Word_Book.Common.Models;
-using SFY_Word_Book.Common.Modles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +22,6 @@ using Prism.Modularity;
 using System.Diagnostics;
 using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
-using SFY_Word_Book.ViewModles;
 using SFY_Word_Book.WordBook;
 using System.Collections.Specialized;
 

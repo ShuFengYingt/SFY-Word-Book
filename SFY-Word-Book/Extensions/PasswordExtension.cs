@@ -61,9 +61,9 @@ namespace SFY_Word_Book.Extensions
         {
             PasswordBox passwordBox = sender as PasswordBox;
             string passwordValue = PasswordExtension.GetPassword(passwordBox);
-            if (passwordValue != null && passwordBox.Password != passwordValue )
+            if (passwordBox != null && passwordBox.Password != passwordValue )
             {
-                PasswordExtension.SetPassword(passwordBox, passwordValue);
+                PasswordExtension.SetPassword(passwordBox, passwordBox.Password);
             }
         }
 
