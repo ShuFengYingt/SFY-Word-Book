@@ -51,7 +51,7 @@ namespace SFY_Word_Book.Api.Service
 
                 if (userModel != null)
                 {
-                    return new APIResponse(false, $"账号:{model.Account}已存在,请重新注册");
+                    return new APIResponse($"账号:{model.Account}已存在,请重新注册");
                 }
                 model.CreateDate = DateTime.Now;
                 //MD5加密

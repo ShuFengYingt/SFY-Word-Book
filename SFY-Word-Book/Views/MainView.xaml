@@ -31,11 +31,7 @@
         <WindowChrome CornerRadius="20" GlassFrameThickness="10" />
     </WindowChrome.WindowChrome>
     <!--#endregion-->
-
-    <materialDesign:DialogHost
-        DialogTheme="Inherit"
-        Identifier="RootDialog"
-        SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+    <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
         <!--  菜单栏  -->
         <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <!--#region 左侧菜单栏-->
@@ -73,8 +69,8 @@
                         <behaviors:Interaction.Triggers>
                             <!--  触发事件，名字为SelectionChanged，即选择后触发  -->
                             <behaviors:EventTrigger EventName="SelectionChanged">
-                                <!--  触发事件InvokeCommandAction，唤醒指令，指令绑定NavigateCommand  -->
-                                <behaviors:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=MenuBar, Path=SelectedItem}" />
+                                <!--  触发事件InvokeCommandAction，唤醒指令，指令绑定NavigateCommand ,CommandParameter原理未知  -->
+                                <behaviors:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" />
                             </behaviors:EventTrigger>
                         </behaviors:Interaction.Triggers>
 
@@ -101,6 +97,7 @@
 
             <!--#region 顶部导航条-->
             <DockPanel>
+
 
                 <materialDesign:ColorZone
                     x:Name="ColorZone"
@@ -181,7 +178,8 @@
                 </materialDesign:ColorZone>
                 <!--  注册区域,需要先建立extension文件夹，创建PrismManager类，静态声明只读字符串，作为区域名称  -->
                 <!--  而后在MainView.xaml中，用ContentControl特性， 使用prism命名空间，调用RegionManager类下的RegionName属性，绑定PrismManager类下的静态变量MainViewRegionName  -->
-                <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+                <ContentControl x:Name="ContentControl" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+
             </DockPanel>
             <!--#endregion-->
         </materialDesign:DrawerHost>

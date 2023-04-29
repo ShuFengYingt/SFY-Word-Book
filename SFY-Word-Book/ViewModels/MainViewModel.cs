@@ -29,28 +29,9 @@ namespace SFY_Word_Book.ViewModels
             this.regionManager = regionManager;
 
 
-            //读入单词本
-            CET6.ReadJson();
-
-            //读取生词本
-            NewWordBook.ReadJson();
-
-            //读入待学习单词
-            LearningWordBook.ReadJson();
-
-            //读入当日学习的单词
-            ToDayHasLearnBook.ReadJson();
-
-            //读入待复习单词
-            ReviewWordBook.ReadJson();
-
-            //读入当日待复习单词
-            ToDayReviewWords.ReadReviewWordBook();
-
 
             //方法实现
             FowardAndBack();
-            CreateMenuBar();
 
 
         }
@@ -70,11 +51,12 @@ namespace SFY_Word_Book.ViewModels
         {
             UserName = AppSession.UserName;
             CreateMenuBar();
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("HomeView");
         }
 
 
         #region 导航功能实现
+        
         //菜单在主页的声明和更新
         private ObservableCollection<MenuBar> menuBars;
         public ObservableCollection<MenuBar> MenuBars

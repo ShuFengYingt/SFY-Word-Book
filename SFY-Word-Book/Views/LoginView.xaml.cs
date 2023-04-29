@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Prism.Events;
+using SFY_Word_Book.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,15 @@ namespace SFY_Word_Book.Views
     /// </summary>
     public partial class LoginView : UserControl
     {
-        public LoginView()
+        public LoginView(IEventAggregator eventAggregator)
         {
             InitializeComponent();
+
+            //注册消息提示
+            eventAggregator.ResgiterMessage(arg =>
+            {
+                LoginSnackBar.MessageQueue.Enqueue(arg.Message);
+            }, "Login");
         }
     }
 }

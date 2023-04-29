@@ -56,12 +56,32 @@ namespace SFY_Word_Book.ViewModels
             LearningWordBook.LearningWords.CollectionChanged += OnLearningWordBookCollectionChanged;
 
 
-            #region 单词查找用Words，迁移CET6
+            #region 执行单词读入操作
+            //读入单词本
+            CET6.ReadJson();
+
+            //读取生词本
+            NewWordBook.ReadJson();
+
+            //读入待学习单词
+            LearningWordBook.ReadJson();
+
+            //读入当日学习的单词
+            ToDayHasLearnBook.ReadJson();
+
+            //读入待复习单词
+            ReviewWordBook.ReadJson();
+
+            //读入当日待复习单词
+            ToDayReviewWords.ReadReviewWordBook();
+
+
             Words = CET6.words;
             #endregion
 
             #region 方法调用
-            CreateTaskBar();
+            //奇怪的Bug，不知道在什么敌方这个函数被调用过一次，如果这里也写上CreateTaskBar();的话，会导致任务栏有两个
+            //CreateTaskBar();
             CreateDailyPage();
             #endregion
         }

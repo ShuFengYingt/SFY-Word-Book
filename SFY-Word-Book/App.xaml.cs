@@ -31,8 +31,8 @@ namespace SFY_Word_Book
             //var service = Container.Resolve<ILoginService>();
             //获得弹窗
             var dialog = Container.Resolve<IDialogService>();
-            base.OnInitialized();
-            Application.Current.MainWindow.Hide();
+            //base.OnInitialized();
+            //Application.Current.MainWindow.Hide();
 
 
             ////弹窗
@@ -45,12 +45,15 @@ namespace SFY_Word_Book
                     Application.Current.Shutdown();
                     return;
                 }
-                Application.Current.MainWindow.Show();
-                //var service = App.Current.MainWindow.DataContext as IConfigureService;
-                //if (service != null)
-                //{
-                //    service.Configure();
-                //}
+                //Application.Current.MainWindow.Show();
+
+                //加载首页
+                var service = App.Current.MainWindow.DataContext as IConfigureService;
+                if (service != null)
+                {
+                    service.Configure();
+                }
+                base.OnInitialized();
 
 
             });

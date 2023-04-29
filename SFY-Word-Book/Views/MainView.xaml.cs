@@ -28,6 +28,9 @@ namespace SFY_Word_Book.Views
         public MainView(IRegionManager regionManager)
         {
             InitializeComponent();
+            HomeView homeView = new HomeView();
+            //HomeView homeView = new HomeView();
+            //ContentControl.Content = homeView;
             #region 基础窗口交互
             Button_WindowMin.Click += (s, e) =>
             {
@@ -57,6 +60,7 @@ namespace SFY_Word_Book.Views
 
 
 
+
                 Close();
             };
 
@@ -81,7 +85,7 @@ namespace SFY_Word_Book.Views
             };
             # endregion
 
-
+            
 
             ////设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager);
@@ -91,6 +95,8 @@ namespace SFY_Word_Book.Views
             {
                 drawerHost.IsLeftDrawerOpen = false;
             };
+
+
 
         }
 

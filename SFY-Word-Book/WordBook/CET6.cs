@@ -76,7 +76,7 @@ namespace SFY_Word_Book.Extensions
             {
                 CET6WordBookJson += JsonConvert.SerializeObject(word, settings) + Environment.NewLine;
             }
-            using (StreamWriter writer = new StreamWriter(filePath))
+            using (StreamWriter writer = new StreamWriter(filePath,false))
             {
                 writer.WriteLine(CET6WordBookJson);
             }

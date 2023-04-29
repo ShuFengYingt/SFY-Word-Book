@@ -12,7 +12,7 @@ namespace SFY_Word_Book.Service
 {
     public interface ILoginService
     {
-        Task<APIResponse> LoginAsync(UserDto userDto);
+        Task<APIResponse<UserDto>> LoginAsync(UserDto userDto);
         Task<APIResponse> RegisterAsync(UserDto userDto);
 
             
