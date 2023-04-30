@@ -31,10 +31,13 @@ namespace SFY_Word_Book.Views
         public MainView(IRegionManager regionManager, IContainerProvider containerProvider)
         {
             InitializeComponent();
+<<<<<<< HEAD
             HomeView homeView = new HomeView();
             this.containerProvider = containerProvider;
             //HomeView homeView = new HomeView();
             //ContentControl.Content = homeView;
+=======
+>>>>>>> parent of 5b00b73 (BugFixes)
             #region 基础窗口交互
             Button_WindowMin.Click += (s, e) =>
             {
@@ -64,7 +67,6 @@ namespace SFY_Word_Book.Views
 
 
 
-
                 Close();
             };
 
@@ -90,6 +92,10 @@ namespace SFY_Word_Book.Views
             #endregion
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 5b00b73 (BugFixes)
 
             ////设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager,containerProvider);
@@ -99,7 +105,11 @@ namespace SFY_Word_Book.Views
             {
                 drawerHost.IsLeftDrawerOpen = false;
             };
+<<<<<<< HEAD
             this.containerProvider = containerProvider;
+=======
+
+>>>>>>> parent of 5b00b73 (BugFixes)
         }
 
 

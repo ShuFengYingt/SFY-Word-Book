@@ -31,7 +31,6 @@ namespace SFY_Word_Book.WordBook
                 {
                     LearningWords.Add(CET6.words[i]);
                 }
-                //OutLearningWordBook();
                 return;
             }
             using (StreamReader r = new StreamReader(filePath))

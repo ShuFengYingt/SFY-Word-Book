@@ -34,11 +34,6 @@
             Grid.Column="0"
             Margin="50"
             Source="/Images/login.png" />
-        <materialDesign:Snackbar
-            x:Name="LoginSnackBar"
-            Grid.ColumnSpan="2"
-            Panel.ZIndex="1"
-            MessageQueue="{materialDesign:MessageQueue}" />
 
         <materialDesign:Transitioner Grid.Column="1" SelectedIndex="{Binding SelectedIndex}">
             <materialDesign:TransitionerSlide>

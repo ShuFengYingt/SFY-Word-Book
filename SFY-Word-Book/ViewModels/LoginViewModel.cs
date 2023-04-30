@@ -1,11 +1,13 @@
 ﻿using Microsoft.VisualStudio.Services.WebApi;
 using Microsoft.Win32;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+<<<<<<< HEAD
 using SFY_Word_Book.Common;
 using SFY_Word_Book.Extensions;
+=======
+>>>>>>> parent of 5b00b73 (BugFixes)
 using SFY_Word_Book.Service;
 using SFY_Word_Book.Shared.Dtos;
 using System;
@@ -19,14 +21,11 @@ namespace SFY_Word_Book.ViewModels
 {
     public class LoginViewModel : BindableBase, IDialogAware//可弹窗
     {
-        public LoginViewModel(ILoginService loginService,IEventAggregator eventAggregator)
+        public LoginViewModel(ILoginService loginService)
         {
             registerUserDto = new RegisterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
-            SnackBarSign = "";
-
             this.loginService = loginService;
-            this.eventAggregator = eventAggregator; 
         }
 
         #region 接口实现
@@ -48,25 +47,6 @@ namespace SFY_Word_Book.ViewModels
         {
         }
         #endregion
-
-        #region 属性
-        private bool isSnackBarActive;
-        public bool IsSnackBarActive
-        {
-            get { return isSnackBarActive; }
-            set { isSnackBarActive = value;RaisePropertyChanged(); }
-        }
-
-        private string snackBarSign;
-        /// <summary>
-        /// 错误提示
-        /// </summary>
-        public string SnackBarSign
-        {
-            get { return snackBarSign; } 
-            set {  snackBarSign = value;RaisePropertyChanged(); }
-        }
-
 
         private string account;
         /// <summary>
@@ -118,12 +98,6 @@ namespace SFY_Word_Book.ViewModels
             get { return registerUserDto; }
             set { registerUserDto = value; RaisePropertyChanged(); }
         }
-        #endregion
-
-        /// <summary>
-        /// 事件聚合器
-        /// </summary>
-        private readonly IEventAggregator eventAggregator;
 
         public DelegateCommand<string> ExecuteCommand { get; private set; }
         /// <summary>
@@ -184,11 +158,9 @@ namespace SFY_Word_Book.ViewModels
             //输入密码不一致
             if (!registerUserDto.Password.Equals(registerUserDto.RepeatPassword))
             {
-                eventAggregator.SendMessage("前后密码不一致","Login");
+                //提示还没写
                 return;
             }
-
-            //实例化一个UserDto
             UserDto userDto = new UserDto();
             userDto.Account = registerUserDto.Account;
             userDto.UserName = registerUserDto.UserName;
@@ -198,15 +170,12 @@ namespace SFY_Word_Book.ViewModels
 
             if (registerResult != null && registerResult.Statue)
             {
-                //提示成功
-                eventAggregator.SendMessage("注册成功,尝试登录吧", "Login");
                 //注册成功,返回
                 SelectedIndex = 0;
-                return;
             }
             else
             {
-                eventAggregator.SendMessage(registerResult.Message);
+                MessageBox.Show("注册失败");
             }
         }
 
@@ -231,12 +200,11 @@ namespace SFY_Word_Book.ViewModels
             {
                 Appsession.UserName = loginResult.Result.UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
-                return;
             }
             else
             {
-                eventAggregator.SendMessage(loginResult.Message, "Login");
-
+                //登录失败提示。。
+                MessageBox.Show("登录失败");
 
             }
 

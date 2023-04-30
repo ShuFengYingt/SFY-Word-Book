@@ -1,5 +1,4 @@
 ﻿using SFY_Word_Book.Api.Serviece;
-using SFY_Word_Book.Shared;
 using SFY_Word_Book.Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -27,13 +26,13 @@ namespace SFY_Word_Book.Service
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        public async Task<APIResponse<UserDto>> LoginAsync(UserDto userDto)
+        public async Task<APIResponse> LoginAsync(UserDto userDto)
         {
             BaseRequest request = new BaseRequest();
             request.Method = RestSharp.Method.POST;
             request.Route = $"api/{serviceName}/Login";
             request.Parameter = userDto;
-            return await httpRestClient.ExecuteAsync<UserDto>(request);
+            return await httpRestClient.ExecuteAsync(request);
         }
 
         /// <summary>
