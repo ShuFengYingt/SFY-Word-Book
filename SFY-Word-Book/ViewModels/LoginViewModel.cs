@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using SFY_Word_Book.Common;
 using SFY_Word_Book.Extensions;
 using SFY_Word_Book.Service;
 using SFY_Word_Book.Shared.Dtos;
@@ -228,6 +229,7 @@ namespace SFY_Word_Book.ViewModels
             //登录成功
             if (loginResult.Statue)
             {
+                Appsession.UserName = loginResult.Result.UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
                 return;
             }

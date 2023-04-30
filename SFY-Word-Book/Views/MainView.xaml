@@ -31,6 +31,7 @@
         <WindowChrome CornerRadius="20" GlassFrameThickness="10" />
     </WindowChrome.WindowChrome>
     <!--#endregion-->
+
     <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
         <!--  菜单栏  -->
         <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
@@ -56,7 +57,7 @@
                             Margin="0,10"
                             HorizontalAlignment="Center"
                             FontStyle="Normal"
-                            Text="书封影" />
+                            Text="{Binding UserName}" />
                     </StackPanel>
 
                     <!--  菜单体  -->
@@ -98,7 +99,6 @@
             <!--#region 顶部导航条-->
             <DockPanel>
 
-
                 <materialDesign:ColorZone
                     x:Name="ColorZone"
                     Padding="16"
@@ -108,18 +108,6 @@
                     Mode="PrimaryMid">
                     <DockPanel LastChildFill="False">
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                            <Image
-                                Width="45"
-                                Height="45"
-                                Source="/Images/头像.jpeg">
-                                <Image.Clip>
-                                    <EllipseGeometry
-                                        Center="22.5,22.5"
-                                        RadiusX="22.5"
-                                        RadiusY="22.5" />
-
-                                </Image.Clip>
-                            </Image>
                             <Button
                                 x:Name="Button_WindowMin"
                                 Content="—"
@@ -134,6 +122,29 @@
                                 Style="{StaticResource MaterialDesignFlatMidBgButton}" />
 
                         </StackPanel>
+
+                        <materialDesign:PopupBox DockPanel.Dock="Right">
+
+                            <materialDesign:PopupBox.ToggleContent>
+                                <Image
+                                    Width="45"
+                                    Height="45"
+                                    Source="/Images/头像.jpeg">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="22.5,22.5"
+                                            RadiusX="22.5"
+                                            RadiusY="22.5" />
+
+                                    </Image.Clip>
+                                </Image>
+
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel>
+                                <Button Command="{Binding LoginOutCommand}" Content="注销" />
+                            </StackPanel>
+
+                        </materialDesign:PopupBox>
 
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton
@@ -179,6 +190,7 @@
                 <!--  注册区域,需要先建立extension文件夹，创建PrismManager类，静态声明只读字符串，作为区域名称  -->
                 <!--  而后在MainView.xaml中，用ContentControl特性， 使用prism命名空间，调用RegionManager类下的RegionName属性，绑定PrismManager类下的静态变量MainViewRegionName  -->
                 <ContentControl x:Name="ContentControl" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+
 
             </DockPanel>
             <!--#endregion-->
