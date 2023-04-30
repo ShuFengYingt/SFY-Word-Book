@@ -28,6 +28,7 @@ namespace SFY_Word_Book.ViewModels
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
 
+<<<<<<< HEAD
 
             //读入单词本
             CET6.ReadJson();
@@ -46,6 +47,8 @@ namespace SFY_Word_Book.ViewModels
 
             //读入当日待复习单词
             ToDayReviewWords.ReadReviewWordBook();
+=======
+>>>>>>> parent of bc9771a (1)
 
 
             //方法实现

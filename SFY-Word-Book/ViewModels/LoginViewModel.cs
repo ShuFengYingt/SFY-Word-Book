@@ -3,7 +3,6 @@ using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
-using SFY_Word_Book.Common;
 using SFY_Word_Book.Extensions;
 using SFY_Word_Book.Service;
 using SFY_Word_Book.Shared.Dtos;

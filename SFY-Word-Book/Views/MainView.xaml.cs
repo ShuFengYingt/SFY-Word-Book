@@ -84,6 +84,7 @@ namespace SFY_Word_Book.Views
             };
             # endregion
 
+            
 
             ////设置主页面xaml上下文
             DataContext = new MainViewModel(regionManager);
@@ -93,6 +94,12 @@ namespace SFY_Word_Book.Views
             {
                 drawerHost.IsLeftDrawerOpen = false;
             };
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> parent of bc9771a (1)
         }
 
 

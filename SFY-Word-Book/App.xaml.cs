@@ -25,6 +25,7 @@ namespace SFY_Word_Book
         {
             return Container.Resolve<MainView>();
         }
+<<<<<<< HEAD
         public static void LoginOut(IContainerProvider containerProvider)
         {
             Current.MainWindow.Hide();
@@ -44,6 +45,7 @@ namespace SFY_Word_Book
             });
 
         }
+
         protected  override void OnInitialized()
         {
             //var service = Container.Resolve<ILoginService>();
