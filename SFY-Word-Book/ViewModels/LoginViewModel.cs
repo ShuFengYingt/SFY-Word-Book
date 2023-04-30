@@ -4,7 +4,10 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using SFY_Word_Book.Common;
+=======
+>>>>>>> parent of bc9771a (1)
 using SFY_Word_Book.Extensions;
 =======
 >>>>>>> parent of 5b00b73 (BugFixes)
@@ -198,7 +201,6 @@ namespace SFY_Word_Book.ViewModels
             //登录成功
             if (loginResult.Statue)
             {
-                Appsession.UserName = loginResult.Result.UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
             else

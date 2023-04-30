@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFY_Word_Book.Common
+namespace SFY_Word_Book.Common.Models
 {
-    public static class Appsession
+    public static class AppSession
     {
-        public static string UserName { get;set; }
+        public static string UserName { get; set; }
     }
 }

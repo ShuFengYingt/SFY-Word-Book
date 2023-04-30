@@ -31,8 +31,11 @@
         <WindowChrome CornerRadius="20" GlassFrameThickness="10" />
     </WindowChrome.WindowChrome>
     <!--#endregion-->
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+>>>>>>> parent of bc9771a (1)
     <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
 =======
     <materialDesign:DialogHost
@@ -64,7 +67,7 @@
                             Margin="0,10"
                             HorizontalAlignment="Center"
                             FontStyle="Normal"
-                            Text="{Binding UserName}" />
+                            Text="书封影" />
                     </StackPanel>
 
                     <!--  菜单体  -->
@@ -106,6 +109,7 @@
             <!--#region 顶部导航条-->
             <DockPanel>
 
+
                 <materialDesign:ColorZone
                     x:Name="ColorZone"
                     Padding="16"
@@ -115,6 +119,18 @@
                     Mode="PrimaryMid">
                     <DockPanel LastChildFill="False">
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Image
+                                Width="45"
+                                Height="45"
+                                Source="/Images/头像.jpeg">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        Center="22.5,22.5"
+                                        RadiusX="22.5"
+                                        RadiusY="22.5" />
+
+                                </Image.Clip>
+                            </Image>
                             <Button
                                 x:Name="Button_WindowMin"
                                 Content="—"
@@ -129,29 +145,6 @@
                                 Style="{StaticResource MaterialDesignFlatMidBgButton}" />
 
                         </StackPanel>
-
-                        <materialDesign:PopupBox DockPanel.Dock="Right">
-
-                            <materialDesign:PopupBox.ToggleContent>
-                                <Image
-                                    Width="45"
-                                    Height="45"
-                                    Source="/Images/头像.jpeg">
-                                    <Image.Clip>
-                                        <EllipseGeometry
-                                            Center="22.5,22.5"
-                                            RadiusX="22.5"
-                                            RadiusY="22.5" />
-
-                                    </Image.Clip>
-                                </Image>
-
-                            </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel>
-                                <Button Command="{Binding LoginOutCommand}" Content="注销" />
-                            </StackPanel>
-
-                        </materialDesign:PopupBox>
 
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton
@@ -199,10 +192,13 @@
 <<<<<<< HEAD
                 <ContentControl x:Name="ContentControl" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
 
+<<<<<<< HEAD
 
 =======
                 <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
 >>>>>>> parent of 5b00b73 (BugFixes)
+=======
+>>>>>>> parent of bc9771a (1)
             </DockPanel>
             <!--#endregion-->
         </materialDesign:DrawerHost>

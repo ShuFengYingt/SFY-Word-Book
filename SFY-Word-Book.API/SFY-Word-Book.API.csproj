@@ -30,10 +30,4 @@
     <ProjectReference Include="..\SFY-Word-Book.Shared\SFY-Word-Book.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="SFYWordBook.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

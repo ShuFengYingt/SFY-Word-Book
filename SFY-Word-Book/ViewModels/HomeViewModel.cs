@@ -24,7 +24,6 @@ using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.WordBook;
 using System.Collections.Specialized;
-using SFY_Word_Book.Common;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -50,8 +49,6 @@ namespace SFY_Word_Book.ViewModels
             NumOfLearn = LearningWordBook.LearningWords.Count;
             NumOfReview = ReviewWordBook.ReviewWords.Count;
             NumOfHasLearn = ToDayHasLearnBook.ToDayHasLearnWords.Count;
-            HeadTitle = $"{Appsession.UserName}，欢迎回来！";
-            
 
             #endregion
             ToDayHasLearnBook.ToDayHasLearnWords.CollectionChanged += OnTodayHasLearnWordBookCollectionChanged;
@@ -69,14 +66,7 @@ namespace SFY_Word_Book.ViewModels
             #endregion
         }
 
-        #region 标题
-        private string headTitle;
-        public string HeadTitle
-        {
-            get { return headTitle; } 
-            set { headTitle = value; RaisePropertyChanged(); }
-        }
-        #endregion
+
 
         #region 任务栏
 

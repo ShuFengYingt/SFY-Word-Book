@@ -21,18 +21,13 @@ namespace SFY_Word_Book.ViewModels
     public class MainViewModel : BindableBase, IConfigureService
     {
         //需要传入区域接口，对接主页面上下文
-        public MainViewModel(IRegionManager regionManager,IContainerProvider containerProvider)
+        public MainViewModel(IRegionManager regionManager)
         {
             //实例化
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
-            this.ContainerProvider = containerProvider;
 
-            LoginOutCommand = new DelegateCommand(() =>
-            {//注销
-                App.LoginOut(ContainerProvider);
-            });
 
             //读入单词本
             CET6.ReadJson();
@@ -60,7 +55,6 @@ namespace SFY_Word_Book.ViewModels
 
         }
 
-        #region 顶部导航条配置
 
         private string userName;
 
@@ -69,23 +63,15 @@ namespace SFY_Word_Book.ViewModels
             get { return userName; }
             set { userName = value; RaisePropertyChanged(); }
         }
-
-        public DelegateCommand LoginOutCommand { get; private set; }
-        #endregion
-
-
-
         /// <summary>
         /// 配置首页初始化参数
         /// </summary>
         public void Configure()
         {
-            UserName = Appsession.UserName;
+            UserName = AppSession.UserName;
             CreateMenuBar();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
         }
-
-
 
 
         #region 导航功能实现
@@ -130,7 +116,7 @@ namespace SFY_Word_Book.ViewModels
         /// 下一步导航，用导航日志实现
         /// </summary>
         public DelegateCommand GoForwardCommand { get; private set; }
-        public IContainerProvider ContainerProvider { get; set; }
+        public IContainerProvider ContainerProvider { get; }
 
         /// <summary>
         /// 用于设置主页面区域以及上下文

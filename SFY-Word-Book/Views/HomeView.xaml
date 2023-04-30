@@ -33,7 +33,7 @@
         <TextBlock
             Margin="15"
             FontSize="30"
-            Text="{Binding HeadTitle}" />
+            Text="欢迎回来，书封影！" />
         <!--#region 任务栏,绑定TaskBars-->
         <ListBox
             x:Name="TaskBar"
@@ -325,7 +325,9 @@
                                 ItemsSource="{Binding Words}"
                                 SelectedValue="{Binding SelectedWordRank}"
                                 SelectedValuePath="wordRank"
-                                Style="{StaticResource MaterialDesignComboBox}" />
+                                Style="{StaticResource MaterialDesignComboBox}">
+
+                            </ComboBox>
                             <!--<Button
                             HorizontalAlignment="Right"
                             Width="40"
