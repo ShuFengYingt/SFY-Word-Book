@@ -3,14 +3,8 @@ using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using SFY_Word_Book.Common;
-=======
->>>>>>> parent of bc9771a (1)
 using SFY_Word_Book.Extensions;
-=======
->>>>>>> parent of 5b00b73 (BugFixes)
 using SFY_Word_Book.Service;
 using SFY_Word_Book.Shared.Dtos;
 using System;

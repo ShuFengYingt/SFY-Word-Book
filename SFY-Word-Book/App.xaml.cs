@@ -25,7 +25,25 @@ namespace SFY_Word_Book
         {
             return Container.Resolve<MainView>();
         }
+        public static void LoginOut(IContainerProvider containerProvider)
+        {
+            Current.MainWindow.Hide();
 
+            //获得弹窗
+            var dialog = containerProvider.Resolve<IDialogService>();
+
+            dialog.Show("LoginView", callback =>
+            {
+                //如果异常，则关闭
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Application.Current.Shutdown();
+                    return;
+                }
+                Current.MainWindow.Show();
+            });
+
+        }
         protected  override void OnInitialized()
         {
             //var service = Container.Resolve<ILoginService>();
