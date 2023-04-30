@@ -17,6 +17,7 @@ using SFY_Word_Book.WordBook;
 using System.IO;
 using SFY_Word_Book.ViewModels;
 using SFY_Word_Book.Extensions;
+using Prism.Ioc;
 
 namespace SFY_Word_Book.Views
 {
@@ -25,7 +26,9 @@ namespace SFY_Word_Book.Views
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView(IRegionManager regionManager)
+        private readonly IContainerProvider containerProvider;
+
+        public MainView(IRegionManager regionManager,IContainerProvider containerProvider)
         {
             InitializeComponent();
             HomeView homeView = new HomeView();
@@ -87,19 +90,14 @@ namespace SFY_Word_Book.Views
             
 
             ////设置主页面xaml上下文
-            DataContext = new MainViewModel(regionManager);
+            DataContext = new MainViewModel(containerProvider,regionManager);
 
             //左侧菜单栏选中页面后，收回菜单栏
             MenuBar.SelectionChanged += (s, e) =>
             {
                 drawerHost.IsLeftDrawerOpen = false;
             };
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> parent of bc9771a (1)
+            this.containerProvider = containerProvider;
         }
 
 

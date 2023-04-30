@@ -29,53 +29,39 @@ namespace SFY_Word_Book
         {
             Current.MainWindow.Hide();
 
-            //获得弹窗
             var dialog = containerProvider.Resolve<IDialogService>();
 
-            dialog.Show("LoginView", callback =>
-            {
-                //如果异常，则关闭
-                if (callback.Result != ButtonResult.OK)
-                {
-                    Application.Current.Shutdown();
-                    return;
-                }
-                Current.MainWindow.Show();
-            });
-
-        }
-        protected  override void OnInitialized()
-        {
-            //var service = Container.Resolve<ILoginService>();
-            //获得弹窗
-            var dialog = Container.Resolve<IDialogService>();
-            base.OnInitialized();
-            Application.Current.MainWindow.Hide();
-
-
-            ////弹窗
             dialog.ShowDialog("LoginView", callback =>
             {
-
-                //如果异常，则关闭
                 if (callback.Result != ButtonResult.OK)
                 {
-                    Application.Current.Shutdown();
+                    Environment.Exit(0);
                     return;
                 }
-                Application.Current.MainWindow.Show();
-                //var service = App.Current.MainWindow.DataContext as IConfigureService;
-                //if (service != null)
-                //{
-                //    service.Configure();
-                //}
 
-
+                Current.MainWindow.Show();
             });
-
-
         }
+        protected override void OnInitialized()
+        {
+            var dialog = Container.Resolve<IDialogService>();
 
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+
+                var service = App.Current.MainWindow.DataContext as IConfigureService;
+                if (service != null)
+                {
+                    service.Configure();
+                }
+                base.OnInitialized();
+            });
+        }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //注册HttpRestClient

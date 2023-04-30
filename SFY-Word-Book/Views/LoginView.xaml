@@ -29,7 +29,11 @@
             <ColumnDefinition Width="1.5*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
+        <materialDesign:Snackbar
+            x:Name="LoginSnakeBar"
+            Grid.ColumnSpan="2"
+            Panel.ZIndex="1"
+            MessageQueue="{materialDesign:MessageQueue}" />
         <Image
             Grid.Column="0"
             Margin="50"

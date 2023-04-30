@@ -31,28 +31,12 @@
         <WindowChrome CornerRadius="20" GlassFrameThickness="10" />
     </WindowChrome.WindowChrome>
     <!--#endregion-->
-    <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
-        <materialDesign:DialogHost
-            DialogTheme="Inherit"
-            Identifier="RootDialog"
-            SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-            <!--  菜单栏  -->
-            <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
-                <!--#region 左侧菜单栏-->
 
-                <materialDesign:DrawerHost.LeftDrawerContent>
-                    <DockPanel MinWidth="220">
-                        <!--  头像  -->
-                        <StackPanel Margin="0,20" DockPanel.Dock="Top">
-                            <Image
-                                Width="60"
-                                Height="60"
-                                Source="/Images/头像.jpeg">
-                                <Image.Clip>
-                                    <EllipseGeometry
-                                        Center="30,30"
-                                        RadiusX="30"
-                                        RadiusY="30" />
+    <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
+        <!--  菜单栏  -->
+        <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <!--#region 左侧菜单栏-->
+
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="220">
                     <!--  头像  -->
@@ -73,7 +57,7 @@
                             Margin="0,10"
                             HorizontalAlignment="Center"
                             FontStyle="Normal"
-                            Text="书封影" />
+                            Text="{Binding UserName}" />
                     </StackPanel>
 
                     <!--  菜单体  -->
@@ -115,7 +99,6 @@
             <!--#region 顶部导航条-->
             <DockPanel>
 
-
                 <materialDesign:ColorZone
                     x:Name="ColorZone"
                     Padding="16"
@@ -125,18 +108,6 @@
                     Mode="PrimaryMid">
                     <DockPanel LastChildFill="False">
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                            <Image
-                                Width="45"
-                                Height="45"
-                                Source="/Images/头像.jpeg">
-                                <Image.Clip>
-                                    <EllipseGeometry
-                                        Center="22.5,22.5"
-                                        RadiusX="22.5"
-                                        RadiusY="22.5" />
-
-                                </Image.Clip>
-                            </Image>
                             <Button
                                 x:Name="Button_WindowMin"
                                 Content="—"
@@ -150,64 +121,11 @@
                                 Content="✕"
                                 Style="{StaticResource MaterialDesignFlatMidBgButton}" />
 
-                                </Image.Clip>
-                            </Image>
-                            <TextBlock
-                                Margin="0,10"
-                                HorizontalAlignment="Center"
-                                FontStyle="Normal"
-                                Text="书封影" />
                         </StackPanel>
 
-                        <!--  菜单体  -->
-                        <ListBox
-                            x:Name="MenuBar"
-                            ItemContainerStyle="{StaticResource MenuListBoxItemStyle}"
-                            ItemsSource="{Binding MenuBars}">
+                        <materialDesign:PopupBox DockPanel.Dock="Right">
 
-                            <!--  交互行为触发器，要引入behavior命名空间  -->
-                            <behaviors:Interaction.Triggers>
-                                <!--  触发事件，名字为SelectionChanged，即选择后触发  -->
-                                <behaviors:EventTrigger EventName="SelectionChanged">
-                                    <!--  触发事件InvokeCommandAction，唤醒指令，指令绑定NavigateCommand  -->
-                                    <behaviors:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=MenuBar, Path=SelectedItem}" />
-                                </behaviors:EventTrigger>
-                            </behaviors:Interaction.Triggers>
-
-                            <!--  菜单元素  -->
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Background="Transparent" Orientation="Horizontal">
-                                        <materialDesign:PackIcon
-                                            Margin="15,0"
-                                            VerticalAlignment="Center"
-                                            Kind="{Binding Icon}" />
-                                        <TextBlock
-                                            Margin="10,0"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding Title}" />
-
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </DockPanel>
-                </materialDesign:DrawerHost.LeftDrawerContent>
-                <!--#endregion-->
-
-                <!--#region 顶部导航条-->
-                <DockPanel>
-
-
-                    <materialDesign:ColorZone
-                        x:Name="ColorZone"
-                        Padding="16"
-                        materialDesign:ElevationAssist.Elevation="Dp4"
-                        CornerRadius="10,10,0,0"
-                        DockPanel.Dock="Top"
-                        Mode="PrimaryMid">
-                        <DockPanel LastChildFill="False">
-                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <materialDesign:PopupBox.ToggleContent>
                                 <Image
                                     Width="45"
                                     Height="45"
@@ -220,38 +138,14 @@
 
                                     </Image.Clip>
                                 </Image>
-                                <Button
-                                    x:Name="Button_WindowMin"
-                                    Content="—"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button
-                                    x:Name="Button_WindowMax"
-                                    Content="☐"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button
-                                    x:Name="Button_WindowClose"
-                                    Content="✕"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
 
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel>
+                                <Button Command="{Binding LoginOutCommand}" Content="注销" />
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal">
-                                <ToggleButton
-                                    x:Name="MenuToggleButton"
-                                    AutomationProperties.Name="HamburgerToggleButton"
-                                    IsChecked="False"
-                                    Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                        </materialDesign:PopupBox>
 
-                                <!--  上一步/按钮  -->
-                                <Button
-                                    Margin="24,0,0,0"
-                                    materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
-                                    Command="{Binding GoBackCommand}"
-                                    Content="{materialDesign:PackIcon Kind=ArrowLeft,
-                                                                      Size=24}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
-                                    Style="{StaticResource MaterialDesignToolButton}"
-                                    ToolTip="GoBack Item" />
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton
                                 x:Name="MenuToggleButton"
@@ -259,42 +153,44 @@
                                 IsChecked="False"
                                 Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
 
-                                <!--  下一步/按钮  -->
-                                <Button
-                                    Margin="16,0,0,0"
-                                    materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
-                                    Command="{Binding GoForwardCommand}"
-                                    Content="{materialDesign:PackIcon Kind=ArrowRight,
-                                                                      Size=24}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
-                                    Style="{StaticResource MaterialDesignToolButton}"
-                                    ToolTip="GoForward Item" />
+                            <!--  上一步/按钮  -->
+                            <Button
+                                Margin="24,0,0,0"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                Command="{Binding GoBackCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowLeft,
+                                                                  Size=24}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                ToolTip="GoBack Item" />
 
-                                <TextBlock
-                                    Margin="16,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    AutomationProperties.Name="书封影的单词书"
-                                    FontSize="22"
-                                    Text="书封影的单词书" />
+                            <!--  下一步/按钮  -->
+                            <Button
+                                Margin="16,0,0,0"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                Command="{Binding GoForwardCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowRight,
+                                                                  Size=24}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                ToolTip="GoForward Item" />
 
-                            </StackPanel>
+                            <TextBlock
+                                Margin="16,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                AutomationProperties.Name="书封影的单词书"
+                                FontSize="22"
+                                Text="书封影的单词书" />
 
-                        </DockPanel>
-                    </materialDesign:ColorZone>
-                    <!--  注册区域,需要先建立extension文件夹，创建PrismManager类，静态声明只读字符串，作为区域名称  -->
-                    <!--  而后在MainView.xaml中，用ContentControl特性， 使用prism命名空间，调用RegionManager类下的RegionName属性，绑定PrismManager类下的静态变量MainViewRegionName  -->
-                    <ContentControl x:Name="ContentControl" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+                        </StackPanel>
 
-                </DockPanel>
-                <!--#endregion-->
-            </materialDesign:DrawerHost>
-            </materialDesign:DialogHost>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <!--  注册区域,需要先建立extension文件夹，创建PrismManager类，静态声明只读字符串，作为区域名称  -->
                 <!--  而后在MainView.xaml中，用ContentControl特性， 使用prism命名空间，调用RegionManager类下的RegionName属性，绑定PrismManager类下的静态变量MainViewRegionName  -->
                 <ContentControl x:Name="ContentControl" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+
 
             </DockPanel>
             <!--#endregion-->

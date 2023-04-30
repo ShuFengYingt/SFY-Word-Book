@@ -21,43 +21,26 @@ namespace SFY_Word_Book.ViewModels
     public class MainViewModel : BindableBase, IConfigureService
     {
         //需要传入区域接口，对接主页面上下文
-        public MainViewModel(IRegionManager regionManager)
+        public MainViewModel(IContainerProvider containerProvider, IRegionManager regionManager)
         {
             //实例化
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
-
-<<<<<<< HEAD
-
-            //读入单词本
-            CET6.ReadJson();
-
-            //读取生词本
-            NewWordBook.ReadJson();
-
-            //读入待学习单词
-            LearningWordBook.ReadJson();
-
-            //读入当日学习的单词
-            ToDayHasLearnBook.ReadJson();
-
-            //读入待复习单词
-            ReviewWordBook.ReadJson();
-
-            //读入当日待复习单词
-            ToDayReviewWords.ReadReviewWordBook();
-=======
->>>>>>> parent of bc9771a (1)
+            this.ContainerProvider = containerProvider;
+            LoginOutCommand = new DelegateCommand(() =>
+            {
+                //注销当前用户
+                App.LoginOut(ContainerProvider);
+            });
 
 
             //方法实现
             FowardAndBack();
-            CreateMenuBar();
 
 
         }
-
+        public DelegateCommand LoginOutCommand { get; set; }
 
         private string userName;
 
@@ -71,9 +54,9 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public void Configure()
         {
-            UserName = AppSession.UserName;
+            UserName = Appsession.UserName;
             CreateMenuBar();
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("HomeView");
         }
 
 

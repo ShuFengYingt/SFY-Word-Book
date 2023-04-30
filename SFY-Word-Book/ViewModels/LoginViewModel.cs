@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.Services.WebApi;
-using Microsoft.Win32;
-using Prism.Commands;
+﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using SFY_Word_Book.Common;
 using SFY_Word_Book.Extensions;
 using SFY_Word_Book.Service;
 using SFY_Word_Book.Shared.Dtos;
@@ -17,11 +17,14 @@ namespace SFY_Word_Book.ViewModels
 {
     public class LoginViewModel : BindableBase, IDialogAware//可弹窗
     {
-        public LoginViewModel(ILoginService loginService)
+        public LoginViewModel(ILoginService loginService, IEventAggregator eventAggregator)
         {
             registerUserDto = new RegisterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
+            SnackBarSign = "";
+
             this.loginService = loginService;
+            this.eventAggregator = eventAggregator;
         }
 
         #region 接口实现
@@ -44,6 +47,25 @@ namespace SFY_Word_Book.ViewModels
         }
         #endregion
 
+        #region 属性
+        private bool isSnackBarActive;
+        public bool IsSnackBarActive
+        {
+            get { return isSnackBarActive; }
+            set { isSnackBarActive = value; RaisePropertyChanged(); }
+        }
+
+        private string snackBarSign;
+        /// <summary>
+        /// 错误提示
+        /// </summary>
+        public string SnackBarSign
+        {
+            get { return snackBarSign; }
+            set { snackBarSign = value; RaisePropertyChanged(); }
+        }
+
+
         private string account;
         /// <summary>
         /// 账号
@@ -65,7 +87,7 @@ namespace SFY_Word_Book.ViewModels
 
         private string password;
         private readonly ILoginService loginService;
-          
+
         /// <summary>
         /// 密码
         /// </summary>
@@ -94,6 +116,12 @@ namespace SFY_Word_Book.ViewModels
             get { return registerUserDto; }
             set { registerUserDto = value; RaisePropertyChanged(); }
         }
+        #endregion
+
+        /// <summary>
+        /// 事件聚合器
+        /// </summary>
+        private readonly IEventAggregator eventAggregator;
 
         public DelegateCommand<string> ExecuteCommand { get; private set; }
         /// <summary>
@@ -114,19 +142,19 @@ namespace SFY_Word_Book.ViewModels
                         LoginOut();
                         break;
                     }
-                    //跳转注册界面
+                //跳转注册界面
                 case "Go":
                     {
                         SelectedIndex = 1;
                         break;
                     }
-                    //注册账号  
+                //注册账号  
                 case "Register":
                     {
                         Register();
                         break;
                     }
-                    //返回登录界面
+                //返回登录界面
                 case "Return":
                     {
                         SelectedIndex = 0;
@@ -154,9 +182,11 @@ namespace SFY_Word_Book.ViewModels
             //输入密码不一致
             if (!registerUserDto.Password.Equals(registerUserDto.RepeatPassword))
             {
-                //提示还没写
+                eventAggregator.SendMessage("前后密码不一致", "Login");
                 return;
             }
+
+            //实例化一个UserDto
             UserDto userDto = new UserDto();
             userDto.Account = registerUserDto.Account;
             userDto.UserName = registerUserDto.UserName;
@@ -166,12 +196,15 @@ namespace SFY_Word_Book.ViewModels
 
             if (registerResult != null && registerResult.Statue)
             {
+                //提示成功
+                eventAggregator.SendMessage("注册成功,尝试登录吧", "Login");
                 //注册成功,返回
                 SelectedIndex = 0;
+                return;
             }
             else
             {
-                MessageBox.Show("注册失败");
+                eventAggregator.SendMessage(registerResult.Message);
             }
         }
 
@@ -194,12 +227,14 @@ namespace SFY_Word_Book.ViewModels
             //登录成功
             if (loginResult.Statue)
             {
+                Appsession.UserName = UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                return;
             }
             else
             {
-                //登录失败提示。。
-                MessageBox.Show("登录失败");
+                eventAggregator.SendMessage(loginResult.Message, "Login");
+
 
             }
 

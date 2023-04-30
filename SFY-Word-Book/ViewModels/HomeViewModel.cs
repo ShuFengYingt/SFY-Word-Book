@@ -24,6 +24,7 @@ using SFY_Word_Book.Common.Commands;
 using SFY_Word_Book.Views;
 using SFY_Word_Book.WordBook;
 using System.Collections.Specialized;
+using SFY_Word_Book.Common;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -49,6 +50,7 @@ namespace SFY_Word_Book.ViewModels
             NumOfLearn = LearningWordBook.LearningWords.Count;
             NumOfReview = ReviewWordBook.ReviewWords.Count;
             NumOfHasLearn = ToDayHasLearnBook.ToDayHasLearnWords.Count;
+            HeadTitle = $"欢迎回来！{Appsession.UserName}";
 
             #endregion
             ToDayHasLearnBook.ToDayHasLearnWords.CollectionChanged += OnTodayHasLearnWordBookCollectionChanged;
@@ -57,20 +59,42 @@ namespace SFY_Word_Book.ViewModels
 
 
             #region 单词查找用Words，迁移CET6
+            //读入单词本
+            CET6.ReadJson();
+
+            //读取生词本
+            NewWordBook.ReadJson();
+
+            //读入待学习单词
+            LearningWordBook.ReadJson();
+
+            //读入当日学习的单词
+            ToDayHasLearnBook.ReadJson();
+
+            //读入待复习单词
+            ReviewWordBook.ReadJson();
+
+            //读入当日待复习单词
+            ToDayReviewWords.ReadReviewWordBook();
+
             Words = CET6.words;
             #endregion
 
             #region 方法调用
-            CreateTaskBar();
             CreateDailyPage();
             #endregion
         }
-
+        private string headTitle;
+        public string HeadTitle
+        {
+            get { return headTitle; }
+            set { headTitle = value; RaisePropertyChanged(); }
+        }
 
 
         #region 任务栏
 
-        //任务栏的通知更新
+            //任务栏的通知更新
         private ObservableCollection<TaskBar> taskBars;
         public ObservableCollection<TaskBar> TaskBars
         {
