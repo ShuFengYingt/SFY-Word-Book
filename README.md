@@ -1,6 +1,31 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 5.4 项目日志
 
+鸽了好久，完蛋力
+
+1. 登录系统提示实现
+2. 了解了一下WebApi的IIS发布，笔记懒得写
+
+这里有一个关于配置环境的问题，我还是记录一下：
+
+## IIS无法打开web.config如何解决
+
+我在发布WebApi的时候，配置IIS后，发现IIS内的所有功能都无法使用，提示如下:
+
+![4.24](READMEImage/webconfigcantbeopened.png)
+
+而后发现是环境配置的问题，注意一下以下三个运行时是否安装
+
+1. 对应dotnet版本的sdk
+2. AspNetCoreModuleV2（具体情况视webconfig内容而定，webconfig可以用VS打开）
+3. HostingBundle
+
+安装位置在这
+
+https://dotnet.microsoft.com/download/dotnet-core
+
+上述所有运行时都可在此处找到
 
 # 4.25 项目日志
 

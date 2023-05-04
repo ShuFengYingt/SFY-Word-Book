@@ -43,8 +43,16 @@ namespace SFY_Word_Book.Service
             }
             restClient.BaseUrl = new Uri(apiUrl + baseRequest.Route);
             var response = await restClient.ExecuteAsync(request);
-            return JsonConvert.DeserializeObject<APIResponse>(response.Content);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return JsonConvert.DeserializeObject<APIResponse>(response.Content);
 
+            else
+                return new APIResponse()
+                {
+                    Statue = false,
+                    Result = null,
+                    Message = response.ErrorMessage
+                };
         }
         public async Task<APIResponse<T>> ExecuteAsync<T>(BaseRequest baseRequest)
         {
@@ -56,8 +64,15 @@ namespace SFY_Word_Book.Service
             }
             restClient.BaseUrl = new Uri(apiUrl + baseRequest.Route);
             var response = await restClient.ExecuteAsync(request);
-            return JsonConvert.DeserializeObject<APIResponse<T>>(response.Content);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return JsonConvert.DeserializeObject<APIResponse<T>>(response.Content);
 
+            else
+                return new APIResponse<T>()
+                {
+                    Statue = false,
+                    Message = response.ErrorMessage
+                };
         }
 
     }

@@ -225,7 +225,7 @@ namespace SFY_Word_Book.ViewModels
             var loginResult = await loginService.LoginAsync(userDto);
 
             //登录成功
-            if (loginResult.Statue)
+            if (loginResult !=  null && loginResult.Statue)
             {
                 Appsession.UserName = UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));

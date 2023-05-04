@@ -21,7 +21,7 @@ namespace SFY_Word_Book.WordBook
         {
             for(int i = 0;i < ReviewWordBook.ReviewWords.Count;i++)
             {
-                if (ReviewWordBook.ReviewWords[i].ReviewDays == DateTime.Today)
+                if (ReviewWordBook.ReviewWords[i].ReviewDays <= DateTime.Today)
                 {
                     //迁移至今日待复习
                     TodayReviewWords.Add(ReviewWordBook.ReviewWords[i]);

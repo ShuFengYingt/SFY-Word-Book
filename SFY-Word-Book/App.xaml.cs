@@ -66,7 +66,7 @@ namespace SFY_Word_Book
         {
             //注册HttpRestClient
             containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "webUrl"));
-            containerRegistry.GetContainer().RegisterInstance(@"http://localhost:5255/", serviceKey: "webUrl");
+            containerRegistry.GetContainer().RegisterInstance(@"http://localhost:3333/", serviceKey: "webUrl");
 
             //注册服务
             containerRegistry.Register<ILoginService, LoginService>();
