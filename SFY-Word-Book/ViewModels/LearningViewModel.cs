@@ -241,9 +241,11 @@ namespace SFY_Word_Book.ViewModels
             //加入单词群组，用于本组结束后的显示
             WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
-            if (groupWord.Count == 1)
+            groupWord.RemoveAt(0);
+
+
+            if (groupWord.Count == 0)
             {
-                groupWord.RemoveAt(0);
                 IsKnowButtonShow = false;
                 IsNextButtonShow = false;
                 isFinishTen = true;
@@ -286,15 +288,13 @@ namespace SFY_Word_Book.ViewModels
             //显示释义
             CreateTranslation();
 
-            //加入单词群组
-            WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
             //加到背记组最后一个
             groupWord.Add(groupWord[0]);
             groupWord.RemoveAt(0);
 
             //当记忆完十个之后
-            if (groupWord.Count == 1)
+            if (groupWord.Count == 0)
             {
 
 
@@ -351,9 +351,6 @@ namespace SFY_Word_Book.ViewModels
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow2)));
 
 
-            groupWord.RemoveAt(0);
-            //序列增加
-            WordIndex++;
             //新单词卡
             CreateWordCard();
 
