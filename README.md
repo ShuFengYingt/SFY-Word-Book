@@ -1,5 +1,13 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+
+
+# 5.7 项目日志
+
+1. 解决了Advanced Installer的打包问题，IIS自动部署问题，数据库连接问题
+2. 为背单词界面和复习单词界面新增单词自动发音功能
+3. 优化了背单词的逻辑，但是还是有点bug
+
 # 5.4 项目日志
 
 鸽了好久，完蛋力

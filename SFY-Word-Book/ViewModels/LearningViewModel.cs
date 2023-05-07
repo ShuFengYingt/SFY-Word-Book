@@ -34,6 +34,7 @@ namespace SFY_Word_Book.ViewModels
             ToNextWordCommand = new Command(ToNextWord);
             FinishThisGroupCommand = new Command(FinishThisGroup);
             ToNextGroupCommand = new Command(ToNextGroup);
+            FailToRememberCommand = new Command(FailToRemember);
             #endregion
 
 
@@ -43,10 +44,13 @@ namespace SFY_Word_Book.ViewModels
             IsNextButtonShow = false;
             isFinishTen = false;
             isToNextGroup = false;
+            IsFailToRememberShow = false;
+            IsKnowButtonShow2 = false;
             WordIndex = 0;
             #endregion
 
             #region 方法调用
+            ReadGroupWord();
             CreateWordCard();
             #endregion
 
@@ -57,11 +61,26 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public int NumOfGroup { get; set; }
 
+
         /// <summary>
         /// 发音api前置
         /// </summary>
         private string prePhoneSpeechUri = "https://dict.youdao.com/dictvoice?audio=";
 
+        /// <summary>
+        /// 背记的单词组
+        /// </summary>
+        private List<WordRoot.Root> groupWord = new List<WordRoot.Root>();
+        /// <summary>
+        /// 读取要背记的一组单词
+        /// </summary>
+        private void ReadGroupWord()
+        {
+            for (int i =0;i < NumOfGroup;i++)
+            {
+                groupWord.Add(LearningWordBook.LearningWords[i]);
+            }
+        }
 
         private ObservableCollection<WordGroupItem> wordGroups;
         /// <summary>
@@ -102,9 +121,9 @@ namespace SFY_Word_Book.ViewModels
         {
             TempWordCard = new WordCard
             {
-                Word = LearningWordBook.LearningWords[WordIndex].headWord,
-                PhoneticSymbol = "[" + LearningWordBook.LearningWords[WordIndex].content.word.content.ukphone + "]",
-                PhoneSpeech = prePhoneSpeechUri + LearningWordBook.LearningWords[WordIndex].content.word.content.ukspeech,
+                Word = groupWord[0].headWord,
+                PhoneticSymbol = "[" + groupWord[0].content.word.content.ukphone + "]",
+                PhoneSpeech = prePhoneSpeechUri + groupWord[0].content.word.content.ukspeech,
 
 
             };
@@ -133,12 +152,12 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         private void CreateTranslation()
         {
-            for (int i = 0; i < LearningWordBook.LearningWords[WordIndex].content.word.content.trans.Count; i++)
+            for (int i = 0; i < groupWord[0].content.word.content.trans.Count; i++)
             {
                 WordCards[WordCards.Count - 1].Translations.Add(new WordCard.Translation
                 {
-                    TransCN = LearningWordBook.LearningWords[WordIndex].content.word.content.trans[i].tranCn,
-                    PartOfSpeech = LearningWordBook.LearningWords[WordIndex].content.word.content.trans[i].pos + "."
+                    TransCN = groupWord[0].content.word.content.trans[i].tranCn,
+                    PartOfSpeech = groupWord[0].content.word.content.trans[i].pos + "."
                 });
             }
         }
@@ -185,13 +204,34 @@ namespace SFY_Word_Book.ViewModels
             set { SetProperty(ref isToNextGroup, value); }
 
         }
+        private bool isFailToRememberShow;
+        /// <summary>
+        /// 是否显示记错了按钮
+        /// </summary>
+        public bool IsFailToRememberShow 
+        {
+            get { return  isFailToRememberShow; }
+
+            set { SetProperty(ref isFailToRememberShow, value); }
+        }
+        private bool isKnowButtonShow2;
+        /// <summary>
+        /// 是否显示下一个2
+        /// </summary>
+        public bool IsKnowButtonShow2
+        {
+            get { return isKnowButtonShow2; }
+
+            set { SetProperty(ref isKnowButtonShow2, value); }
+        }
+
 
         /// <summary>
         /// 显示释义命令
         /// </summary>
         public Command ShowTransKnowCommand { get; set; }
         /// <summary>
-        /// 显示释义
+        /// 认识单词
         /// </summary>
         public void ShowTransFromKnow()
         {
@@ -201,8 +241,9 @@ namespace SFY_Word_Book.ViewModels
             //加入单词群组，用于本组结束后的显示
             WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
-            if ((WordIndex + 1) % NumOfGroup == 0)
+            if (groupWord.Count == 1)
             {
+                groupWord.RemoveAt(0);
                 IsKnowButtonShow = false;
                 IsNextButtonShow = false;
                 isFinishTen = true;
@@ -224,6 +265,10 @@ namespace SFY_Word_Book.ViewModels
                 //显示下一个按钮
                 IsNextButtonShow = true;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+
+                //显示记错了按钮
+                IsFailToRememberShow = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFailToRememberShow)));
 
 
             }
@@ -244,9 +289,12 @@ namespace SFY_Word_Book.ViewModels
             //加入单词群组
             WordGroups.Add(new WordGroupItem { HeadWord = WordCards[0].Word });
 
+            //加到背记组最后一个
+            groupWord.Add(groupWord[0]);
+            groupWord.RemoveAt(0);
 
             //当记忆完十个之后
-            if ((WordIndex + 1) % NumOfGroup == 0)
+            if (groupWord.Count == 1)
             {
 
 
@@ -270,8 +318,8 @@ namespace SFY_Word_Book.ViewModels
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
                 //显示下一个按钮
-                IsNextButtonShow = true;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+                IsKnowButtonShow2 = true;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow2)));
 
             }
 
@@ -296,11 +344,43 @@ namespace SFY_Word_Book.ViewModels
             IsNextButtonShow = false;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
 
+            IsFailToRememberShow = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFailToRememberShow)));
+
+            IsKnowButtonShow2 = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow2)));
+
+
+            groupWord.RemoveAt(0);
             //序列增加
             WordIndex++;
             //新单词卡
             CreateWordCard();
 
+
+
+        }
+
+        /// <summary>
+        /// 记错了命令
+        /// </summary>
+        public Command FailToRememberCommand { get; set; }
+        public void FailToRemember()
+        {
+            isKnowButtonShow = true;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsNextButtonShow)));
+
+
+            IsNextButtonShow = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsKnowButtonShow)));
+
+            IsFailToRememberShow = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFailToRememberShow)));
+
+            groupWord.Add(groupWord[0]);
+            groupWord.RemoveAt(0);
+            //新单词卡
+            CreateWordCard();
 
 
         }
@@ -331,7 +411,7 @@ namespace SFY_Word_Book.ViewModels
         private void WordBookMoveAndSet()
         {
             //单词迁移进待复习词书以及当日学习词书
-            for (int i = WordIndex - NumOfGroup; i < WordIndex; i++)
+            for (int i = 0; i < NumOfGroup; i++)
             {
                 //记录连对次数
                 LearningWordBook.LearningWords[i].Combo++;
@@ -339,8 +419,9 @@ namespace SFY_Word_Book.ViewModels
                 LearningWordBook.LearningWords[i].DateTime = DateTime.Today;
                 //下一次复习的时间,明日
                 LearningWordBook.LearningWords[i].ReviewDays = DateTime.Today.AddDays(1);
-
+                //加入待复习词书
                 ReviewWordBook.ReviewWords.Add(LearningWordBook.LearningWords[i]);
+                //今日已复习词书
                 ToDayHasLearnBook.ToDayHasLearnWords.Add(LearningWordBook.LearningWords[i]);
             }
 
@@ -363,6 +444,7 @@ namespace SFY_Word_Book.ViewModels
         /// </summary>
         public void ToNextGroup()
         {
+            ReadGroupWord();
             CreateWordCard();
 
             IsToNextGroup = false;
