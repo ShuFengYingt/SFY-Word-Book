@@ -72,6 +72,10 @@ namespace SFY_Word_Book.ViewModels
             get { return wordCards; }
             set { this.wordCards = value; RaisePropertyChanged(); }
         }
+        /// <summary>
+        /// 发音api前置
+        /// </summary>
+        private string prePhoneSpeechUri = "https://dict.youdao.com/dictvoice?audio=";
 
         /// <summary>
         /// 当前单词索引
@@ -106,6 +110,7 @@ namespace SFY_Word_Book.ViewModels
                 {
                     Word = ToDayReviewWords.TodayReviewWords[WordIndex].headWord,
                     PhoneticSymbol = "[" + ToDayReviewWords.TodayReviewWords[WordIndex].content.word.content.ukphone + "]",
+                    PhoneSpeech = prePhoneSpeechUri + LearningWordBook.LearningWords[WordIndex].content.word.content.ukspeech,
 
 
                 };
@@ -122,6 +127,12 @@ namespace SFY_Word_Book.ViewModels
             TempWordCreate();
             wordCards.Clear();
             wordCards.Add(TempWordCard);
+
+            //播放音频
+            MediaPlayer phoneSpeechPlayer = new MediaPlayer();
+            phoneSpeechPlayer.Open(new Uri(TempWordCard.PhoneSpeech));
+            phoneSpeechPlayer.Play();
+
 
         }
 

@@ -204,7 +204,7 @@ namespace SFY_Word_Book.ViewModels
             }
             else
             {
-                eventAggregator.SendMessage(registerResult.Message);
+                eventAggregator.SendMessage(registerResult.Result.ToString(),"Login");
             }
         }
 

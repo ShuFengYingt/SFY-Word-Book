@@ -26,6 +26,11 @@ namespace SFY_Word_Book.Common.Models
         public string PhoneticSymbol { get;set; }
 
         /// <summary>
+        /// 发音参数请求
+        /// </summary>
+        public string PhoneSpeech { get;set; } 
+
+        /// <summary>
         /// 下次复习时间
         /// </summary>
         public string ReviewDay { get; set; }

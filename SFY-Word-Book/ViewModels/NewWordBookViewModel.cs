@@ -77,10 +77,6 @@ namespace SFY_Word_Book.ViewModels
             set { transCNs = value; RaisePropertyChanged(); }
         }
 
-        private void CreateNewWordExpender(WordRoot.Root word)
-        {
-              
-        }
 
 
     }

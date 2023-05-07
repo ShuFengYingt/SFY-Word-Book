@@ -14,6 +14,7 @@ using SFY_Word_Book.Extensions;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Services.Profile;
 using SFY_Word_Book.WordBook;
+using System.Windows.Media;
 
 namespace SFY_Word_Book.ViewModels
 {
@@ -55,6 +56,11 @@ namespace SFY_Word_Book.ViewModels
         /// 一组多少个
         /// </summary>
         public int NumOfGroup { get; set; }
+
+        /// <summary>
+        /// 发音api前置
+        /// </summary>
+        private string prePhoneSpeechUri = "https://dict.youdao.com/dictvoice?audio=";
 
 
         private ObservableCollection<WordGroupItem> wordGroups;
@@ -98,6 +104,7 @@ namespace SFY_Word_Book.ViewModels
             {
                 Word = LearningWordBook.LearningWords[WordIndex].headWord,
                 PhoneticSymbol = "[" + LearningWordBook.LearningWords[WordIndex].content.word.content.ukphone + "]",
+                PhoneSpeech = prePhoneSpeechUri + LearningWordBook.LearningWords[WordIndex].content.word.content.ukspeech,
 
 
             };
@@ -113,6 +120,11 @@ namespace SFY_Word_Book.ViewModels
             TempWordCreate();
             wordCards.Clear();
             wordCards.Add(TempWordCard);
+
+            //播放音频
+            MediaPlayer phoneSpeechPlayer = new MediaPlayer();
+            phoneSpeechPlayer.Open(new Uri(TempWordCard.PhoneSpeech));
+            phoneSpeechPlayer.Play();
 
         }
 
@@ -175,7 +187,7 @@ namespace SFY_Word_Book.ViewModels
         }
 
         /// <summary>
-        /// 认识该单词
+        /// 显示释义命令
         /// </summary>
         public Command ShowTransKnowCommand { get; set; }
         /// <summary>

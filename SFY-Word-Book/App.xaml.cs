@@ -61,6 +61,8 @@ namespace SFY_Word_Book
                 }
                 base.OnInitialized();
             });
+            base.OnInitialized();
+
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
