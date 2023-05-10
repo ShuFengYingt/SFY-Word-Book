@@ -1,6 +1,15 @@
 [English log translate by ChatGPT](https://github.com/ShuFengYingt/SFY-Word-Book/blob/master/README_en.md)
 
+# 5.10 项目日志
 
+1. 完成了GPT依据背诵的十个单词生成一篇小短文的页面（目前仅前端实现）
+
+2. 修改了关于页面的信息
+3. 准备开摆
+
+![5.10](READMEImage/5.10.png)
+
+（有一说一我觉得我审美不错）
 
 # 5.7 项目日志
 
@@ -21,7 +30,7 @@
 
 我在发布WebApi的时候，配置IIS后，发现IIS内的所有功能都无法使用，提示如下:
 
-![4.24](READMEImage/webconfigcantbeopened.png)
+![5.4](READMEImage/webconfigcantbeopened.png)
 
 而后发现是环境配置的问题，注意一下以下三个运行时是否安装
 
