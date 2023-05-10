@@ -12,8 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Composers trade.jpg" />
     <None Remove="Images\login.png" />
     <None Remove="Images\OIP.ico" />
+    <None Remove="Images\Story2.jpeg" />
+    <None Remove="Images\Story2.jpg" />
+    <None Remove="Images\Story_2.jpg" />
     <None Remove="Images\头像.jpeg" />
     <None Remove="Images\清明杭州.jpg" />
   </ItemGroup>
@@ -52,8 +56,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Composers trade.jpg" />
     <Resource Include="Images\login.png" />
     <Resource Include="Images\OIP.ico" />
+    <Resource Include="Images\Story_2.jpg" />
     <Resource Include="Images\头像.jpeg" />
     <Resource Include="Images\清明杭州.jpg" />
   </ItemGroup>

@@ -76,7 +76,7 @@ namespace SFY_Word_Book.ViewModels
         {
             MenuBars.Add(new MenuBar() { Icon = "Home", Title = "首页", NameSpace = "HomeView" });
             MenuBars.Add(new MenuBar() { Icon = "NotebookOutline", Title = "生词本", NameSpace = "NewWordBookView" });
-            MenuBars.Add(new MenuBar() { Icon = "CalendarRange", Title = "学习历史", NameSpace = "LearningHistoryView" });
+            MenuBars.Add(new MenuBar() { Icon = "AppleKeyboardCommand", Title = "故事书", NameSpace = "WordStoryView" });
             MenuBars.Add(new MenuBar() { Icon = "CogOutline", Title = "设置", NameSpace = "SettingsView" });
 
 

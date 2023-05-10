@@ -111,7 +111,7 @@ namespace SFY_Word_Book.ViewModels
                 {
                     Word = ToDayReviewWords.TodayReviewWords[WordIndex].headWord,
                     PhoneticSymbol = "[" + ToDayReviewWords.TodayReviewWords[WordIndex].content.word.content.ukphone + "]",
-                    PhoneSpeech = prePhoneSpeechUri + LearningWordBook.LearningWords[WordIndex].content.word.content.ukspeech,
+                    PhoneSpeech = prePhoneSpeechUri + ToDayReviewWords.TodayReviewWords[WordIndex].content.word.content.ukspeech,
 
 
                 };

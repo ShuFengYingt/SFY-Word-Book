@@ -52,6 +52,10 @@ namespace SFY_Word_Book.Views
             };
             Button_WindowClose.Click += (s, e) =>
             {
+
+                //检查复习情况
+                ToDayReviewWords.CheckOrSetBack();
+
                 //保存单词本
                 CET6.OutCET6WordBook();
                 //保存生词本

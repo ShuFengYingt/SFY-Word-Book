@@ -11,7 +11,7 @@
     xmlns:prism="http://prismlibrary.com/"
     Title="MainView"
     Width="1280"
-    Height="768"
+    Height="791"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{DynamicResource MaterialDesignPaper}"
     Cursor=""

@@ -219,7 +219,7 @@ namespace SFY_Word_Book.ViewModels
             Title = "已学习",
             Content = "0",
             Color = "#965fa0",
-            NameSpace = "LearningHistoryView"
+            NameSpace = "WordStoryView"
         };
         /// <summary>
         /// 词书
@@ -298,9 +298,9 @@ namespace SFY_Word_Book.ViewModels
         /// 生成每日文章
         /// </summary>
         /*async*/
-        void CreateDailyPage()
+        async void  CreateDailyPage()
         {
-            DailyPages.Add(new DailyPage
+             DailyPages.Add(new DailyPage
             {
                 Image = "https://img2.chinadaily.com.cn/images/202303/10/640ae33ca31057c4b4b6d617.jpeg",
                 Title = "Best spring destinations in Tibet",

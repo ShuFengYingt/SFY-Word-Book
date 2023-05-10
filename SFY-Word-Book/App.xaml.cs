@@ -86,6 +86,7 @@ namespace SFY_Word_Book
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<AboutView, AboutViewModel>();
             containerRegistry.RegisterForNavigation<ReviewView, ReviewViewModel>();
+            containerRegistry.RegisterForNavigation<WordStoryView, WordStoryViewModel>();
 
 
 

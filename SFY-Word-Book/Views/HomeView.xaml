@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:all="clr-namespace:SFY_Word_Book"
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:converter="clr-namespace:SFY_Word_Book.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extension="clr-namespace:SFY_Word_Book.Extensions"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -18,6 +19,8 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <models:ImageBrushConverter x:Key="ImageBrushConverter" />
+        <converter:HalfWidthConverter x:Key="HalfWidthConverter" />
+
     </UserControl.Resources>
 
     <Grid>
@@ -143,6 +146,7 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
         <!--#endregion-->
+
         <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
             <!--  下方栏，一个放每日文章，一个放查词  -->
             <Grid Grid.Row="2" Margin="0,10">
@@ -154,6 +158,7 @@
 
                 <!--#region大底框-->
                 <Border
+                    x:Name="BigBorder"
                     Grid.Column="0"
                     Margin="10,0"
                     Background="#757575"
@@ -165,7 +170,12 @@
                 <ItemsControl>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="2" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                            </Grid>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
@@ -177,8 +187,8 @@
                                 <Border
                                     x:Name="cardBorder"
                                     Grid.Column="0"
-                                    Width="300"
-                                    Height="420"
+                                    Width="{Binding ActualWidth, ElementName=BigBorder}"
+                                    Height="{Binding ActualHeight, ElementName=BigBorder}"
                                     Margin="11,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
@@ -191,13 +201,27 @@
 
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl Grid.Column="1" ItemsSource="{Binding DailyPages}">
+                    <ItemsControl
+                        Grid.Column="1"
+                        Width="300"
+                        ItemsSource="{Binding DailyPages}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
 
-                                <DockPanel LastChildFill="False">
+                                <Grid Height="{Binding ActualHeight, ElementName=BigBorder}">
+                                    <!--<Grid.Width>
+                                        <MultiBinding Converter="{StaticResource HalfWidthConverter}">
+                                            <Binding ElementName="BigBorder" Path="ActualWidth" />
+                                        </MultiBinding>
+                                    </Grid.Width>-->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
                                     <!--  文章标题  -->
                                     <TextBlock
+                                        Grid.Row="0"
                                         Margin="20,20,0,10"
                                         DockPanel.Dock="Top"
                                         FontFamily="Arial"
@@ -208,14 +232,16 @@
                                         TextWrapping="Wrap" />
                                     <!--  内容  -->
                                     <TextBlock
+                                        Grid.Row="1"
                                         Margin="20,10,10,10"
-                                        DockPanel.Dock="Top"
+                                        VerticalAlignment="Top"
                                         LineHeight="22"
                                         Text="{Binding Content}"
                                         TextWrapping="Wrap" />
 
                                     <!--  底部菜单  -->
                                     <StackPanel
+                                        Grid.Row="2"
                                         Margin="15,0,15,15"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
@@ -248,7 +274,7 @@
                                     </StackPanel>
 
 
-                                </DockPanel>
+                                </Grid>
 
 
                             </DataTemplate>

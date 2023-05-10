@@ -62,18 +62,15 @@
                 </materialDesign:TransitioningContent>
 
                 <materialDesign:TransitioningContent
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.ColumnSpan="2"
                     OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
-                    <Border
-                        Margin="0,15,0,0"
-                        Padding="8"
-                        BorderBrush="{DynamicResource MaterialDesignDivider}"
-                        BorderThickness="0,1,0,0">
+                    <Border Margin="0,-15,0,0" Padding="8">
                         <DockPanel LastChildFill="False">
                             <Button
                                 x:Name="DonateButton"
                                 Margin="0,30,10,0"
+                                Command="{Binding ShowGameCoreCommand}"
                                 DockPanel.Dock="Right"
                                 Style="{StaticResource MaterialDesignFlatButton}">
                                 <StackPanel Orientation="Horizontal">
@@ -81,7 +78,7 @@
                                     <TextBlock
                                         Margin="20,0,10,0"
                                         VerticalAlignment="Center"
-                                        Text="捐赠" />
+                                        Text="机核" />
                                 </StackPanel>
                             </Button>
                             <TextBlock
@@ -89,7 +86,7 @@
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
                                 Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                Text="如果你喜欢我的大作业，可以投币给我点赞。点击这个按钮支持一下头发消失的书封影"
+                                Text="当然，书封影更希望能关注一下他的机核"
                                 TextWrapping="Wrap" />
 
 
@@ -99,10 +96,14 @@
                 </materialDesign:TransitioningContent>
 
                 <materialDesign:TransitioningContent
-                    Grid.Row="2"
+                    Grid.Row="1"
                     Grid.ColumnSpan="2"
                     OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
-                    <Border Margin="0,-15,0,0" Padding="8">
+                    <Border
+                        Margin="0,15,0,0"
+                        Padding="8"
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        BorderThickness="0,1,0,0">
 
                         <DockPanel LastChildFill="False">
                             <TextBlock
@@ -110,12 +111,13 @@
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
                                 Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                Text="你也可以关注一下书封影的Github，虽然上面啥也没有......"
+                                Text="你可以关注一下书封影的Github，虽然上面啥也没有......"
                                 TextWrapping="Wrap" />
 
                             <Button
                                 x:Name="GithubButton"
                                 Margin="0,30,0,0"
+                                Command="{Binding ShowGithubCommand}"
                                 DockPanel.Dock="Right"
                                 Style="{StaticResource MaterialDesignFlatButton}">
                                 <StackPanel Orientation="Horizontal">

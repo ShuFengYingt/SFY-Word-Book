@@ -19,6 +19,8 @@ using SFY_Word_Book.ViewModels;
 using SFY_Word_Book.Common.Models;
 using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
+using System.Globalization;
+
 namespace SFY_Word_Book.Views
 {
     /// <summary>
@@ -76,4 +78,6 @@ namespace SFY_Word_Book.Views
         //    return null;
         //}
     }
+
+    
 }
