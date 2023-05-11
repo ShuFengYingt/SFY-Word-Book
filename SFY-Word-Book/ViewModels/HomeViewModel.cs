@@ -312,7 +312,7 @@ namespace SFY_Word_Book.ViewModels
             ////调取API
             //using (HttpClient client = new HttpClient())
             //{
-            //    HttpResponseMessage responseMessage = await client.GetAsync("http://api.mediastack.com/v1/news?access_key=1c9403cd7c4a8b2c8940ad941477fd69");
+            //    HttpResponseMessage responseMessage = await client.GetAsync("yourApi");
             //    if (responseMessage.IsSuccessStatusCode)
             //    {
             //        string responseContent = await responseMessage.Content.ReadAsStringAsync();
