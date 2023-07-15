@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book.Api", "SFY-Wo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSolves", "SFY-Word-BookC\SFY-Word-BookC.vcxproj", "{9AC4C5E8-F56B-4BBD-BC6E-C32FB985603A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFY-Word-Book.Shared", "SFY-Word-Book.Shared\SFY-Word-Book.Shared.csproj", "{E3A5E7A0-028B-4002-8BED-DAE75168EC4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFY-Word-Book.Shared", "SFY-Word-Book.Shared\SFY-Word-Book.Shared.csproj", "{E3A5E7A0-028B-4002-8BED-DAE75168EC4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

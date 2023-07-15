@@ -12,7 +12,6 @@ namespace SFY_Word_Book.Extensions
     {
         //实现CSolve中的结构体
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 16)]
-
         public struct Sentence
         {
             private int _sentenceRank;
@@ -58,7 +57,6 @@ namespace SFY_Word_Book.Extensions
 
 
         };
-
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Word

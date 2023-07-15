@@ -23,7 +23,7 @@ namespace SFY_Word_Book.Service
         public BaseService(HttpRestClient client,string serviceName) 
         {
             this.client = client;
-            this.serviceName = serviceName;
+            this.serviceName = serviceName; 
         }
 
         public async Task<APIResponse<TEntity>> AddAsync(TEntity entity)
