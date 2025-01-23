@@ -29,7 +29,7 @@ namespace SFY_Word_Book.Views
             //注册提示消息
             aggregator.ResgiterMessage(arg =>
             {
-                LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
+                LoginSnakeBar?.MessageQueue?.Enqueue(arg.Message);
             }, "Login");
         }
     }

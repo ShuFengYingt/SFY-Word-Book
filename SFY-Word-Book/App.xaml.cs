@@ -61,7 +61,17 @@ namespace SFY_Word_Book
                 }
                 base.OnInitialized();
             });
+
+
+            //base.OnInitialized();
+            //Application.Current.MainWindow.Hide();
+            //var service = App.Current.MainWindow.DataContext as IConfigureService;
+            //if (service != null)
+            //{
+            //    service.Configure();
+            //}
             base.OnInitialized();
+
 
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
